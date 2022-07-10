@@ -1,14 +1,14 @@
 
 package com.mason.libgui.components;
 
-import com.mason.libgui.core.Component;
+import com.mason.libgui.core.UIComponent;
 import java.awt.event.MouseEvent;
 
 /**
  *
  * @author Adam Whittaker
  */
-public abstract class DraggableComponent extends Component implements Draggable{
+public abstract class DraggableComponent extends UIComponent implements Draggable{
     
     
     private int diffX;

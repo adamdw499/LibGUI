@@ -17,14 +17,14 @@ public class Window extends JFrame{
     private final int NUM_BUFFERS = 4;
     
     
-    public Window(int width, int height, String title, ComponentManager cm, Image toolbarImg, Cursor cursor){
+    public Window(int width, int height, String title, UIComponentManager cm, Image toolbarImg, Cursor cursor){
         this(width, height, title, cm);
 
         setIconImage(toolbarImg);
         setCursor(cursor);
     }
     
-    public Window(int width, int height, String title, ComponentManager cm){
+    public Window(int width, int height, String title, UIComponentManager cm){
         super(title);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,7 +45,7 @@ public class Window extends JFrame{
     }
     
     
-    protected void render(ComponentManager compManager){
+    protected void render(UIComponentManager compManager){
         BufferStrategy bs = canvas.getBufferStrategy();
         Graphics2D bsg = (Graphics2D) bs.getDrawGraphics();
         

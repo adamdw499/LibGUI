@@ -8,13 +8,13 @@ import java.awt.event.MouseAdapter;
  *
  * @author Adam Whittaker
  */
-public abstract class Component extends MouseAdapter{
+public abstract class UIComponent extends MouseAdapter{
     
     
     protected int x, y, width, height;
     
     
-    public Component(int x, int y, int w, int h){
+    public UIComponent(int x, int y, int w, int h){
         this.x = x;
         this.y = y;
         width = w;

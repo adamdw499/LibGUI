@@ -35,6 +35,7 @@ public class Pacemaker implements Runnable{
                 tick();
                 tickDelta -= TICK_RATE;
             }
+            lastTick = currentTimeMillis();
             
             render();
             

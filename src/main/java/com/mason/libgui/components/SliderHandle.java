@@ -1,7 +1,7 @@
 
 package com.mason.libgui.components;
 
-import com.mason.libgui.core.Component;
+import com.mason.libgui.core.UIComponent;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -10,7 +10,7 @@ import java.awt.event.MouseWheelEvent;
  *
  * @author Adam Whittaker
  */
-public abstract class SliderHandle extends Component{
+public abstract class SliderHandle extends UIComponent{
 
 
     private int diff;

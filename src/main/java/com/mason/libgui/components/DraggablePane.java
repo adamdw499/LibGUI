@@ -1,7 +1,7 @@
 
 package com.mason.libgui.components;
 
-import com.mason.libgui.core.Component;
+import com.mason.libgui.core.UIComponent;
 import java.awt.event.MouseEvent;
 
 import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
@@ -43,7 +43,7 @@ public class DraggablePane extends Pane implements Draggable{
     }
     
     
-    protected class DragRegion extends Component{
+    protected class DragRegion extends UIComponent{
         
         
         private boolean dragging = false;

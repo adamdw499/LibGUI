@@ -9,11 +9,11 @@ public class GUIManager{
     
     
     private final Window window;
-    private final ComponentManager compManager;
+    private final UIComponentManager compManager;
     
     
     public GUIManager(int width, int height, String title){
-        compManager = new ComponentManager(width, height);
+        compManager = new UIComponentManager(width, height);
         window = new Window(width, height, title, compManager);
     }
     
@@ -28,11 +28,11 @@ public class GUIManager{
     }
     
     
-    public void addComponent(Component comp){
+    public void addComponent(UIComponent comp){
         compManager.addComponent(comp);
     }
     
-    public void removeComponent(Component comp){
+    public void removeComponent(UIComponent comp){
         compManager.removeComponent(comp);
     }
     

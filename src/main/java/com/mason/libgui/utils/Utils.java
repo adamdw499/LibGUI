@@ -49,7 +49,7 @@ public final class Utils{
     
     
     public static void main(String[] args){
-        Color[] cols = ColorScheme.analogousColors(new Color(174, 25, 78));
+        Color[] cols = StyleInfo.analogousColors(new Color(174, 25, 78));
         System.out.println(cols[0]);
         System.out.println(cols[1]);
         System.out.println(cols[2]);
