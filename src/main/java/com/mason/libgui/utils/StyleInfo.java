@@ -2,12 +2,13 @@
 package com.mason.libgui.utils;
 
 import java.awt.Color;
+import java.awt.Font;
 
 /**
  *
  * @author Adam Whittaker
  */
-public class ColorScheme{
+public class StyleInfo{
     
     
     public Color FOREGROUND;
@@ -16,9 +17,12 @@ public class ColorScheme{
     public Color FORE_HIGHLIGHT;
     public Color TEXT;
     
+    public Font FONT;
     
-    public ColorScheme(Color fg, Color bg, Color b, Color fhl, Color t){
+    
+    public StyleInfo(Color fg, Color bg, Color b, Color fhl, Color t, Font f){
         FOREGROUND = fg;
+        FONT = f;
         BACKGROUND = bg;
         BORDER = b;
         FORE_HIGHLIGHT = fhl;
@@ -40,12 +44,14 @@ public class ColorScheme{
     }
     
     
-    public static final ColorScheme DEFAULT_COLOR_SCHEME = new ColorScheme(
+    public static final StyleInfo DEFAULT_STYLE_INFO = new StyleInfo(
             new Color(75,32,32),
             new Color(42,42,42),
             new Color(120,120,120),
             new Color(105,62,62),
-            new Color(240,170,40)
+            new Color(240,170,40),
+            //new Font("Joystix Monospace", Font.PLAIN, 24)
+            new Font("Dubstep Dungeons", Font.PLAIN, 24)
     );
     
 }

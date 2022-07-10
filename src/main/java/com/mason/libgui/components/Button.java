@@ -1,8 +1,8 @@
 
 package com.mason.libgui.components;
 
-import com.mason.libgui.core.Component;
-import com.mason.libgui.utils.ColorScheme;
+import com.mason.libgui.core.UIComponent;
+import com.mason.libgui.utils.StyleInfo;
 import com.mason.libgui.utils.RenderUtils;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
@@ -11,14 +11,14 @@ import java.awt.event.MouseEvent;
  *
  * @author Adam Whittaker
  */
-public class Button extends Component{
+public class Button extends UIComponent{
     
     
     protected boolean hovering = false;
-    public ColorScheme colorScheme;
+    public StyleInfo colorScheme;
     
     
-    public Button(ColorScheme col, int x, int y, int w, int h){
+    public Button(StyleInfo col, int x, int y, int w, int h){
         super(x, y, w, h);
         colorScheme = col;
     }

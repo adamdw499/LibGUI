@@ -1,8 +1,8 @@
 
 package com.mason.libgui.components;
 
-import com.mason.libgui.core.ComponentManager;
-import com.mason.libgui.utils.ColorScheme;
+import com.mason.libgui.core.UIComponentManager;
+import com.mason.libgui.utils.StyleInfo;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -14,7 +14,7 @@ import static com.mason.libgui.utils.RenderUtils.drawBorder;
  *
  * @author Adam Whittaker
  */
-public class Pane extends ComponentManager{
+public class Pane extends UIComponentManager{
     
     
     public Pane(int x, int y, int w, int h){
@@ -32,7 +32,7 @@ public class Pane extends ComponentManager{
     }
     
     protected void renderBorder(Graphics2D g){
-        drawBorder(g, ColorScheme.DEFAULT_COLOR_SCHEME, x, y, width, height);
+        drawBorder(g, StyleInfo.DEFAULT_STYLE_INFO, x, y, width, height);
     }
     
     protected MouseEvent relativeMouseCoords(MouseEvent e){

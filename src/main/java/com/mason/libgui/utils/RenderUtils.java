@@ -17,7 +17,7 @@ public class RenderUtils{
     public static final int LINE_WIDTH = 6;
     
     
-    public static void drawBorder(Graphics2D g, ColorScheme c, int x, int y, int w, int h){
+    public static void drawBorder(Graphics2D g, StyleInfo c, int x, int y, int w, int h){
         g.setColor(c.BORDER);
         g.fillRect(x, y, LINE_WIDTH, h);
         g.fillRect(x, y, w, LINE_WIDTH);
@@ -30,7 +30,7 @@ public class RenderUtils{
         g.fillRect(x+LINE_WIDTH/3, y+h-2*LINE_WIDTH/3, w-2*LINE_WIDTH/3, LINE_WIDTH/3);
     }
     
-    public static void drawButton(Graphics2D g, ColorScheme c, int x, int y, int w, int h, boolean highlighted, 
+    public static void drawButton(Graphics2D g, StyleInfo c, int x, int y, int w, int h, boolean highlighted, 
             boolean clicked){
         if(clicked) g.setColor(c.FORE_HIGHLIGHT.brighter());
         else if(highlighted) g.setColor(c.FORE_HIGHLIGHT);
@@ -39,7 +39,7 @@ public class RenderUtils{
         drawBorder(g, c, x, y, w, h);
     }
     
-    public static void drawBorderLine(Graphics2D g, ColorScheme c, int x, int y, int len, boolean horizontal){
+    public static void drawBorderLine(Graphics2D g, StyleInfo c, int x, int y, int len, boolean horizontal){
         g.setColor(c.BORDER);
         if(horizontal) g.fillRect(x, y, len, LINE_WIDTH);
         else g.fillRect(x, y, LINE_WIDTH, len);
@@ -51,7 +51,7 @@ public class RenderUtils{
         }
     }
     
-    public static void drawSliderHandle(Graphics2D g, ColorScheme c, int x, int y, int w, int h, boolean horizontal){
+    public static void drawSliderHandle(Graphics2D g, StyleInfo c, int x, int y, int w, int h, boolean horizontal){
         g.setColor(c.BORDER.brighter());
         g.fillRect(x, y, w, h);
         g.setColor(c.BORDER);
@@ -76,7 +76,7 @@ public class RenderUtils{
         }
     }
     
-    public static void drawSlider(Graphics2D g, ColorScheme col, int x, int y, int width, int height, boolean horizontal, 
+    public static void drawSlider(Graphics2D g, StyleInfo col, int x, int y, int width, int height, boolean horizontal, 
             SliderHandle handle){
         if(horizontal){
             drawBorderLine(g, col, x, y, height, false);
