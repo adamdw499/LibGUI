@@ -15,6 +15,10 @@ public class UIAligner{
     public static enum Position{
         START, MIDDLE, END;
     }
+
+    public static enum Direction{
+        LEFT, UP, DOWN, RIGHT;
+    }
     
     
     private int topMargin, bottomMargin, leftMargin, rightMargin;

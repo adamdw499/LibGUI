@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 
+import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
+
 /**
  *
  * @author Adam Whittaker
@@ -21,10 +23,12 @@ public class UIText extends UIComponent{
     private boolean dropShadow;
     private int dropShadowOffset;
     private Color shadowColor;
+    private int padding;
     
     
-    public UIText(String t, Font f, Color c, boolean dropS, int dropShadowOff, Color shadowC, int x, int y){
+    public UIText(String t, Font f, Color c, boolean dropS, int dropShadowOff, Color shadowC, int x, int y, int pad){
         super(x, y, 0, 0);
+        padding = pad;
         text = t;
         font = f;
         color = c;
@@ -34,7 +38,7 @@ public class UIText extends UIComponent{
     }
     
     public UIText(String t, StyleInfo col, int x, int y){
-        this(t, col.FONT, col.TEXT, true, 2, col.TEXT.darker().darker(), x, y);
+        this(t, col.FONT, col.TEXT, true, 2, col.TEXT.darker().darker(), x, y, LINE_WIDTH);
     }
     
     public UIText(String t, int x, int y){
@@ -48,10 +52,10 @@ public class UIText extends UIComponent{
         g.setFont(font);
         if(dropShadow){
             g.setColor(shadowColor);
-            g.drawString(text, x + dropShadowOffset, y + dropShadowOffset + f.getDescent());
+            g.drawString(text, x + dropShadowOffset + padding, y + dropShadowOffset + height - f.getDescent() - padding);
         }
         g.setColor(color);
-        g.drawString(text, x, y + f.getDescent());
+        g.drawString(text, x + padding, y + height - f.getDescent() - padding);
     }
     
     
