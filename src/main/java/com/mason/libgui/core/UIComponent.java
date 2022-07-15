@@ -99,7 +99,7 @@ public abstract class UIComponent extends MouseAdapter{
      * Changes the box's dimensions.
      * @param w The width.
      */
-    protected void setWidth(int w){
+    public void setWidth(int w){
         width = w;
     }
     
@@ -107,7 +107,7 @@ public abstract class UIComponent extends MouseAdapter{
      * Changes the box's dimensions.
      * @param h The height.
      */
-    protected void setHeight(int h){
+    public void setHeight(int h){
         height = h;
     }
     

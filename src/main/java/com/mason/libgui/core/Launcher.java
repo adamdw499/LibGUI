@@ -1,14 +1,17 @@
 
 package com.mason.libgui.core;
 
-import com.mason.libgui.components.*;
+import com.mason.libgui.components.buttons.Button;
+import com.mason.libgui.components.buttons.TrapezoidalButton;
+import com.mason.libgui.components.inventory.Inventory;
+import com.mason.libgui.components.inventory.InventoryPane;
+import com.mason.libgui.components.panes.SlidingPane;
+import com.mason.libgui.utils.StyleInfo;
 import com.mason.libgui.utils.UIAligner;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-
-import static com.mason.libgui.utils.StyleInfo.ALPHA_STYLE_INFO;
-import static com.mason.libgui.utils.StyleInfo.DEFAULT_STYLE_INFO;
+import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
+import static com.mason.libgui.utils.StyleInfo.*;
+import static com.mason.libgui.utils.UIAligner.Position.*;
 
 /**
  *
@@ -24,26 +27,42 @@ public class Launcher{
     public static void main(String[] args){
         new Thread(new Pacemaker(gui)).start();
         
-        Pane pane = new SlidingPane(120, 16, 400, 300, UIAligner.Direction.RIGHT, 21, WIDTH, HEIGHT);
+        //SlidingPane pane = new SlidingPane(120, 16, 400, 300, UIAligner.Direction.RIGHT, 21, WIDTH, HEIGHT);
         
-        Button b = new Toggle(DEFAULT_STYLE_INFO, 50, 50, 64, 64);
-        UIText text = new Tooltip("The text", ALPHA_STYLE_INFO, 150, 150, 75, 32);
-        
-        DraggableComponent d = new DraggableComponent(50, 50, 64, 64){
-            
-            public void render(Graphics2D g){
-                g.setColor(Color.ORANGE);
-                g.fillRect(x, y, width, height);
-            }
-            
+        //Button b = new Toggle(DEFAULT_STYLE_INFO, 50, 50, 64, 64);
+        //UIText text = new Tooltip("The text", ALPHA_STYLE_INFO, 150, 150, 75, 32);
+
+        Button[] buttons1 = new Button[24], buttons2 = new Button[24], buttons3 = new Button[24];
+        for(int n=0; n<buttons1.length; n++){
+            buttons1[n] = new Button(ALTERNATE_STYLE_INFO_1, 0, 0, 40, 40);
+            buttons2[n] = new Button(ALTERNATE_STYLE_INFO_2, 0, 0, 40, 40);
+            buttons3[n] = new Button(DEFAULT_STYLE_INFO, 0, 0, 40, 40);
+        }
+
+        InventoryPane inv1 = new InventoryPane(ALTERNATE_STYLE_INFO_1, 64, 2*LINE_WIDTH, buttons1, 6);
+        InventoryPane inv2 = new InventoryPane(ALTERNATE_STYLE_INFO_2, 64, 2*LINE_WIDTH, buttons2, 6);
+        InventoryPane inv3 = new InventoryPane(DEFAULT_STYLE_INFO, 64, 2*LINE_WIDTH, buttons3, 6);
+
+        Button[] selectors = new Button[]{
+                new TrapezoidalButton(ALTERNATE_STYLE_INFO_1, 0, 0, 124, 24, 24, UIAligner.Direction.UP),
+                new TrapezoidalButton(ALTERNATE_STYLE_INFO_2, 50, 0, 124, 24, 24, UIAligner.Direction.UP),
+                new TrapezoidalButton(DEFAULT_STYLE_INFO, 100, 0, 124, 24, 24, UIAligner.Direction.UP)
         };
-        pane.addComponent(b);
+
+        Inventory inv = new Inventory(new InventoryPane[]{inv1, inv2, inv3}, selectors, UIAligner.Direction.UP);
+
+        gui.addComponent(inv, MIDDLE, MIDDLE);
+
+        //Button b = new TrapezoidalButton(DEFAULT_STYLE_INFO, 30, 130, 100, 32, 24, UIAligner.Direction.DOWN);
+
+        //gui.addComponent(b);
+
         
-        SmoothSlider s = SmoothSlider.getDefaultSlider(310, 130, 150, false);
-        pane.addComponent(s);
-        pane.addComponent(text);
-        gui.addComponent(pane);
-        gui.addComponent(d);
+        //SmoothSlider s = SmoothSlider.getDefaultSlider(310, 130, 150, false);
+        //pane.addComponent(b);
+        //pane.addComponent(text);
+        //gui.addComponent(pane);
+        //gui.addComponent(d);
     }
     
 }

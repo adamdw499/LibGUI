@@ -1,4 +1,4 @@
-package com.mason.libgui.components;
+package com.mason.libgui.components.misc;
 
 import com.mason.libgui.utils.StyleInfo;
 
@@ -6,7 +6,7 @@ import java.awt.*;
 
 import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
 
-public class Tooltip extends UIText{
+public class Tooltip extends UIText {
 
 
     private StyleInfo style;

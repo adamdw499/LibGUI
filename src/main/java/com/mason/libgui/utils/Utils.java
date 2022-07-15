@@ -1,7 +1,7 @@
 
 package com.mason.libgui.utils;
 
-import java.awt.Color;
+import java.awt.*;
 import java.io.FileNotFoundException;
 
 /**
@@ -49,10 +49,7 @@ public final class Utils{
     
     
     public static void main(String[] args){
-        Color[] cols = StyleInfo.analogousColors(new Color(174, 25, 78));
-        System.out.println(cols[0]);
-        System.out.println(cols[1]);
-        System.out.println(cols[2]);
+        RenderUtils.drawBorder(null, null, new Polygon(new int[]{50, 100, 100, 50}, new int[]{170, 50, 170, 50}, 4));
     }
     
 }

@@ -1,8 +1,8 @@
 
 package com.mason.libgui.core;
 
-import com.mason.libgui.components.ClickBlocker;
-import com.mason.libgui.components.Draggable;
+import com.mason.libgui.components.misc.ClickBlocker;
+import com.mason.libgui.components.draggables.Draggable;
 import com.mason.libgui.utils.UIAligner;
 import com.mason.libgui.utils.UIAligner.Position;
 import java.awt.Graphics2D;

@@ -1,6 +1,8 @@
 
 package com.mason.libgui.core;
 
+import com.mason.libgui.utils.UIAligner.Position;
+
 /**
  *
  * @author Adam Whittaker
@@ -30,6 +32,10 @@ public class GUIManager{
     
     public void addComponent(UIComponent comp){
         compManager.addComponent(comp);
+    }
+
+    public void addComponent(UIComponent comp, Position horizontal, Position vertical){
+        compManager.addComponent(comp, horizontal, vertical);
     }
     
     public void removeComponent(UIComponent comp){

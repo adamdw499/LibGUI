@@ -1,8 +1,12 @@
 
 package com.mason.libgui.utils;
 
-import com.mason.libgui.components.SliderHandle;
-import java.awt.Graphics2D;
+import com.mason.libgui.components.sliders.SliderHandle;
+
+import java.awt.*;
+import java.awt.geom.PathIterator;
+import java.nio.file.Path;
+import java.util.Arrays;
 
 /**
  *
@@ -29,7 +33,25 @@ public class RenderUtils{
         g.fillRect(x+w-2*LINE_WIDTH/3, y+LINE_WIDTH/3, LINE_WIDTH/3, h-2*LINE_WIDTH/3);
         g.fillRect(x+LINE_WIDTH/3, y+h-2*LINE_WIDTH/3, w-2*LINE_WIDTH/3, LINE_WIDTH/3);
     }
-    
+
+    public static void drawBorder(Graphics2D g, StyleInfo s, Polygon poly){
+        PathIterator path = poly.getPathIterator(null);
+        double[] firstPoint = new double[2], prevPoint = new double[2], point = new double[2];
+        path.currentSegment(firstPoint);
+        path.currentSegment(prevPoint);
+        path.next();
+        while(path.currentSegment(point) == PathIterator.SEG_LINETO){
+
+            drawBorderLine(g, s, (int)prevPoint[0], (int)prevPoint[1],
+                    (int)point[0], (int)point[1]);
+
+            path.currentSegment(prevPoint);
+            path.next();
+        }
+        drawBorderLine(g, s, (int)point[0], (int)point[1],
+                (int)firstPoint[0], (int)firstPoint[1]);
+    }
+
     public static void drawButton(Graphics2D g, StyleInfo c, int x, int y, int w, int h, boolean highlighted, 
             boolean clicked){
         if(clicked) g.setColor(c.FORE_HIGHLIGHT.brighter());
@@ -48,6 +70,31 @@ public class RenderUtils{
             g.fillRect(x+LINE_WIDTH/3, y+LINE_WIDTH/3, len-2*LINE_WIDTH/3, LINE_WIDTH/3);
         }else{
             g.fillRect(x+LINE_WIDTH/3, y+LINE_WIDTH/3, LINE_WIDTH/3, len-2*LINE_WIDTH/3);
+        }
+    }
+
+    public static void drawBorderLine(Graphics2D g, StyleInfo info, int x1, int y1, int x2, int y2){
+        g.setColor(info.BORDER);
+        if(y1>=y2){
+            int temp = y1;
+            y1 = y2;
+            y2 = temp;
+            temp = x1;
+            x1 = x2;
+            x2 = temp;
+        }
+        if(x1<x2){
+            g.fillPolygon(new int[]{x1-LINE_WIDTH/2, x1-LINE_WIDTH/2, x1+LINE_WIDTH/2, x2+LINE_WIDTH/2, x2+LINE_WIDTH/2, x2-LINE_WIDTH/2},
+                    new int[]{y1+LINE_WIDTH/2, y1-LINE_WIDTH/2, y1-LINE_WIDTH/2, y2-LINE_WIDTH/2, y2+LINE_WIDTH/2, y2+LINE_WIDTH/2}, 6);
+            g.setColor(info.BORDER.brighter());
+            g.fillPolygon(new int[]{x1-LINE_WIDTH/6, x1-LINE_WIDTH/6, x1+LINE_WIDTH/6, x2+LINE_WIDTH/6, x2+LINE_WIDTH/6, x2-LINE_WIDTH/6},
+                    new int[]{y1+LINE_WIDTH/6, y1-LINE_WIDTH/6, y1-LINE_WIDTH/6, y2-LINE_WIDTH/6, y2+LINE_WIDTH/6, y2+LINE_WIDTH/6}, 6);
+        }else{
+            g.fillPolygon(new int[]{x1+LINE_WIDTH/2, x1+LINE_WIDTH/2, x1-LINE_WIDTH/2, x2-LINE_WIDTH/2, x2-LINE_WIDTH/2, x2+LINE_WIDTH/2},
+                    new int[]{y1+LINE_WIDTH/2, y1-LINE_WIDTH/2, y1-LINE_WIDTH/2, y2-LINE_WIDTH/2, y2+LINE_WIDTH/2, y2+LINE_WIDTH/2}, 6);
+            g.setColor(info.BORDER.brighter());
+            g.fillPolygon(new int[]{x1+LINE_WIDTH/6, x1+LINE_WIDTH/6, x1-LINE_WIDTH/6, x2-LINE_WIDTH/6, x2-LINE_WIDTH/6, x2+LINE_WIDTH/6},
+                    new int[]{y1+LINE_WIDTH/6, y1-LINE_WIDTH/6, y1-LINE_WIDTH/6, y2-LINE_WIDTH/6, y2+LINE_WIDTH/6, y2+LINE_WIDTH/6}, 6);
         }
     }
     

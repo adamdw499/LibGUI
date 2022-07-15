@@ -1,5 +1,6 @@
-package com.mason.libgui.components;
+package com.mason.libgui.components.panes;
 
+import com.mason.libgui.components.panes.Pane;
 import com.mason.libgui.core.UIComponent;
 import com.mason.libgui.utils.UIAligner.Direction;
 
@@ -7,7 +8,7 @@ import java.awt.event.MouseEvent;
 
 import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
 
-public class SlidingPane extends Pane{
+public class SlidingPane extends Pane {
 
 
     private MotionManager motion;

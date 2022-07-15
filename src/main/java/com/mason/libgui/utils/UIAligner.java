@@ -73,13 +73,13 @@ public class UIAligner{
         
         switch(vert){
             case START -> {
-                comp.setX(topMargin);
+                comp.setY(topMargin);
             }
             case MIDDLE -> {
-                comp.setX(height/2 - comp.getHeight()/2 + getVerticalMod());
+                comp.setY(height/2 - comp.getHeight()/2 + getVerticalMod());
             }
             case END -> {
-                comp.setX(height - bottomMargin - comp.getHeight());
+                comp.setY(height - bottomMargin - comp.getHeight());
             }
         }
     }
