@@ -44,7 +44,7 @@ public class PerformanceLog extends PrintStream implements MouseListener, KeyLis
      */
     public PerformanceLog() throws FileNotFoundException{
         super(new File("log/performance.txt"));
-        dualPrint("Free memory: " + (Runtime.getRuntime().freeMemory()/1048576) + "MB");
+        dualPrintln("Free memory: " + (Runtime.getRuntime().freeMemory()/1048576) + "MB");
     }
     
     
@@ -85,7 +85,7 @@ public class PerformanceLog extends PrintStream implements MouseListener, KeyLis
      * Prints the given message to the console and the internal log.
      * @param message
      */
-    public final void dualPrint(String message){
+    public final void dualPrintln(String message){
         System.out.println(message);
         println(message);
     }

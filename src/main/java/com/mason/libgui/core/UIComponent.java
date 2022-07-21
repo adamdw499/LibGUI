@@ -110,7 +110,12 @@ public abstract class UIComponent extends MouseAdapter{
     public void setHeight(int h){
         height = h;
     }
-    
+
+    public boolean intersects(UIComponent comp){
+        return comp.x + comp.width >= x && comp.x <= x + width &&
+                comp.y + comp.height >= y && comp.y <= y + height;
+    }
+
     
     public void render(Graphics2D g){}
     

@@ -1,7 +1,14 @@
 
 package com.mason.libgui.utils;
 
+import com.mason.libgui.core.GUIManager;
+import com.mason.libgui.utils.exceptionHandlers.FailExceptionHandler;
+import com.mason.libgui.utils.exceptionHandlers.FreezeExceptionHandler;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
 
 /**
@@ -15,6 +22,7 @@ public final class Utils{
     
     
     public static PerformanceLog PERFORMANCE_LOG;
+    public static ExceptionHandler DEFAULT_EXCEPTION_HANDLER = new FreezeExceptionHandler();
     static{
         try{
             PERFORMANCE_LOG = new PerformanceLog();
@@ -46,7 +54,22 @@ public final class Utils{
         }
         System.out.println(ary[ary.length-1] + "]");
     }
-    
+
+
+    public static BufferedImage loadImage(String filepath, ExceptionHandler ex){
+        BufferedImage img = null;
+        try{
+            img = ImageIO.read(new File(filepath));
+        }catch(Exception e){
+            ex.handleException(e);
+        }
+        return img;
+    }
+
+    public static BufferedImage loadImage(String filepath, GUIManager gui){
+        return loadImage(filepath, gui.getExceptionHandler());
+    }
+
     
     public static void main(String[] args){
         RenderUtils.drawBorder(null, null, new Polygon(new int[]{50, 100, 100, 50}, new int[]{170, 50, 170, 50}, 4));

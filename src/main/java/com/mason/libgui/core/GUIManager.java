@@ -1,7 +1,9 @@
 
 package com.mason.libgui.core;
 
+import com.mason.libgui.utils.ExceptionHandler;
 import com.mason.libgui.utils.UIAligner.Position;
+import com.mason.libgui.utils.Utils;
 
 /**
  *
@@ -12,11 +14,19 @@ public class GUIManager{
     
     private final Window window;
     private final UIComponentManager compManager;
+    private final Pacemaker pacemaker;
+    private ExceptionHandler exceptionHandler;
     
     
     public GUIManager(int width, int height, String title){
+        this(width, height, title, Utils.DEFAULT_EXCEPTION_HANDLER);
+    }
+
+    public GUIManager(int width, int height, String title, ExceptionHandler ex){
         compManager = new UIComponentManager(width, height);
         window = new Window(width, height, title, compManager);
+        pacemaker = new Pacemaker(this);
+        setExceptionHandler(ex);
     }
     
     
@@ -27,6 +37,36 @@ public class GUIManager{
     
     protected void render(){
         window.render(compManager);
+    }
+
+    public void start(){
+        new Thread(pacemaker).start();
+    }
+
+    public void terminate(){
+        pacemaker.terminate();
+    }
+
+    public void passException(Exception e){
+        exceptionHandler.handleException(e);
+    }
+
+
+    public Window getWindow(){
+        return window;
+    }
+
+    public Pacemaker getPacemaker(){
+        return pacemaker;
+    }
+
+    public final void setExceptionHandler(ExceptionHandler ex){
+        exceptionHandler = ex;
+        ex.setParameters(this);
+    }
+
+    public ExceptionHandler getExceptionHandler(){
+        return exceptionHandler;
     }
     
     

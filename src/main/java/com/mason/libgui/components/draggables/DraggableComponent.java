@@ -9,12 +9,12 @@ import java.awt.event.MouseEvent;
  *
  * @author Adam Whittaker
  */
-public abstract class DraggableComponent extends UIComponent implements Draggable {
+public abstract class DraggableComponent extends UIComponent implements Draggable{
     
     
-    private int diffX;
-    private int diffY;
-    private boolean dragging;
+    protected int diffX;
+    protected int diffY;
+    protected boolean dragging;
     
     
     public DraggableComponent(int x, int y, int w, int h){

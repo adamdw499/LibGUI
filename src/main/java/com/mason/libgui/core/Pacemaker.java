@@ -11,7 +11,7 @@ import static java.lang.System.currentTimeMillis;
 public class Pacemaker implements Runnable{
 
     
-    private final double TICK_RATE = 1/60D;
+    private double tickRate = 1/60D;
     private boolean running = true;
     private int fps = 0, tps = 0;
     private final GUIManager gui;
@@ -31,9 +31,9 @@ public class Pacemaker implements Runnable{
             currentTime = currentTimeMillis();
             tickDelta += (currentTime - lastTick) / 1000D;
             
-            while(tickDelta > TICK_RATE){
+            while(tickDelta > tickRate){
                 tick();
-                tickDelta -= TICK_RATE;
+                tickDelta -= tickRate;
             }
             lastTick = currentTimeMillis();
             
@@ -61,6 +61,11 @@ public class Pacemaker implements Runnable{
     
     public void terminate(){
         running = false;
+        PERFORMANCE_LOG.dualPrintln("Program Terminated");
+    }
+
+    public void setTickRate(double _tickRate){
+        tickRate = _tickRate;
     }
     
 }

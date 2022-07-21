@@ -24,8 +24,8 @@ public class Pane extends UIComponentManager{
     
     @Override
     public void render(Graphics2D g){
-        renderBorder(g);
         renderComponents(g);
+        renderBorder(g);
     }
 
     protected void renderComponents(Graphics2D g){
