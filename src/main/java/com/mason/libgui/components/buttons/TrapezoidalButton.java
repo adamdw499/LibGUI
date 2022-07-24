@@ -5,8 +5,9 @@ import com.mason.libgui.utils.StyleInfo;
 import com.mason.libgui.utils.UIAligner.Direction;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
-public class TrapezoidalButton extends Button{
+public abstract class TrapezoidalButton extends Button{
 
 
     private int tapering;
@@ -85,6 +86,14 @@ public class TrapezoidalButton extends Button{
     public void setHeight(int h){
         super.setHeight(h);
         trapezium = getPolygon();
+    }
+
+
+    public static TrapezoidalButton getBlankButton(StyleInfo info, int x, int y, int w, int h, int tapering, Direction direction){
+        return new TrapezoidalButton(info, x, y, w, h, tapering, direction){
+            @Override
+            public void mouseClicked(MouseEvent e){}
+        };
     }
 
 

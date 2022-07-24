@@ -4,6 +4,7 @@ package com.mason.libgui.core;
 import com.mason.libgui.components.misc.ClickBlocker;
 import com.mason.libgui.components.draggables.Draggable;
 import com.mason.libgui.components.panes.Pane;
+import com.mason.libgui.utils.StyleInfo;
 import com.mason.libgui.utils.UIAligner;
 import com.mason.libgui.utils.UIAligner.Position;
 import java.awt.Graphics2D;
@@ -20,21 +21,24 @@ import java.util.List;
 public class UIComponentManager extends UIComponent{
     
     
-    protected final List<UIComponent> components = new LinkedList<>();
+    private final List<UIComponent> components = new LinkedList<>();
     private final List<UIComponent> spawning = new LinkedList<>(), despawning = new LinkedList<>();
     protected int mouseX, mouseY;
+    protected StyleInfo info;
     private Draggable dragging;
     private Pane dragPane;
     
     private UIAligner aligner = UIAligner.DEFAULT_ALIGNER;
     
     
-    public UIComponentManager(int w, int h){
+    public UIComponentManager(StyleInfo info, int w, int h){
         super(0, 0, w, h);
+        this.info = info;
     }
     
-    protected UIComponentManager(int x, int y, int w, int h){
+    protected UIComponentManager(StyleInfo info, int x, int y, int w, int h){
         super(x, y, w, h);
+        this.info = info;
     }
     
     
@@ -63,6 +67,14 @@ public class UIComponentManager extends UIComponent{
 
     protected void setDragging(Draggable d){
         dragging = d;
+    }
+
+    protected UIComponent getComponent(int n){
+        return components.get(n);
+    }
+
+    public int componentNum(){
+        return components.size();
     }
 
     public void addComponent(UIComponent comp){

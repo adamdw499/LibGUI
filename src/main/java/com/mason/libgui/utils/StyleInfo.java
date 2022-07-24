@@ -18,15 +18,17 @@ public class StyleInfo{
     public Color TEXT;
     
     public Font FONT;
+    public Font TITLE_FONT;
     
     
-    public StyleInfo(Color fg, Color bg, Color b, Color fhl, Color t, Font f){
+    public StyleInfo(Color fg, Color bg, Color b, Color fhl, Color t, Font f, Font tf){
         FOREGROUND = fg;
         FONT = f;
         BACKGROUND = bg;
         BORDER = b;
         FORE_HIGHLIGHT = fhl;
         TEXT = t;
+        TITLE_FONT = tf;
     }
     
     
@@ -60,20 +62,21 @@ public class StyleInfo{
         Color grey = new Color(120, 120, 120);
         Color[] foreHighlight = analogousColors(new Color(105,62,62));
         Color[] fontCol = analogousColors(new Color(240,170,40));
-        Font font = new Font("Dubstep Dungeons", Font.PLAIN, 24);
+        Font font = new Font("Dubstep Dungeons", Font.PLAIN, 18);
+        Font title = new Font("Joystix Monospace", Font.PLAIN, 24);
         int alpha = 75;
 
-        ALTERNATE_STYLE_INFO_1 = new StyleInfo(fore[0], darkGrey, grey, foreHighlight[0], fontCol[0], font);
-        DEFAULT_STYLE_INFO = new StyleInfo(fore[1], darkGrey, grey, foreHighlight[1], fontCol[1], font);
-        ALTERNATE_STYLE_INFO_2 = new StyleInfo(fore[2], darkGrey, grey, foreHighlight[2], fontCol[2], font);
+        ALTERNATE_STYLE_INFO_1 = new StyleInfo(fore[0], darkGrey, grey, foreHighlight[0], fontCol[0], font, title);
+        DEFAULT_STYLE_INFO = new StyleInfo(fore[1], darkGrey, grey, foreHighlight[1], fontCol[1], font, title);
+        ALTERNATE_STYLE_INFO_2 = new StyleInfo(fore[2], darkGrey, grey, foreHighlight[2], fontCol[2], font, title);
         ALPHA_STYLE_INFO = new StyleInfo(
                 addAlpha(fore[0], alpha),
                 addAlpha(darkGrey, alpha),
                 addAlpha(grey, alpha),
                 addAlpha(foreHighlight[0], alpha),
                 addAlpha(fontCol[0], alpha),
-                //new Font("Joystix Monospace", Font.PLAIN, 12)
-                new Font("Dubstep Dungeons", Font.PLAIN, 12)
+                new Font("Dubstep Dungeons", Font.PLAIN, 12),
+                new Font("Joystix Monospace", Font.PLAIN, 16)
         );
     }
     

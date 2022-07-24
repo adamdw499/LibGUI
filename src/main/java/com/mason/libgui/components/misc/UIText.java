@@ -7,8 +7,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.util.LinkedList;
 
 import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
+import static com.mason.libgui.utils.StyleInfo.DEFAULT_STYLE_INFO;
+import static com.mason.libgui.utils.Utils.stringDimension;
 
 /**
  *
@@ -17,7 +20,7 @@ import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
 public class UIText extends UIComponent{
     
     
-    private String text;
+    private String[] text;
     private Font font;
     private Color color;
     private boolean dropShadow;
@@ -26,36 +29,80 @@ public class UIText extends UIComponent{
     private int padding;
     
     
-    public UIText(String t, Font f, Color c, boolean dropS, int dropShadowOff, Color shadowC, int x, int y, int pad){
-        super(x, y, 0, 0);
+    public UIText(String t, Font f, Color c, boolean dropS, int dropShadowOff, Color shadowC, int x, int y, int w, int pad){
+        super(x, y, w, -1);
         padding = pad;
-        text = t;
         font = f;
+        text = splitLines(t);
         color = c;
         dropShadow = dropS;
         dropShadowOffset = dropShadowOff;
         shadowColor = shadowC;
+        setHeight(text.length*(stringDimension("QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm", font)[1] + padding) + padding);
     }
     
-    public UIText(String t, StyleInfo col, int x, int y){
-        this(t, col.FONT, col.TEXT, true, 2, col.TEXT.darker().darker(), x, y, LINE_WIDTH);
+    public UIText(String t, StyleInfo info, int x, int y, int w, boolean title){
+        this(t, title ? info.TITLE_FONT : info.FONT, info.TEXT, true, 2,
+                info.TEXT.darker().darker(), x, y, w, LINE_WIDTH);
     }
     
+    public UIText(String t, int x, int y, int w){
+        this(t, DEFAULT_STYLE_INFO, x, y, w, false);
+    }
+
     public UIText(String t, int x, int y){
-        this(t, StyleInfo.DEFAULT_STYLE_INFO, x, y);
+        this(t, x, y, stringDimension(t, DEFAULT_STYLE_INFO.FONT)[0] + 2*LINE_WIDTH);
     }
     
-    
+
+    private String[] splitLines(String text){
+        String[] words = text.split(" ");
+        if(words.length == 1) return words;
+
+        LinkedList<String> lines = new LinkedList<>();
+        int x;
+        String currentLine = words[0];
+        for(int n=1; n < words.length; n++){
+            if(stringDimension(currentLine + " " + words[n], font)[0] > width - 2*padding){
+                lines.add(currentLine);
+                currentLine = words[n];
+            }else{
+                currentLine += " " + words[n];
+            }
+        }
+        lines.add(currentLine);
+        return lines.toArray(new String[lines.size()]);
+    }
+
+
+    @Override
+    public String toString(){
+        return "[UIText] " + getText();
+    }
+
+    public String getText(){
+        String ret = "";
+        for(String line : text){
+            ret += line + " ";
+        }
+        return ret.substring(0, ret.length()-1);
+    }
+
     @Override
     public void render(Graphics2D g){
-        FontMetrics f = g.getFontMetrics();
         g.setFont(font);
-        if(dropShadow){
-            g.setColor(shadowColor);
-            g.drawString(text, x + dropShadowOffset + padding, y + dropShadowOffset + height - f.getDescent() - padding);
+        FontMetrics f = g.getFontMetrics();
+        int h = y + f.getHeight();
+        for(String line : text){
+            if(dropShadow){
+                g.setColor(shadowColor);
+                g.drawString(line, x + dropShadowOffset + padding, dropShadowOffset + h);
+            }
+            g.setColor(color);
+            g.drawString(line, x + padding, h);
+
+            h += stringDimension(line, font)[1];
         }
-        g.setColor(color);
-        g.drawString(text, x + padding, y + height - f.getDescent() - padding);
     }
     
     

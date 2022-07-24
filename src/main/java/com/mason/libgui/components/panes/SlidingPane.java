@@ -2,6 +2,7 @@ package com.mason.libgui.components.panes;
 
 import com.mason.libgui.components.panes.Pane;
 import com.mason.libgui.core.UIComponent;
+import com.mason.libgui.utils.StyleInfo;
 import com.mason.libgui.utils.UIAligner.Direction;
 
 import java.awt.event.MouseEvent;
@@ -14,8 +15,8 @@ public class SlidingPane extends Pane {
     private MotionManager motion;
 
 
-    public SlidingPane(int x, int y, int w, int h, Direction direction, double speed, int super_width, int super_height){
-        super(x, y, w, h);
+    public SlidingPane(StyleInfo info, int x, int y, int w, int h, Direction direction, double speed, int super_width, int super_height){
+        super(info, x, y, w, h);
         int retractedCoord;
         switch(direction) {
             case LEFT -> retractedCoord = LINE_WIDTH - width;
@@ -27,8 +28,8 @@ public class SlidingPane extends Pane {
         motion = new MotionManager(direction, speed, x, y, w, h, retractedCoord);
     }
 
-    public SlidingPane(int x, int y, int w, int h, Direction direction, double speed){
-        this(x, y, w, h, direction, speed, w, h);
+    public SlidingPane(StyleInfo info, int x, int y, int w, int h, Direction direction, double speed){
+        this(info, x, y, w, h, direction, speed, w, h);
     }
 
 

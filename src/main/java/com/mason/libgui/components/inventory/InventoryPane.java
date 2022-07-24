@@ -5,7 +5,6 @@ import com.mason.libgui.components.panes.Pane;
 import com.mason.libgui.utils.StyleInfo;
 
 import java.awt.*;
-import java.util.Arrays;
 
 import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
 
@@ -13,17 +12,15 @@ public class InventoryPane extends Pane{
 
 
     private int rows, columns, padding, rightSpace, leftSpace, topSpace, bottomSpace, buttonWidth, buttonHeight;
-    private StyleInfo style;
 
 
     public InventoryPane(StyleInfo info, int x, int y, int leftSpace, int rightSpace,
                          int topSpace, int botSpace, int padding, Button[] buttons, int but_width, int but_height,
                          int rows, int cols){
-        super(x, y,
+        super(info, x, y,
                 cols * (but_width + padding) - padding + leftSpace + rightSpace,
                 rows * (but_height + padding) - padding + topSpace + botSpace);
-        components.addAll(Arrays.asList(buttons));
-        this.style = info;
+        for(Button button : buttons) addComponent(button);
         this.rows = rows;
         this.columns = cols;
         this.padding = padding;
@@ -63,7 +60,7 @@ public class InventoryPane extends Pane{
 
     @Override
     public void render(Graphics2D g){
-        g.setColor(style.BACKGROUND);
+        g.setColor(info.BACKGROUND);
         g.fillRect(x, y, width, height);
         super.render(g);
     }

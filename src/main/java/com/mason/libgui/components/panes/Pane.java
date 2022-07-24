@@ -17,8 +17,8 @@ import static com.mason.libgui.utils.RenderUtils.drawBorder;
 public class Pane extends UIComponentManager{
     
     
-    public Pane(int x, int y, int w, int h){
-        super(x, y, w, h);
+    public Pane(StyleInfo info, int x, int y, int w, int h){
+        super(info, x, y, w, h);
     }
     
     
@@ -34,9 +34,9 @@ public class Pane extends UIComponentManager{
         super.render(g);
         g.setTransform(saved);
     }
-    
+
     protected void renderBorder(Graphics2D g){
-        drawBorder(g, StyleInfo.DEFAULT_STYLE_INFO, x, y, width, height);
+        drawBorder(g, info, x, y, width, height);
     }
     
     protected MouseEvent relativeMouseCoords(MouseEvent e){

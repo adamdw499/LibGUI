@@ -3,6 +3,8 @@ package com.mason.libgui.components.panes;
 
 import com.mason.libgui.components.draggables.Draggable;
 import com.mason.libgui.core.UIComponent;
+import com.mason.libgui.utils.StyleInfo;
+
 import java.awt.event.MouseEvent;
 
 import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
@@ -11,15 +13,15 @@ import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
  *
  * @author Adam Whittaker
  */
-public class DraggablePane extends Pane implements Draggable {
+public class DraggablePane extends Pane implements Draggable{
     
     
     private final DragRegion dragRegion;
     private int diffX, diffY;
     
     
-    public DraggablePane(int x, int y, int w, int h){
-        super(x, y, w, h);
+    public DraggablePane(StyleInfo info, int x, int y, int w, int h){
+        super(info, x, y, w, h);
         dragRegion = new DragRegion(w, h);
         addComponent(dragRegion);
     }
@@ -42,7 +44,20 @@ public class DraggablePane extends Pane implements Draggable {
         if(dragRegion.isDragging()) dragRegion.stopDragging();
         else super.mouseReleased(e);
     }
-    
+
+
+    @Override
+    public void setWidth(int w){
+        super.setWidth(w);
+        dragRegion.setWidth(w);
+    }
+
+    @Override
+    public void setHeight(int h){
+        super.setHeight(h);
+        dragRegion.setHeight(h);
+    }
+
     
     protected class DragRegion extends UIComponent{
         

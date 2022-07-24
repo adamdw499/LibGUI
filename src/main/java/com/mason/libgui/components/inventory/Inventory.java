@@ -5,6 +5,7 @@ import com.mason.libgui.components.buttons.ButtonDecorator;
 import com.mason.libgui.components.panes.Pane;
 import com.mason.libgui.core.UIComponent;
 import com.mason.libgui.utils.RenderUtils;
+import com.mason.libgui.utils.StyleInfo;
 import com.mason.libgui.utils.UIAligner.Direction;
 
 import java.awt.*;
@@ -21,12 +22,12 @@ public class Inventory extends UIComponent{
     private Direction direction;
 
 
-    public Inventory(Pane[] panes, Button[] buttons, Direction direction){
+    public Inventory(StyleInfo info, Pane[] panes, Button[] buttons, Direction direction){
         super(panes[0].getX(), panes[0].getY(), panes[0].getWidth(), panes[0].getHeight());
         this.panes = panes;
         switch(direction) {
-            case DOWN, UP -> selector = new PaneSelector(0, 0, width, buttons[0].getHeight(), buttons, direction);
-            case LEFT, RIGHT -> selector = new PaneSelector(0, 0, buttons[0].getWidth(), height, buttons, direction);
+            case DOWN, UP -> selector = new PaneSelector(info, 0, 0, width, buttons[0].getHeight(), buttons, direction);
+            case LEFT, RIGHT -> selector = new PaneSelector(info, 0, 0, buttons[0].getWidth(), height, buttons, direction);
         }
         this.direction = direction;
         setX(x);
@@ -121,8 +122,8 @@ public class Inventory extends UIComponent{
     private class PaneSelector extends Pane{
 
 
-        public PaneSelector(int x, int y, int w, int h, Button[] buttons, Direction direction){
-            super(x, y, w, h);
+        public PaneSelector(StyleInfo info, int x, int y, int w, int h, Button[] buttons, Direction direction){
+            super(info, x, y, w, h);
             for(int n=0; n<buttons.length; n++){
                 setButtonCoords(w, h, buttons[n], direction, n, buttons.length);
                 addComponent(new PaneSelectorButton(buttons[n], n));

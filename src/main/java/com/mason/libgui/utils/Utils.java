@@ -7,6 +7,8 @@ import com.mason.libgui.utils.exceptionHandlers.FreezeExceptionHandler;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -68,6 +70,16 @@ public final class Utils{
 
     public static BufferedImage loadImage(String filepath, GUIManager gui){
         return loadImage(filepath, gui.getExceptionHandler());
+    }
+
+
+    public static int[] stringDimension(String text, Font font){
+        AffineTransform transform = new AffineTransform();
+        FontRenderContext frc = new FontRenderContext(transform, true, true);
+        return new int[]{
+                (int)(font.getStringBounds(text, frc).getWidth()),
+                (int)(font.getStringBounds(text, frc).getHeight())
+        };
     }
 
     

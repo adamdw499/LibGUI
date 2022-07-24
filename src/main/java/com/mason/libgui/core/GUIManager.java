@@ -2,6 +2,7 @@
 package com.mason.libgui.core;
 
 import com.mason.libgui.utils.ExceptionHandler;
+import com.mason.libgui.utils.StyleInfo;
 import com.mason.libgui.utils.UIAligner.Position;
 import com.mason.libgui.utils.Utils;
 
@@ -23,7 +24,7 @@ public class GUIManager{
     }
 
     public GUIManager(int width, int height, String title, ExceptionHandler ex){
-        compManager = new UIComponentManager(width, height);
+        compManager = new UIComponentManager(StyleInfo.DEFAULT_STYLE_INFO, width, height);
         window = new Window(width, height, title, compManager);
         pacemaker = new Pacemaker(this);
         setExceptionHandler(ex);

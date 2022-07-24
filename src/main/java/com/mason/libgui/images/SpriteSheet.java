@@ -5,6 +5,7 @@ import com.mason.libgui.utils.Utils;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import java.util.Map;
 
 public class SpriteSheet extends HashMap<String, BufferedImage>{
 
@@ -22,5 +23,9 @@ public class SpriteSheet extends HashMap<String, BufferedImage>{
     }
 
     public SpriteSheet(){}
+
+    public SpriteSheet(Map<String, BufferedImage> map){
+        super(map);
+    }
 
 }

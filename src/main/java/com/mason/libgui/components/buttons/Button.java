@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
  *
  * @author Adam Whittaker
  */
-public class Button extends UIComponent{
+public abstract class Button extends UIComponent{
     
     
     private boolean hovering = false;
@@ -21,6 +21,10 @@ public class Button extends UIComponent{
     public Button(StyleInfo info, int x, int y, int w, int h){
         super(x, y, w, h);
         style = info;
+    }
+
+    public Button(int x, int y, int w, int h){
+        this(StyleInfo.DEFAULT_STYLE_INFO, x, y, w, h);
     }
     
     
@@ -42,6 +46,29 @@ public class Button extends UIComponent{
     @Override
     public void mouseMoved(MouseEvent e){
         if(!hovering) hovering = true;
+    }
+
+
+    @Override
+    public abstract void mouseClicked(MouseEvent e);
+
+
+    public static Button getBlankButton(StyleInfo info, int x, int y, int w, int h){
+        return new Button(info, x, y, w, h){
+
+            @Override
+            public void mouseClicked(MouseEvent e){}
+
+        };
+    }
+
+    public static Button getBlankButton(int x, int y, int w, int h){
+        return new Button(x, y, w, h){
+
+            @Override
+            public void mouseClicked(MouseEvent e){}
+
+        };
     }
     
 }

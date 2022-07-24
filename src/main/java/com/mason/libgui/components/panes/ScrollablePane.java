@@ -19,14 +19,14 @@ public class ScrollablePane extends Pane{
     private static final double MAX_ZOOM = 8.0, MIN_ZOOM = 0.512;
 
 
-    public ScrollablePane(int x, int y, int w, int h, int vx, int vy, int vw, int vh, boolean panLocked){
-        super(x, y, w, h);
+    public ScrollablePane(StyleInfo info, int x, int y, int w, int h, int vx, int vy, int vw, int vh, boolean panLocked){
+        super(info, x, y, w, h);
         setCamera(vx, vy, vw, vh, panLocked);
         addComponent(camera);
     }
 
-    public ScrollablePane(int x, int y, int w, int h, int vw, int vh, boolean panLocked){
-        this(x, y, w, h, (vw-w)/2, (vh-h)/2, vw, vh, panLocked);
+    public ScrollablePane(StyleInfo info, int x, int y, int w, int h, int vw, int vh, boolean panLocked){
+        this(info, x, y, w, h, (vw-w)/2, (vh-h)/2, vw, vh, panLocked);
     }
 
 
@@ -54,8 +54,8 @@ public class ScrollablePane extends Pane{
         AffineTransform saved = g.getTransform();
         g.transform(AffineTransform.getTranslateInstance(x + camera.getX(), y + camera.getY()));
         g.transform(AffineTransform.getScaleInstance(camera.zoom, camera.zoom));
-        for(int n = components.size()-1; n>=0; n--){
-            /*if(inView(components.get(n))) */components.get(n).render(g);
+        for(int n = componentNum()-1; n>=0; n--){
+            /*if(inView(components.get(n))) */getComponent(n).render(g);
         }
         g.setTransform(saved);
         g.setClip(null);
