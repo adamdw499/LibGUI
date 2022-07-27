@@ -13,13 +13,13 @@ import java.awt.event.MouseEvent;
 import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
 import static com.mason.libgui.utils.Utils.stringDimension;
 
-public class UITextInput extends UIComponent{
+public class UITextInput extends UIComponent implements ClickOffable{
 
 
     private String text = "";
     private boolean isClicked = false;
-    private KeyHandler keys;
-    private TypeIndicator typeLine;
+    private final KeyHandler keys;
+    private final TypeIndicator typeLine;
     private final StyleInfo info;
     private final int maxLength;
 
@@ -113,6 +113,11 @@ public class UITextInput extends UIComponent{
     @Override
     public String toString(){
         return "[UITextInput] " + getText();
+    }
+
+    @Override
+    public void clickOff(){
+        isClicked = false;
     }
 
 

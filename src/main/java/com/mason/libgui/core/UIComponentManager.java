@@ -3,6 +3,7 @@ package com.mason.libgui.core;
 
 import com.mason.libgui.components.misc.ClickBlocker;
 import com.mason.libgui.components.draggables.Draggable;
+import com.mason.libgui.components.misc.ClickOffable;
 import com.mason.libgui.components.panes.Pane;
 import com.mason.libgui.utils.StyleInfo;
 import com.mason.libgui.utils.UIAligner;
@@ -117,6 +118,9 @@ public class UIComponentManager extends UIComponent{
                 break;
             }
         }
+        components.stream().filter(s -> s instanceof ClickOffable && !s.withinBounds(e.getX(), e.getY())).forEach(s -> {
+            ((ClickOffable) s).clickOff();
+        });
     }
 
     @Override
