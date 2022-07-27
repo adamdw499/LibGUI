@@ -1,7 +1,10 @@
 
 package com.mason.libgui.core;
 
+import com.mason.libgui.components.misc.KeyHandler;
+
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 
@@ -17,14 +20,14 @@ public class Window extends JFrame{
     private final int NUM_BUFFERS = 4;
     
     
-    public Window(int width, int height, String title, UIComponentManager cm, Image toolbarImg, Cursor cursor){
-        this(width, height, title, cm);
+    public Window(int width, int height, String title, UIComponentManager cm, KeyHandler keys, Image toolbarImg, Cursor cursor){
+        this(width, height, title, cm, keys);
 
         setIconImage(toolbarImg);
         setCursor(cursor);
     }
     
-    public Window(int width, int height, String title, UIComponentManager cm){
+    public Window(int width, int height, String title, UIComponentManager cm, KeyHandler keys){
         super(title);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,6 +43,7 @@ public class Window extends JFrame{
         canvas.addMouseListener(cm);
         canvas.addMouseMotionListener(cm);
         canvas.addMouseWheelListener(cm);
+        this.addKeyListener(keys);
         
         setVisible(true);
     }

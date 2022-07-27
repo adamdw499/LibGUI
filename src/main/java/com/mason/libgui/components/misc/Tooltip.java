@@ -13,12 +13,12 @@ public class Tooltip extends UIText{
 
 
     public Tooltip(String t, StyleInfo st, boolean dropS, int dropShadowOff, Color shadowC, int x, int y, int w, int padding){
-        super(t, st.FONT, st.TEXT, dropS, dropShadowOff, shadowC, x, y, w, padding);
+        super(t, st.FONT, st.TEXT_COLOR, dropS, dropShadowOff, shadowC, x, y, w, padding);
         style = st;
     }
 
     public Tooltip(String t, StyleInfo style, int x, int y, int w) {
-        this(t, style, false, 2, style.TEXT.darker().darker(), x, y, w, LINE_WIDTH);
+        this(t, style, false, 2, style.TEXT_COLOR.darker().darker(), x, y, w, LINE_WIDTH);
     }
 
     public Tooltip(String t, int x, int y, int w){

@@ -15,7 +15,7 @@ public class StyleInfo{
     public Color BACKGROUND;
     public Color BORDER;
     public Color FORE_HIGHLIGHT;
-    public Color TEXT;
+    public Color TEXT_COLOR;
     
     public Font FONT;
     public Font TITLE_FONT;
@@ -27,7 +27,7 @@ public class StyleInfo{
         BACKGROUND = bg;
         BORDER = b;
         FORE_HIGHLIGHT = fhl;
-        TEXT = t;
+        TEXT_COLOR = t;
         TITLE_FONT = tf;
     }
     
@@ -54,6 +54,7 @@ public class StyleInfo{
     public static final StyleInfo ALTERNATE_STYLE_INFO_1;
     public static final StyleInfo ALTERNATE_STYLE_INFO_2;
     public static final StyleInfo ALPHA_STYLE_INFO;
+    public static final StyleInfo TEXT_INPUT_INFO;
 
 
     static{
@@ -69,6 +70,7 @@ public class StyleInfo{
         ALTERNATE_STYLE_INFO_1 = new StyleInfo(fore[0], darkGrey, grey, foreHighlight[0], fontCol[0], font, title);
         DEFAULT_STYLE_INFO = new StyleInfo(fore[1], darkGrey, grey, foreHighlight[1], fontCol[1], font, title);
         ALTERNATE_STYLE_INFO_2 = new StyleInfo(fore[2], darkGrey, grey, foreHighlight[2], fontCol[2], font, title);
+        TEXT_INPUT_INFO = new StyleInfo(fore[1], new Color(40, 40, 60), grey, foreHighlight[1], new Color(220, 220, 180), font, title);
         ALPHA_STYLE_INFO = new StyleInfo(
                 addAlpha(fore[0], alpha),
                 addAlpha(darkGrey, alpha),

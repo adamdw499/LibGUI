@@ -8,6 +8,7 @@ import com.mason.libgui.components.dialogues.Dialogue;
 import com.mason.libgui.components.inventory.Inventory;
 import com.mason.libgui.components.inventory.InventoryPane;
 import com.mason.libgui.components.misc.UIText;
+import com.mason.libgui.components.misc.UITextInput;
 import com.mason.libgui.components.panes.DraggablePane;
 import com.mason.libgui.components.panes.Pane;
 import com.mason.libgui.components.panes.ScrollablePane;
@@ -67,13 +68,15 @@ public class Launcher{
         //p.addComponent(new Gradient(0, 0, 1000, 1000));
         //gui.addComponent(p);
 
-        Button[] buttons = new Button[]{
+        /*Button[] buttons = new Button[]{
                 getBlankButton("uwu", -1, -1),
                 getBlankButton("Button", -1, -1),
                 getBlankButton("Slightly longer button", -1, -1)
-        };
+        };*/
 
-        gui.addComponent(new Dialogue(50, 50, 270, "Title", "The quick brown fox jumped over the lazy dog.", buttons));
+        gui.addComponent(new UITextInput(100, 100, 200, 50, gui));
+
+        //gui.addComponent(new Dialogue(50, 50, 270, "Title", "The quick brown fox jumped over the lazy dog.", buttons));
         //gui.addComponent(new DraggablePane(ALTERNATE_STYLE_INFO_1, 250, 200, 200, 200));
 
         //gui.addComponent(getBlankButton("Slightly longer button", 50, 250));
