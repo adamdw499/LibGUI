@@ -15,6 +15,8 @@ import com.mason.libgui.components.panes.SlidingPane;
 import com.mason.libgui.test.testComponents.Gradient;
 import com.mason.libgui.utils.StyleInfo;
 import com.mason.libgui.utils.UIAligner;
+import com.mason.libgui.utils.boxPacking.HorizontalBoxPacker;
+import com.mason.libgui.utils.boxPacking.VerticalBoxPacker;
 
 import static com.mason.libgui.components.buttons.TextButton.getBlankButton;
 import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
@@ -72,7 +74,7 @@ public class Launcher{
         };
 
         gui.addComponent(new Dialogue(50, 50, 270, "Title", "The quick brown fox jumped over the lazy dog.", buttons));
-        gui.addComponent(new DraggablePane(ALTERNATE_STYLE_INFO_1, 250, 200, 200, 200));
+        //gui.addComponent(new DraggablePane(ALTERNATE_STYLE_INFO_1, 250, 200, 200, 200));
 
         //gui.addComponent(getBlankButton("Slightly longer button", 50, 250));
 
