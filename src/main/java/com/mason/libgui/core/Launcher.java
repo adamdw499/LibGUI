@@ -1,28 +1,10 @@
 
 package com.mason.libgui.core;
 
-import com.mason.libgui.components.buttons.Button;
-import com.mason.libgui.components.buttons.TextButton;
-import com.mason.libgui.components.buttons.TrapezoidalButton;
-import com.mason.libgui.components.dialogues.Dialogue;
-import com.mason.libgui.components.inventory.Inventory;
-import com.mason.libgui.components.inventory.InventoryPane;
-import com.mason.libgui.components.misc.UIText;
-import com.mason.libgui.components.misc.UITextInput;
-import com.mason.libgui.components.panes.DraggablePane;
 import com.mason.libgui.components.panes.Pane;
 import com.mason.libgui.components.panes.ScrollablePane;
-import com.mason.libgui.components.panes.SlidingPane;
-import com.mason.libgui.test.testComponents.Gradient;
+import com.mason.libgui.test.testComponents.GridTest;
 import com.mason.libgui.utils.StyleInfo;
-import com.mason.libgui.utils.UIAligner;
-import com.mason.libgui.utils.boxPacking.HorizontalBoxPacker;
-import com.mason.libgui.utils.boxPacking.VerticalBoxPacker;
-
-import static com.mason.libgui.components.buttons.TextButton.getBlankButton;
-import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
-import static com.mason.libgui.utils.StyleInfo.*;
-import static com.mason.libgui.utils.UIAligner.Position.*;
 
 /**
  *
@@ -64,7 +46,8 @@ public class Launcher{
 
         gui.addComponent(inv, MIDDLE, MIDDLE);*/
 
-        //Pane p = new ScrollablePane(46, 56, 800, 800, 450, 450, false);
+        Pane p = new ScrollablePane(StyleInfo.DEFAULT_STYLE_INFO, 0, 0, 1024, 1024, 400, 400, true);
+        p.addComponent(new GridTest(0, 0, 1024, 1024));
         //p.addComponent(new Gradient(0, 0, 1000, 1000));
         //gui.addComponent(p);
 
@@ -74,7 +57,7 @@ public class Launcher{
                 getBlankButton("Slightly longer button", -1, -1)
         };*/
 
-        gui.addComponent(new UITextInput(100, 100, 200, 50, gui));
+        gui.addComponent(p);
 
         //gui.addComponent(new Dialogue(50, 50, 270, "Title", "The quick brown fox jumped over the lazy dog.", buttons));
         //gui.addComponent(new DraggablePane(ALTERNATE_STYLE_INFO_1, 250, 200, 200, 200));

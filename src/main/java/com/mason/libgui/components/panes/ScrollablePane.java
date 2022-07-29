@@ -52,8 +52,8 @@ public class ScrollablePane extends Pane{
     protected void renderComponents(Graphics2D g){
         g.setClip(x, y, camera.getWidth(), camera.getHeight());
         AffineTransform saved = g.getTransform();
-        g.transform(AffineTransform.getTranslateInstance(x + camera.getX(), y + camera.getY()));
         g.transform(AffineTransform.getScaleInstance(camera.zoom, camera.zoom));
+        g.transform(AffineTransform.getTranslateInstance(x/camera.zoom+camera.getX(), y/camera.zoom+camera.getY()));
         for(int n = componentNum()-1; n>=0; n--){
             /*if(inView(components.get(n))) */getComponent(n).render(g);
         }
@@ -82,7 +82,7 @@ public class ScrollablePane extends Pane{
 
 
         private final boolean panLocked;
-        private double zoom = 1.0;
+        private double zoom = 1;
 
 
         public Camera(int x, int y, int w, int h, boolean panLocked){
@@ -97,32 +97,27 @@ public class ScrollablePane extends Pane{
                 x = (int)(e.getX()/zoom) - diffX;
                 y = (int)(e.getY()/zoom) - diffY;
             }
-            if(panLocked){
-                if(x < width-ScrollablePane.this.width) x = width-ScrollablePane.this.width;
-                else if(x > 0) x = 0;
-                if(y > 0) y = 0;
-                else if(y < height-ScrollablePane.this.height) y = height-ScrollablePane.this.height;
-            }
+            if(panLocked) snapToBounds();
         }
 
 
         @Override
         public void mouseWheelMoved(MouseWheelEvent me){
-            me = relativeMouseCoords(me);
-            double x = -camera.getX()-me.getX()/zoom, y = -camera.getY()-me.getY()/zoom;
-            if (me.getWheelRotation() < 0) {
-                if (zoom < MAX_ZOOM) {
+            double xDiff = camera.getX() - me.getX()/zoom, yDiff = camera.getY() - me.getY()/zoom;
+            if(me.getWheelRotation() < 0){
+                if(zoom < MAX_ZOOM){
                     zoom *= 1.25;
-                    camera.setX((int)(x-me.getX()/zoom));
-                    camera.setY((int)(y-me.getY()/zoom));
+                    camera.setX((me.getX()/zoom) + xDiff);
+                    camera.setY((me.getY()/zoom) + yDiff);
                 }
             }else{
                 if (zoom > MIN_ZOOM) {
                     zoom /= 1.25;
-                    camera.setX((int)(x-me.getX()/zoom));
-                    camera.setY((int)(y-me.getY()/zoom));
+                    camera.setX((me.getX()/zoom) + xDiff);
+                    camera.setY((me.getY()/zoom) + yDiff);
                 }
             }
+            if(panLocked) snapToBounds();
         }
 
         @Override
@@ -130,6 +125,22 @@ public class ScrollablePane extends Pane{
             diffX = (int)(e.getX()/zoom) - x;
             diffY = (int)(e.getY()/zoom) - y;
             dragging = true;
+        }
+
+
+        private void setX(double x){
+            setX((int)x);
+        }
+
+        private void setY(double y){
+            setY((int)y);
+        }
+
+        private void snapToBounds(){
+            if(x < width/camera.zoom-ScrollablePane.this.width) x = (int)((width/camera.zoom-ScrollablePane.this.width));
+            else if(x > 0) x = 0;
+            if(y > 0) y = 0;
+            else if(y < (height/camera.zoom-ScrollablePane.this.height)) y = (int)((height/camera.zoom-ScrollablePane.this.height));
         }
 
     }
