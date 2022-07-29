@@ -1,8 +1,5 @@
 package com.mason.libgui.components.buttons;
 
-import com.mason.libgui.components.inventory.Inventory;
-import com.mason.libgui.utils.StyleInfo;
-
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -14,7 +11,7 @@ public abstract class ButtonDecorator extends Button{
 
 
     public ButtonDecorator(Button b){
-        super(b.style, b.getX(), b.getY(), b.getWidth(), b.getHeight());
+        super(b.info, b.getX(), b.getY(), b.getWidth(), b.getHeight());
         button = b;
     }
 

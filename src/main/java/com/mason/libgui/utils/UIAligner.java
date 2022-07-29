@@ -3,8 +3,6 @@ package com.mason.libgui.utils;
 
 import com.mason.libgui.core.UIComponent;
 
-import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
-
 /**
  *
  * @author Adam Whittaker
@@ -85,6 +83,6 @@ public class UIAligner{
     }
     
     
-    public static UIAligner DEFAULT_ALIGNER = new UIAligner(2*LINE_WIDTH, 2*LINE_WIDTH, 2*LINE_WIDTH, 2*LINE_WIDTH);
+    public static UIAligner DEFAULT_ALIGNER = new UIAligner(2*6, 2*6, 2*6, 2*6);
     
 }

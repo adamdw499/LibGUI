@@ -1,12 +1,11 @@
 package com.mason.libgui.utils.boxPacking;
 
 import com.mason.libgui.core.UIComponent;
+import com.mason.libgui.utils.StyleInfo;
 import com.mason.libgui.utils.exceptions.OversizedComponentException;
 
 import java.util.Arrays;
 import java.util.LinkedList;
-
-import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
 
 public class CenterAlignedBoxPacker implements BoxPacker{
 
@@ -18,8 +17,8 @@ public class CenterAlignedBoxPacker implements BoxPacker{
         this.padding = padding;
     }
 
-    public CenterAlignedBoxPacker(){
-        this(LINE_WIDTH);
+    public CenterAlignedBoxPacker(StyleInfo info){
+        this(info.RENDER_UTILS.getLineWidth());
     }
 
 

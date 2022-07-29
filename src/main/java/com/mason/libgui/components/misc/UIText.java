@@ -9,7 +9,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
 
-import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
 import static com.mason.libgui.utils.StyleInfo.DEFAULT_STYLE_INFO;
 import static com.mason.libgui.utils.Utils.stringDimension;
 
@@ -43,7 +42,7 @@ public class UIText extends UIComponent{
     
     public UIText(String t, StyleInfo info, int x, int y, int w, boolean title){
         this(t, title ? info.TITLE_FONT : info.FONT, info.TEXT_COLOR, true, 2,
-                info.TEXT_COLOR.darker().darker(), x, y, w, LINE_WIDTH);
+                info.TEXT_COLOR.darker().darker(), x, y, w, info.RENDER_UTILS.getLineWidth());
     }
     
     public UIText(String t, int x, int y, int w){
@@ -51,7 +50,8 @@ public class UIText extends UIComponent{
     }
 
     public UIText(String t, int x, int y){
-        this(t, x, y, stringDimension(t, DEFAULT_STYLE_INFO.FONT)[0] + 2*LINE_WIDTH);
+        this(t, x, y, stringDimension(t, DEFAULT_STYLE_INFO.FONT)[0]
+                + 2*DEFAULT_STYLE_INFO.RENDER_UTILS.getLineWidth());
     }
     
 

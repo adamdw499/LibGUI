@@ -15,12 +15,12 @@ public abstract class Button extends UIComponent{
     
     
     private boolean hovering = false;
-    public StyleInfo style;
+    public StyleInfo info;
     
     
     public Button(StyleInfo info, int x, int y, int w, int h){
         super(x, y, w, h);
-        style = info;
+        this.info = info;
     }
 
     public Button(int x, int y, int w, int h){
@@ -30,7 +30,7 @@ public abstract class Button extends UIComponent{
     
     @Override
     public void render(Graphics2D g){
-        RenderUtils.drawButton(g, style, x, y, width, height, hovering, false);
+        info.RENDER_UTILS.drawButton(g, info, x, y, width, height, hovering, false);
     }
     
     @Override

@@ -1,9 +1,8 @@
 package com.mason.libgui.utils.boxPacking;
 
 import com.mason.libgui.core.UIComponent;
+import com.mason.libgui.utils.StyleInfo;
 import com.mason.libgui.utils.exceptions.OversizedComponentException;
-
-import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
 
 public class LeftAlignedBoxPacker implements BoxPacker{
 
@@ -15,8 +14,8 @@ public class LeftAlignedBoxPacker implements BoxPacker{
         this.padding = padding;
     }
 
-    public LeftAlignedBoxPacker(){
-        this(LINE_WIDTH);
+    public LeftAlignedBoxPacker(StyleInfo info){
+        this(info.RENDER_UTILS.getLineWidth());
     }
 
 

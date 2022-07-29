@@ -6,8 +6,6 @@ import com.mason.libgui.utils.StyleInfo;
 
 import java.awt.*;
 
-import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
-
 public class InventoryPane extends Pane{
 
 
@@ -40,7 +38,7 @@ public class InventoryPane extends Pane{
     }
 
     public InventoryPane(StyleInfo info, int topSpace, int botSpace, Button[] buttons, int cols){
-        this(info, 2*LINE_WIDTH, topSpace, botSpace, LINE_WIDTH, buttons, cols);
+        this(info, 2*info.RENDER_UTILS.getLineWidth(), topSpace, botSpace, info.RENDER_UTILS.getLineWidth(), buttons, cols);
     }
 
 

@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
  *
  * @author Adam Whittaker
  */
-public class Toggle extends Button {
+public class Toggle extends Button{
     
     
     private boolean clicked = false;
@@ -23,7 +23,7 @@ public class Toggle extends Button {
     
     @Override
     public void render(Graphics2D g){
-        RenderUtils.drawButton(g, style, x, y, width, height, isHovering(), clicked);
+        info.RENDER_UTILS.drawButton(g, info, x, y, width, height, isHovering(), clicked);
     }
     
     

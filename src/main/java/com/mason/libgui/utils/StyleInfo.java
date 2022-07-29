@@ -19,9 +19,10 @@ public class StyleInfo{
     
     public Font FONT;
     public Font TITLE_FONT;
+    public RenderUtils RENDER_UTILS;
     
     
-    public StyleInfo(Color fg, Color bg, Color b, Color fhl, Color t, Font f, Font tf){
+    public StyleInfo(Color fg, Color bg, Color b, Color fhl, Color t, Font f, Font tf, RenderUtils utils){
         FOREGROUND = fg;
         FONT = f;
         BACKGROUND = bg;
@@ -29,6 +30,7 @@ public class StyleInfo{
         FORE_HIGHLIGHT = fhl;
         TEXT_COLOR = t;
         TITLE_FONT = tf;
+        RENDER_UTILS = utils;
     }
     
     
@@ -66,11 +68,12 @@ public class StyleInfo{
         Font font = new Font("Dubstep Dungeons", Font.PLAIN, 18);
         Font title = new Font("Joystix Monospace", Font.PLAIN, 24);
         int alpha = 75;
+        DefaultRenderUtils utils = new DefaultRenderUtils(6);
 
-        ALTERNATE_STYLE_INFO_1 = new StyleInfo(fore[0], darkGrey, grey, foreHighlight[0], fontCol[0], font, title);
-        DEFAULT_STYLE_INFO = new StyleInfo(fore[1], darkGrey, grey, foreHighlight[1], fontCol[1], font, title);
-        ALTERNATE_STYLE_INFO_2 = new StyleInfo(fore[2], darkGrey, grey, foreHighlight[2], fontCol[2], font, title);
-        TEXT_INPUT_INFO = new StyleInfo(fore[1], new Color(40, 40, 60), grey, foreHighlight[1], new Color(220, 220, 180), font, title);
+        ALTERNATE_STYLE_INFO_1 = new StyleInfo(fore[0], darkGrey, grey, foreHighlight[0], fontCol[0], font, title, utils);
+        DEFAULT_STYLE_INFO = new StyleInfo(fore[1], darkGrey, grey, foreHighlight[1], fontCol[1], font, title, utils);
+        ALTERNATE_STYLE_INFO_2 = new StyleInfo(fore[2], darkGrey, grey, foreHighlight[2], fontCol[2], font, title, utils);
+        TEXT_INPUT_INFO = new StyleInfo(fore[1], new Color(40, 40, 60), grey, foreHighlight[1], new Color(220, 220, 180), font, title, utils);
         ALPHA_STYLE_INFO = new StyleInfo(
                 addAlpha(fore[0], alpha),
                 addAlpha(darkGrey, alpha),
@@ -78,7 +81,8 @@ public class StyleInfo{
                 addAlpha(foreHighlight[0], alpha),
                 addAlpha(fontCol[0], alpha),
                 new Font("Dubstep Dungeons", Font.PLAIN, 12),
-                new Font("Joystix Monospace", Font.PLAIN, 16)
+                new Font("Joystix Monospace", Font.PLAIN, 16),
+                utils
         );
     }
     

@@ -11,7 +11,7 @@ import com.mason.libgui.utils.boxPacking.CenterAlignedBoxPacker;
 import java.awt.*;
 import java.util.Arrays;
 
-import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
+import static com.mason.libgui.utils.StyleInfo.DEFAULT_STYLE_INFO;
 import static java.lang.Math.max;
 
 public class Dialogue extends DraggablePane{
@@ -52,7 +52,7 @@ public class Dialogue extends DraggablePane{
     }
 
     public Dialogue(int x, int y, int w, String title, String text, Button[] buttons){
-        this(x, y, w, StyleInfo.DEFAULT_STYLE_INFO, title, text, buttons, LINE_WIDTH);
+        this(x, y, w, DEFAULT_STYLE_INFO, title, text, buttons, DEFAULT_STYLE_INFO.RENDER_UTILS.getLineWidth());
     }
 
 

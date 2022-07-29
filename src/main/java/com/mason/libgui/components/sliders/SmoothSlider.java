@@ -4,6 +4,8 @@ package com.mason.libgui.components.sliders;
 import com.mason.libgui.components.draggables.Draggable;
 import com.mason.libgui.core.UIComponent;
 import com.mason.libgui.utils.RenderUtils;
+import com.mason.libgui.utils.StyleInfo;
+
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -15,7 +17,7 @@ import static com.mason.libgui.utils.StyleInfo.DEFAULT_STYLE_INFO;
  *
  * @author Adam Whittaker
  */
-public abstract class SmoothSlider extends UIComponent implements Draggable {
+public abstract class SmoothSlider extends UIComponent implements Draggable{
     
     
     protected final boolean horizontal;
@@ -82,12 +84,12 @@ public abstract class SmoothSlider extends UIComponent implements Draggable {
     public abstract void render(Graphics2D g);
     
     
-    public static SmoothSlider getDefaultSlider(int x, int y, int len, boolean horizontal){
+    public static SmoothSlider getDefaultSlider(StyleInfo info, int x, int y, int len, boolean horizontal){
         SliderHandle handle = new SliderHandle(0, 0, horizontal?40:20, horizontal?20:40){
             
             @Override
             public void render(Graphics2D g){
-                RenderUtils.drawSliderHandle(g, DEFAULT_STYLE_INFO, x, y, width, height, horizontal);
+                info.RENDER_UTILS.drawSliderHandle(g, DEFAULT_STYLE_INFO, x, y, width, height, horizontal);
             }
             
         };
@@ -96,7 +98,7 @@ public abstract class SmoothSlider extends UIComponent implements Draggable {
         
             @Override
             public void render(Graphics2D g){
-                RenderUtils.drawSlider(g, DEFAULT_STYLE_INFO, x, y, width, height, this.horizontal, handle);
+                info.RENDER_UTILS.drawSlider(g, DEFAULT_STYLE_INFO, x, y, width, height, this.horizontal, handle);
             }
             
         };

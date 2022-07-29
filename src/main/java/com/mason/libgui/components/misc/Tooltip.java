@@ -4,21 +4,19 @@ import com.mason.libgui.utils.StyleInfo;
 
 import java.awt.*;
 
-import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
-
 public class Tooltip extends UIText{
 
 
-    private StyleInfo style;
+    private StyleInfo info;
 
 
     public Tooltip(String t, StyleInfo st, boolean dropS, int dropShadowOff, Color shadowC, int x, int y, int w, int padding){
         super(t, st.FONT, st.TEXT_COLOR, dropS, dropShadowOff, shadowC, x, y, w, padding);
-        style = st;
+        info = st;
     }
 
-    public Tooltip(String t, StyleInfo style, int x, int y, int w) {
-        this(t, style, false, 2, style.TEXT_COLOR.darker().darker(), x, y, w, LINE_WIDTH);
+    public Tooltip(String t, StyleInfo info, int x, int y, int w) {
+        this(t, info, false, 2, info.TEXT_COLOR.darker().darker(), x, y, w, info.RENDER_UTILS.getLineWidth());
     }
 
     public Tooltip(String t, int x, int y, int w){
@@ -28,7 +26,7 @@ public class Tooltip extends UIText{
 
     @Override
     public void render(Graphics2D g){
-        g.setColor(style.FORE_HIGHLIGHT);
+        g.setColor(info.FORE_HIGHLIGHT);
         g.fillRect(x, y, width, height);
         super.render(g);
     }

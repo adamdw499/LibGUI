@@ -7,9 +7,7 @@ import com.mason.libgui.utils.UIAligner.Direction;
 
 import java.awt.event.MouseEvent;
 
-import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
-
-public class SlidingPane extends Pane {
+public class SlidingPane extends Pane{
 
 
     private MotionManager motion;
@@ -19,10 +17,10 @@ public class SlidingPane extends Pane {
         super(info, x, y, w, h);
         int retractedCoord;
         switch(direction) {
-            case LEFT -> retractedCoord = LINE_WIDTH - width;
-            case RIGHT -> retractedCoord = super_width - LINE_WIDTH;
-            case UP -> retractedCoord = LINE_WIDTH - height;
-            case DOWN -> retractedCoord = super_height - LINE_WIDTH;
+            case LEFT -> retractedCoord = info.RENDER_UTILS.getLineWidth() - width;
+            case RIGHT -> retractedCoord = super_width - info.RENDER_UTILS.getLineWidth();
+            case UP -> retractedCoord = info.RENDER_UTILS.getLineWidth() - height;
+            case DOWN -> retractedCoord = super_height - info.RENDER_UTILS.getLineWidth();
             default -> throw new IllegalStateException("Unexpected value: " + direction);
         }
         motion = new MotionManager(direction, speed, x, y, w, h, retractedCoord);
@@ -50,7 +48,7 @@ public class SlidingPane extends Pane {
     }
 
 
-    protected static class MotionManager extends UIComponent{
+    protected class MotionManager extends UIComponent{
 
 
         Direction direction;
@@ -170,10 +168,10 @@ public class SlidingPane extends Pane {
 
         @Override
         public boolean withinBounds(int mx, int my){
-            return (x<mx && mx<x+LINE_WIDTH && y<my && my<y+height) ||
-                    (mx<width+x && x+width-LINE_WIDTH<mx && y<my && my<y+height) ||
-                    (x<mx && mx<x+width && y<my && my<y+LINE_WIDTH) ||
-                    (x<mx && mx<x+width && y+height-LINE_WIDTH<my && my<y+height);
+            return (x<mx && mx<x+info.RENDER_UTILS.getLineWidth() && y<my && my<y+height) ||
+                    (mx<width+x && x+width-info.RENDER_UTILS.getLineWidth()<mx && y<my && my<y+height) ||
+                    (x<mx && mx<x+width && y<my && my<y+info.RENDER_UTILS.getLineWidth()) ||
+                    (x<mx && mx<x+width && y+height-info.RENDER_UTILS.getLineWidth()<my && my<y+height);
         }
 
         @Override

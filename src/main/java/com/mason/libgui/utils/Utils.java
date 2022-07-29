@@ -88,7 +88,7 @@ public final class Utils{
 
     
     public static void main(String[] args){
-        RenderUtils.drawBorder(null, null, new Polygon(new int[]{50, 100, 100, 50}, new int[]{170, 50, 170, 50}, 4));
+
     }
     
 }

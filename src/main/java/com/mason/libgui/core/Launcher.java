@@ -46,7 +46,7 @@ public class Launcher{
 
         gui.addComponent(inv, MIDDLE, MIDDLE);*/
 
-        Pane p = new ScrollablePane(StyleInfo.DEFAULT_STYLE_INFO, 0, 0, 1024, 1024, 400, 400, true);
+        Pane p = new ScrollablePane(StyleInfo.DEFAULT_STYLE_INFO, 64, 64, 1024, 1024, 400, 400, false);
         p.addComponent(new GridTest(0, 0, 1024, 1024));
         //p.addComponent(new Gradient(0, 0, 1000, 1000));
         //gui.addComponent(p);

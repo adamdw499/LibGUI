@@ -1,11 +1,10 @@
 package com.mason.libgui.utils.boxPacking;
 
 import com.mason.libgui.core.UIComponent;
+import com.mason.libgui.utils.StyleInfo;
 import com.mason.libgui.utils.exceptions.OversizedComponentException;
 
 import java.util.Arrays;
-
-import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
 
 public class HorizontalBoxPacker implements BoxPacker{
 
@@ -17,8 +16,8 @@ public class HorizontalBoxPacker implements BoxPacker{
         this.padding = padding;
     }
 
-    public HorizontalBoxPacker(){
-        this(LINE_WIDTH);
+    public HorizontalBoxPacker(StyleInfo info){
+        this(info.RENDER_UTILS.getLineWidth());
     }
 
 

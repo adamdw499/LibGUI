@@ -5,36 +5,29 @@ import com.mason.libgui.components.sliders.SliderHandle;
 
 import java.awt.*;
 import java.awt.geom.PathIterator;
-import java.nio.file.Path;
-import java.util.Arrays;
 
 /**
  *
  * @author Adam Whittaker
  */
-public class RenderUtils{
+public abstract class RenderUtils{
     
     
-    private RenderUtils(){}
-    
-    
-    public static final int LINE_WIDTH = 6;
-    
-    
-    public static void drawBorder(Graphics2D g, StyleInfo c, int x, int y, int w, int h){
-        g.setColor(c.BORDER);
-        g.fillRect(x, y, LINE_WIDTH, h);
-        g.fillRect(x, y, w, LINE_WIDTH);
-        g.fillRect(x+w-LINE_WIDTH, y, LINE_WIDTH, h);
-        g.fillRect(x, y+h-LINE_WIDTH, w, LINE_WIDTH);
-        g.setColor(c.BORDER.brighter());
-        g.fillRect(x+LINE_WIDTH/3, y+LINE_WIDTH/3, LINE_WIDTH/3, h-2*LINE_WIDTH/3);
-        g.fillRect(x+LINE_WIDTH/3, y+LINE_WIDTH/3, w-2*LINE_WIDTH/3, LINE_WIDTH/3);
-        g.fillRect(x+w-2*LINE_WIDTH/3, y+LINE_WIDTH/3, LINE_WIDTH/3, h-2*LINE_WIDTH/3);
-        g.fillRect(x+LINE_WIDTH/3, y+h-2*LINE_WIDTH/3, w-2*LINE_WIDTH/3, LINE_WIDTH/3);
+    protected int lineWidth;
+
+
+    public RenderUtils(int lineWidth){
+        this.lineWidth = lineWidth;
     }
 
-    public static void drawBorder(Graphics2D g, StyleInfo s, Polygon poly){
+
+    public int getLineWidth(){
+        return lineWidth;
+    }
+
+    public abstract void drawBorder(Graphics2D g, StyleInfo c, int x, int y, int w, int h);
+
+    public void drawBorder(Graphics2D g, StyleInfo s, Polygon poly){
         PathIterator path = poly.getPathIterator(null);
         double[] firstPoint = new double[2], prevPoint = new double[2], point = new double[2];
         path.currentSegment(firstPoint);
@@ -52,28 +45,12 @@ public class RenderUtils{
                 (int)firstPoint[0], (int)firstPoint[1]);
     }
 
-    public static void drawButton(Graphics2D g, StyleInfo c, int x, int y, int w, int h, boolean highlighted, 
-            boolean clicked){
-        if(clicked) g.setColor(c.FORE_HIGHLIGHT.brighter());
-        else if(highlighted) g.setColor(c.FORE_HIGHLIGHT);
-        else g.setColor(c.FOREGROUND);
-        g.fillRect(x, y, w, h);
-        drawBorder(g, c, x, y, w, h);
-    }
+    public abstract void drawButton(Graphics2D g, StyleInfo c, int x, int y, int w, int h, boolean highlighted,
+            boolean clicked);
     
-    public static void drawBorderLine(Graphics2D g, StyleInfo c, int x, int y, int len, boolean horizontal){
-        g.setColor(c.BORDER);
-        if(horizontal) g.fillRect(x, y, len, LINE_WIDTH);
-        else g.fillRect(x, y, LINE_WIDTH, len);
-        g.setColor(c.BORDER.brighter());
-        if(horizontal){
-            g.fillRect(x+LINE_WIDTH/3, y+LINE_WIDTH/3, len-2*LINE_WIDTH/3, LINE_WIDTH/3);
-        }else{
-            g.fillRect(x+LINE_WIDTH/3, y+LINE_WIDTH/3, LINE_WIDTH/3, len-2*LINE_WIDTH/3);
-        }
-    }
+    public abstract void drawBorderLine(Graphics2D g, StyleInfo c, int x, int y, int len, boolean horizontal);
 
-    public static void drawBorderLine(Graphics2D g, StyleInfo info, int x1, int y1, int x2, int y2){
+    public void drawBorderLine(Graphics2D g, StyleInfo info, int x1, int y1, int x2, int y2){
         g.setColor(info.BORDER);
         if(y1>=y2){
             int temp = y1;
@@ -84,21 +61,21 @@ public class RenderUtils{
             x2 = temp;
         }
         if(x1<x2){
-            g.fillPolygon(new int[]{x1-LINE_WIDTH/2, x1-LINE_WIDTH/2, x1+LINE_WIDTH/2, x2+LINE_WIDTH/2, x2+LINE_WIDTH/2, x2-LINE_WIDTH/2},
-                    new int[]{y1+LINE_WIDTH/2, y1-LINE_WIDTH/2, y1-LINE_WIDTH/2, y2-LINE_WIDTH/2, y2+LINE_WIDTH/2, y2+LINE_WIDTH/2}, 6);
+            g.fillPolygon(new int[]{x1- lineWidth /2, x1- lineWidth /2, x1+ lineWidth /2, x2+ lineWidth /2, x2+ lineWidth /2, x2- lineWidth /2},
+                    new int[]{y1+ lineWidth /2, y1- lineWidth /2, y1- lineWidth /2, y2- lineWidth /2, y2+ lineWidth /2, y2+ lineWidth /2}, 6);
             g.setColor(info.BORDER.brighter());
-            g.fillPolygon(new int[]{x1-LINE_WIDTH/6, x1-LINE_WIDTH/6, x1+LINE_WIDTH/6, x2+LINE_WIDTH/6, x2+LINE_WIDTH/6, x2-LINE_WIDTH/6},
-                    new int[]{y1+LINE_WIDTH/6, y1-LINE_WIDTH/6, y1-LINE_WIDTH/6, y2-LINE_WIDTH/6, y2+LINE_WIDTH/6, y2+LINE_WIDTH/6}, 6);
+            g.fillPolygon(new int[]{x1- lineWidth /6, x1- lineWidth /6, x1+ lineWidth /6, x2+ lineWidth /6, x2+ lineWidth /6, x2- lineWidth /6},
+                    new int[]{y1+ lineWidth /6, y1- lineWidth /6, y1- lineWidth /6, y2- lineWidth /6, y2+ lineWidth /6, y2+ lineWidth /6}, 6);
         }else{
-            g.fillPolygon(new int[]{x1+LINE_WIDTH/2, x1+LINE_WIDTH/2, x1-LINE_WIDTH/2, x2-LINE_WIDTH/2, x2-LINE_WIDTH/2, x2+LINE_WIDTH/2},
-                    new int[]{y1+LINE_WIDTH/2, y1-LINE_WIDTH/2, y1-LINE_WIDTH/2, y2-LINE_WIDTH/2, y2+LINE_WIDTH/2, y2+LINE_WIDTH/2}, 6);
+            g.fillPolygon(new int[]{x1+ lineWidth /2, x1+ lineWidth /2, x1- lineWidth /2, x2- lineWidth /2, x2- lineWidth /2, x2+ lineWidth /2},
+                    new int[]{y1+ lineWidth /2, y1- lineWidth /2, y1- lineWidth /2, y2- lineWidth /2, y2+ lineWidth /2, y2+ lineWidth /2}, 6);
             g.setColor(info.BORDER.brighter());
-            g.fillPolygon(new int[]{x1+LINE_WIDTH/6, x1+LINE_WIDTH/6, x1-LINE_WIDTH/6, x2-LINE_WIDTH/6, x2-LINE_WIDTH/6, x2+LINE_WIDTH/6},
-                    new int[]{y1+LINE_WIDTH/6, y1-LINE_WIDTH/6, y1-LINE_WIDTH/6, y2-LINE_WIDTH/6, y2+LINE_WIDTH/6, y2+LINE_WIDTH/6}, 6);
+            g.fillPolygon(new int[]{x1+ lineWidth /6, x1+ lineWidth /6, x1- lineWidth /6, x2- lineWidth /6, x2- lineWidth /6, x2+ lineWidth /6},
+                    new int[]{y1+ lineWidth /6, y1- lineWidth /6, y1- lineWidth /6, y2- lineWidth /6, y2+ lineWidth /6, y2+ lineWidth /6}, 6);
         }
     }
     
-    public static void drawSliderHandle(Graphics2D g, StyleInfo c, int x, int y, int w, int h, boolean horizontal){
+    public void drawSliderHandle(Graphics2D g, StyleInfo c, int x, int y, int w, int h, boolean horizontal){
         g.setColor(c.BORDER.brighter());
         g.fillRect(x, y, w, h);
         g.setColor(c.BORDER);
@@ -123,16 +100,16 @@ public class RenderUtils{
         }
     }
     
-    public static void drawSlider(Graphics2D g, StyleInfo col, int x, int y, int width, int height, boolean horizontal, 
+    public void drawSlider(Graphics2D g, StyleInfo col, int x, int y, int width, int height, boolean horizontal,
             SliderHandle handle){
         if(horizontal){
             drawBorderLine(g, col, x, y, height, false);
-            drawBorderLine(g, col, x+width-LINE_WIDTH, y, height, false);
-            drawBorderLine(g, col, x, y+height/2-LINE_WIDTH/2, width, true);
+            drawBorderLine(g, col, x+width- lineWidth, y, height, false);
+            drawBorderLine(g, col, x, y+height/2- lineWidth /2, width, true);
         }else{
             drawBorderLine(g, col, x, y, width, true);
-            drawBorderLine(g, col, x, y+height-LINE_WIDTH, width, true);
-            drawBorderLine(g, col, x+width/2-LINE_WIDTH/2, y, height, false);
+            drawBorderLine(g, col, x, y+height- lineWidth, width, true);
+            drawBorderLine(g, col, x+width/2- lineWidth /2, y, height, false);
         }
         handle.render(g);
     }

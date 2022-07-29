@@ -8,8 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 
-import static com.mason.libgui.utils.RenderUtils.LINE_WIDTH;
-
 /**
  *
  * @author Adam Whittaker
@@ -21,13 +19,15 @@ public class LoadingCircle extends UIComponent{
     private final double angularVelocity;    
     private final AffineTransform rotation = new AffineTransform();
     private final Rectangle rectangle;
+    private final int lineWidth;
     
     
-    public LoadingCircle(Color col, int x, int y, int diam, double angularVel, int gapHeight){
+    public LoadingCircle(Color col, int x, int y, int diam, double angularVel, int gapHeight, int lineWidth){
         super(x, y, diam, diam);
         color = col;
         angularVelocity = angularVel;
         rectangle = new Rectangle(x, y+diam/2-gapHeight/2, diam, gapHeight);
+        this.lineWidth = lineWidth;
     }
 
     
@@ -37,7 +37,7 @@ public class LoadingCircle extends UIComponent{
         g.setColor(color);
         g.fillOval(x, y, width, height);
         g.setColor(Window.BACKGROUND_COLOR);
-        g.fillOval(x + LINE_WIDTH, y + LINE_WIDTH, width-2*LINE_WIDTH, height-2*LINE_WIDTH);
+        g.fillOval(x + lineWidth, y + lineWidth, width-2* lineWidth, height-2* lineWidth);
         g.fill(rotation.createTransformedShape(rectangle));
         //Paints the loading message.
         /*g.setFont(LOADING_TEXT_FONT);

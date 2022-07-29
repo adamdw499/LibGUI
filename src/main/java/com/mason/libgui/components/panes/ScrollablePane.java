@@ -9,8 +9,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.AffineTransform;
 
-import static com.mason.libgui.utils.RenderUtils.drawBorder;
-
 public class ScrollablePane extends Pane{
 
 
@@ -56,7 +54,7 @@ public class ScrollablePane extends Pane{
 
     @Override
     protected void renderBorder(Graphics2D g){
-        drawBorder(g, StyleInfo.DEFAULT_STYLE_INFO, x, y, camera.getWidth(), camera.getHeight());
+        info.RENDER_UTILS.drawBorder(g, StyleInfo.DEFAULT_STYLE_INFO, x, y, camera.getWidth(), camera.getHeight());
     }
 
     @Override
@@ -114,6 +112,7 @@ public class ScrollablePane extends Pane{
 
         @Override
         public void mouseWheelMoved(MouseWheelEvent me){
+            me = relativeMouseCoords(me);
             double xDiff = camera.getX() - me.getX()/zoom, yDiff = camera.getY() - me.getY()/zoom;
             if(me.getWheelRotation() < 0){
                 if(zoom < maxZoom){

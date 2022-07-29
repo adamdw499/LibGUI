@@ -52,10 +52,10 @@ public abstract class TrapezoidalButton extends Button{
 
     @Override
     public void render(Graphics2D g){
-        if(isHovering()) g.setColor(style.FORE_HIGHLIGHT);
-        else g.setColor(style.FOREGROUND);
+        if(isHovering()) g.setColor(info.FORE_HIGHLIGHT);
+        else g.setColor(info.FOREGROUND);
         g.fillPolygon(trapezium);
-        RenderUtils.drawBorder(g, style, trapezium);
+        info.RENDER_UTILS.drawBorder(g, info, trapezium);
     }
 
 

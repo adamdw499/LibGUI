@@ -8,8 +8,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.AffineTransform;
 
-import static com.mason.libgui.utils.RenderUtils.drawBorder;
-
 /**
  *
  * @author Adam Whittaker
@@ -36,7 +34,7 @@ public class Pane extends UIComponentManager{
     }
 
     protected void renderBorder(Graphics2D g){
-        drawBorder(g, info, x, y, width, height);
+        info.RENDER_UTILS.drawBorder(g, info, x, y, width, height);
     }
     
     protected MouseEvent relativeMouseCoords(MouseEvent e){
