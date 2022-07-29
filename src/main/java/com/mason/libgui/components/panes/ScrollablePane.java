@@ -1,6 +1,5 @@
 package com.mason.libgui.components.panes;
 
-import com.mason.libgui.components.draggables.Draggable;
 import com.mason.libgui.components.draggables.DraggableComponent;
 import com.mason.libgui.core.UIComponent;
 import com.mason.libgui.utils.StyleInfo;
@@ -16,7 +15,7 @@ public class ScrollablePane extends Pane{
 
 
     private Camera camera;
-    private static final double MAX_ZOOM = 8.0, MIN_ZOOM = 0.512;
+    private double maxZoom = 8.0, minZoom = 0.512, zoomFactor = 1.25;
 
 
     public ScrollablePane(StyleInfo info, int x, int y, int w, int h, int vx, int vy, int vw, int vh, boolean panLocked){
@@ -36,6 +35,18 @@ public class ScrollablePane extends Pane{
 
     protected boolean inView(UIComponent comp){
         return camera.intersects(comp);
+    }
+
+    public void setMinZoom(double minZoom){
+        this.minZoom = minZoom;
+    }
+
+    public void setMaxZoom(double maxZoom){
+        this.maxZoom = maxZoom;
+    }
+
+    public void setZoomFactor(double zoomFactor){
+        this.zoomFactor = zoomFactor;
     }
 
     public void setCamera(int vx, int vy, int vw, int vh, boolean panLocked){
@@ -105,14 +116,14 @@ public class ScrollablePane extends Pane{
         public void mouseWheelMoved(MouseWheelEvent me){
             double xDiff = camera.getX() - me.getX()/zoom, yDiff = camera.getY() - me.getY()/zoom;
             if(me.getWheelRotation() < 0){
-                if(zoom < MAX_ZOOM){
-                    zoom *= 1.25;
+                if(zoom < maxZoom){
+                    zoom *= zoomFactor;
                     camera.setX((me.getX()/zoom) + xDiff);
                     camera.setY((me.getY()/zoom) + yDiff);
                 }
             }else{
-                if (zoom > MIN_ZOOM) {
-                    zoom /= 1.25;
+                if(zoom > minZoom){
+                    zoom /= zoomFactor;
                     camera.setX((me.getX()/zoom) + xDiff);
                     camera.setY((me.getY()/zoom) + yDiff);
                 }
