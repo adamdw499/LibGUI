@@ -1,10 +1,14 @@
 
 package com.mason.libgui.core;
 
+import com.mason.libgui.components.draggables.DraggableComponent;
 import com.mason.libgui.components.panes.Pane;
 import com.mason.libgui.components.panes.ScrollablePane;
 import com.mason.libgui.test.testComponents.GridTest;
 import com.mason.libgui.utils.StyleInfo;
+
+import java.awt.*;
+import java.awt.event.MouseEvent;
 
 /**
  *
@@ -46,8 +50,20 @@ public class Launcher{
 
         gui.addComponent(inv, MIDDLE, MIDDLE);*/
 
-        Pane p = new ScrollablePane(StyleInfo.DEFAULT_STYLE_INFO, 64, 64, 1024, 1024, 400, 400, false);
-        p.addComponent(new GridTest(0, 0, 1024, 1024));
+        Pane scroll = new ScrollablePane(StyleInfo.DEFAULT_STYLE_INFO, 64, 64, 1024, 1024, 500, 500, false);
+        Pane p = new Pane(StyleInfo.DEFAULT_STYLE_INFO, 400, 400, 400, 400);
+        p.addComponent(new DraggableComponent(200, 200, 64, 64){
+
+            @Override
+            public void render(Graphics2D g){
+                g.setColor(Color.PINK);
+                g.fillRect(x, y, width, height);
+            }
+
+        });
+        scroll.addComponent(p);
+
+
         //p.addComponent(new Gradient(0, 0, 1000, 1000));
         //gui.addComponent(p);
 
@@ -57,7 +73,7 @@ public class Launcher{
                 getBlankButton("Slightly longer button", -1, -1)
         };*/
 
-        gui.addComponent(p);
+        gui.addComponent(scroll);
 
         //gui.addComponent(new Dialogue(50, 50, 270, "Title", "The quick brown fox jumped over the lazy dog.", buttons));
         //gui.addComponent(new DraggablePane(ALTERNATE_STYLE_INFO_1, 250, 200, 200, 200));

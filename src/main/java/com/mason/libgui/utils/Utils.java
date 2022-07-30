@@ -4,6 +4,7 @@ package com.mason.libgui.utils;
 import com.mason.libgui.core.GUIManager;
 import com.mason.libgui.utils.exceptionHandlers.FailExceptionHandler;
 import com.mason.libgui.utils.exceptionHandlers.FreezeExceptionHandler;
+import com.mason.libgui.utils.noise.MidpointDisplacementNoise;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,6 +13,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Random;
 
 /**
  *
@@ -24,6 +26,7 @@ public final class Utils{
     
     
     public static PerformanceLog PERFORMANCE_LOG;
+    public static final Random R = new Random();
     public static ExceptionHandler DEFAULT_EXCEPTION_HANDLER = new FreezeExceptionHandler();
     static{
         try{
@@ -37,14 +40,14 @@ public final class Utils{
     /**
      * A marker annotation for unfinished methods/classes.
      */
-    public static @interface Unfinished{
+    public @interface Unfinished{
         String value() default "";
     }
     
     /**
      * An annotation to keep track of when each method has been tested.
      */
-    public static @interface Tested{
+    public @interface Tested{
         String value() default ""; //Store the date of current testing.
     }
     
@@ -72,6 +75,38 @@ public final class Utils{
         return loadImage(filepath, gui.getExceptionHandler());
     }
 
+    public static void writeImage(String formatName, String filepath, BufferedImage img, ExceptionHandler ex){
+        try{
+            ImageIO.write(img, formatName, new File(filepath));
+        }catch(Exception e){
+            ex.handleException(e);
+        }
+    }
+
+    public static void setRandomSeed(long seed){
+        R.setSeed(seed);
+    }
+
+    /**
+     * Hermit's smoothing cumulative distribution function.
+     * @param x A number between 0 and 1
+     * @return A smoother version of the number (closer to 0.5).
+     */
+    public static double fade(double x){
+        return x * x * x * (x * (x * 6 - 15) + 10);
+    }
+
+    /**
+     * Interpolates the value between the two given points based on the given
+     * weight.
+     * @param a The first value.
+     * @param b The second value.
+     * @param x The relative weight of the second value (0: a, 1: b).
+     */
+    public static double interpolate(double a, double b, double x){
+        return (1D - x) * a + x * b;
+    }
+
     public static boolean isAlphanumeric(char c){
         return Character.isAlphabetic(c) || Character.isDigit(c) || c == ' ' || c == '.' || c == '-';
     }
@@ -88,7 +123,22 @@ public final class Utils{
 
     
     public static void main(String[] args){
-
+        MidpointDisplacementNoise mdp = new MidpointDisplacementNoise(1, 0.75D, false);
+        double[][] map = new double[128][128];
+        mdp.apply(map);
+        BufferedImage img = ImageUtils.getDichromeTexture(128, 128, 0, 0,
+                new Color(120, 30, 50),
+                new Color(30, 100, 90), map);
+        Graphics2D g = img.createGraphics();
+        g.drawImage(loadImage("testImages/filter3.png", new FailExceptionHandler()), null,0, 0);
+        writeImage("png", "testImages/mdn.png", img, new FailExceptionHandler());
+        /*BufferedImage img = loadImage("testImages/filter3.png", new FailExceptionHandler());
+        ImageUtils.applyFadeFactor(img, 0.5);
+        writeImage("png", "testImages/filter4.png", img, new FailExceptionHandler());
+        ImageUtils.applyFadeFactor(img, 0.5);
+        writeImage("png", "testImages/filter5.png", img, new FailExceptionHandler());
+        ImageUtils.applyFadeFactor(img, 0.5);
+        writeImage("png", "testImages/filter6.png", img, new FailExceptionHandler());*/
     }
     
 }

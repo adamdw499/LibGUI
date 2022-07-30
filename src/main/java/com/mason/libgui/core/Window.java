@@ -17,9 +17,8 @@ public class Window extends JFrame{
     
     private final Canvas canvas = new Canvas();
     public static final Color BACKGROUND_COLOR = new Color(20,20,20);
-    private final int NUM_BUFFERS = 4;
-    
-    
+
+
     public Window(int width, int height, String title, UIComponentManager cm, KeyHandler keys, Image toolbarImg, Cursor cursor){
         this(width, height, title, cm, keys);
 
@@ -32,13 +31,15 @@ public class Window extends JFrame{
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        setLocationRelativeTo(null);
+
         
-        canvas.setPreferredSize(new Dimension(Launcher.WIDTH, Launcher.HEIGHT));
+        canvas.setPreferredSize(new Dimension(width, height));
         canvas.setFocusable(false);
         add(canvas);
         pack();
-        
+        setLocationRelativeTo(null);
+
+        int NUM_BUFFERS = 4;
         canvas.createBufferStrategy(NUM_BUFFERS);
         canvas.addMouseListener(cm);
         canvas.addMouseMotionListener(cm);
@@ -54,7 +55,7 @@ public class Window extends JFrame{
         Graphics2D bsg = (Graphics2D) bs.getDrawGraphics();
         
         bsg.setColor(BACKGROUND_COLOR);
-        bsg.fillRect(0, 0, Launcher.WIDTH, Launcher.HEIGHT);
+        bsg.fillRect(0, 0, getWidth(), getHeight());
         
         compManager.render(bsg);
         

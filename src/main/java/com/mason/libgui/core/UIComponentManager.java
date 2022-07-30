@@ -59,11 +59,11 @@ public class UIComponentManager extends UIComponent{
     }
 
     public boolean isDragging(){
-        return dragging != null;
+        return dragging != null || (dragPane != null && dragPane.isDragging());
     }
 
     protected boolean isPaneDragging(){
-        return dragPane != null;
+        return dragPane != null && dragPane.isDragging();
     }
 
     protected void setDragging(Draggable d){
@@ -94,9 +94,7 @@ public class UIComponentManager extends UIComponent{
     @Override
     public void tick(int mx, int my){
         components.forEach(c -> c.tick(mouseX, mouseY));
-        spawning.forEach(comp -> {
-            components.add(0, comp);
-        });
+        spawning.forEach(comp -> components.add(0, comp));
         if(!despawning.isEmpty()) components.removeAll(despawning);
         spawning.clear();
         despawning.clear();
@@ -118,9 +116,8 @@ public class UIComponentManager extends UIComponent{
                 break;
             }
         }
-        components.stream().filter(s -> s instanceof ClickOffable && !s.withinBounds(e.getX(), e.getY())).forEach(s -> {
-            ((ClickOffable) s).clickOff();
-        });
+        components.stream().filter(s -> s instanceof ClickOffable && !s.withinBounds(e.getX(), e.getY()))
+                .forEach(s -> ((ClickOffable) s).clickOff());
     }
 
     @Override
@@ -138,11 +135,13 @@ public class UIComponentManager extends UIComponent{
     @Override
     public void mouseReleased(MouseEvent e){
         if(isDragging()){
-            dragging.mouseReleased(e);
-            dragging = null;
-        }else if(isPaneDragging()){
-            dragPane.mouseReleased(e);
-            dragPane = null;
+            if(isPaneDragging()){
+                dragPane.mouseReleased(e);
+                dragPane = null;
+            }else{
+                dragging.mouseReleased(e);
+                dragging = null;
+            }
         }else for(UIComponent comp : components){
             if(comp.withinBounds(e.getX(), e.getY())){
                 comp.mouseReleased(e);
@@ -164,9 +163,8 @@ public class UIComponentManager extends UIComponent{
     @Override
     public void mouseDragged(MouseEvent e){
         if(isDragging()){
-            dragging.mouseDragged(e);
-        }else if(isPaneDragging()){
-            dragPane.mouseDragged(e);
+            if(isPaneDragging()) dragPane.mouseDragged(e);
+            else dragging.mouseDragged(e);
         }else for(UIComponent comp : components){
             if(comp.withinBounds(e.getX(), e.getY())){
                 comp.mouseDragged(e);
