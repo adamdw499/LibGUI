@@ -2,6 +2,7 @@
 package com.mason.libgui.utils;
 
 import com.mason.libgui.core.GUIManager;
+import com.mason.libgui.images.SpriteSheet;
 import com.mason.libgui.utils.exceptionHandlers.FailExceptionHandler;
 import com.mason.libgui.utils.exceptionHandlers.FreezeExceptionHandler;
 import com.mason.libgui.utils.noise.MidpointDisplacementNoise;
@@ -26,6 +27,7 @@ public final class Utils{
     
     
     public static PerformanceLog PERFORMANCE_LOG;
+    public static SpriteSheet SPRITE_SHEET;
     public static final Random R = new Random();
     public static ExceptionHandler DEFAULT_EXCEPTION_HANDLER = new FreezeExceptionHandler();
     static{
@@ -61,7 +63,7 @@ public final class Utils{
     }
 
 
-    public static BufferedImage loadImage(String filepath, ExceptionHandler ex){
+    public static BufferedImage readImage(String filepath, ExceptionHandler ex){
         BufferedImage img = null;
         try{
             img = ImageIO.read(new File(filepath));
@@ -71,8 +73,22 @@ public final class Utils{
         return img;
     }
 
-    public static BufferedImage loadImage(String filepath, GUIManager gui){
-        return loadImage(filepath, gui.getExceptionHandler());
+    public static BufferedImage readImage(String filepath, GUIManager gui){
+        return readImage(filepath, gui.getExceptionHandler());
+    }
+
+    public static void setSpriteSheet(String prefix, String[] filepaths, String suffix){
+        SPRITE_SHEET = new SpriteSheet(prefix, filepaths, suffix, DEFAULT_EXCEPTION_HANDLER);
+    }
+
+    public static void setSpriteSheet(SpriteSheet sheet){
+        SPRITE_SHEET = sheet;
+    }
+
+    public static BufferedImage loadSprite(String key){
+        BufferedImage img = SPRITE_SHEET.get(key);
+        if(img == null) img = Utils.loadSprite("ICON_NOT_FOUND");
+        return img;
     }
 
     public static void writeImage(String formatName, String filepath, BufferedImage img, ExceptionHandler ex){
@@ -130,7 +146,7 @@ public final class Utils{
                 new Color(120, 30, 50),
                 new Color(30, 100, 90), map);
         Graphics2D g = img.createGraphics();
-        g.drawImage(loadImage("testImages/filter3.png", new FailExceptionHandler()), null,0, 0);
+        g.drawImage(readImage("testImages/filter3.png", new FailExceptionHandler()), null,0, 0);
         writeImage("png", "testImages/mdn.png", img, new FailExceptionHandler());
         /*BufferedImage img = loadImage("testImages/filter3.png", new FailExceptionHandler());
         ImageUtils.applyFadeFactor(img, 0.5);

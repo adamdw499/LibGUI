@@ -11,7 +11,7 @@ public class SpriteSheet extends HashMap<String, BufferedImage>{
 
 
     public SpriteSheet(String filepath, String[] keys, int pixelLength, ExceptionHandler ex){
-        BufferedImage spriteSheet = Utils.loadImage(filepath, ex);
+        BufferedImage spriteSheet = Utils.readImage(filepath, ex);
         BufferedImage img = new BufferedImage(pixelLength, pixelLength, BufferedImage.TYPE_INT_ARGB);
         int n = 0;
         for(int y=0; y < spriteSheet.getHeight(); y += pixelLength){
@@ -26,6 +26,12 @@ public class SpriteSheet extends HashMap<String, BufferedImage>{
 
     public SpriteSheet(Map<String, BufferedImage> map){
         super(map);
+    }
+
+    public SpriteSheet(String prefix, String[] filepaths, String suffix, ExceptionHandler ex){
+        for(String path : filepaths){
+            this.put(path, Utils.readImage(prefix + path + suffix, ex));
+        }
     }
 
 }

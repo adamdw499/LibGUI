@@ -59,7 +59,7 @@ public class UIComponentManager extends UIComponent{
     }
 
     public boolean isDragging(){
-        return dragging != null || (dragPane != null && dragPane.isDragging());
+        return dragging != null || isPaneDragging();
     }
 
     protected boolean isPaneDragging(){

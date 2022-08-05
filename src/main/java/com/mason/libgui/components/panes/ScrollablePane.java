@@ -72,7 +72,7 @@ public class ScrollablePane extends Pane{
 
     protected MouseEvent relativeMouseCoords(MouseEvent e){
         return new MouseEvent(e.getComponent(), e.getID(), e.getWhen(), e.getModifiersEx(),
-                e.getX() - x - camera.getX(), e.getY() - y - camera.getY(),
+                (int)((e.getX() - x)/camera.zoom - camera.getX()), (int)((e.getY() - y)/camera.zoom - camera.getY()),
                 e.getClickCount(), e.isPopupTrigger());
     }
 
@@ -88,17 +88,20 @@ public class ScrollablePane extends Pane{
         super.mousePressed(e);
         if(!isDragging()){
             setDragging(camera);
-            e = new MouseEvent(e.getComponent(), e.getID(), e.getWhen(), e.getModifiersEx(), e.getX() - x,
-                    e.getY() - y, e.getClickCount(), e.isPopupTrigger());
+            e = new MouseEvent(e.getComponent(), e.getID(), e.getWhen(), e.getModifiersEx(),
+                    (int)(e.getX()-x/camera.zoom), (int)(e.getY()-y/camera.zoom),
+                    e.getClickCount(), e.isPopupTrigger());
             camera.mousePressed(e);
         }
     }
 
     @Override
     public void mouseDragged(MouseEvent e){
-        if(camera.isDragging())
-            e = new MouseEvent(e.getComponent(), e.getID(), e.getWhen(), e.getModifiersEx(), e.getX() + camera.getX(),
-                e.getY() + camera.getY() , e.getClickCount(), e.isPopupTrigger());
+        if(camera.isDragging()){
+            e = new MouseEvent(e.getComponent(), e.getID(), e.getWhen(), e.getModifiersEx(),
+                    (int)((e.getX() + camera.getX())*camera.zoom),
+                    (int)((e.getY() + camera.getY())*camera.zoom), e.getClickCount(), e.isPopupTrigger());
+        }
         super.mouseDragged(e);
     }
 
