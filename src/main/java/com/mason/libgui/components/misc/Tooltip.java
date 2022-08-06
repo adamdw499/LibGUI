@@ -16,7 +16,7 @@ public class Tooltip extends UIText{
     }
 
     public Tooltip(String t, StyleInfo info, int x, int y, int w) {
-        this(t, info, false, 2, info.TEXT_COLOR.darker().darker(), x, y, w, info.RENDER_UTILS.getLineWidth());
+        this(t, info, false, 2, info.TEXT_COLOR.darker().darker(), x, y, w, info.getLineWidth());
     }
 
     public Tooltip(String t, int x, int y, int w){

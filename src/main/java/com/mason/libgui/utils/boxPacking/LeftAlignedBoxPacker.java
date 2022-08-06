@@ -15,7 +15,7 @@ public class LeftAlignedBoxPacker implements BoxPacker{
     }
 
     public LeftAlignedBoxPacker(StyleInfo info){
-        this(info.RENDER_UTILS.getLineWidth());
+        this(info.getLineWidth());
     }
 
 

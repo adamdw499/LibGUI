@@ -17,7 +17,7 @@ public class VerticalBoxPacker implements BoxPacker{
     }
 
     public VerticalBoxPacker(StyleInfo info){
-        this(info.RENDER_UTILS.getLineWidth());
+        this(info.getLineWidth());
     }
 
 

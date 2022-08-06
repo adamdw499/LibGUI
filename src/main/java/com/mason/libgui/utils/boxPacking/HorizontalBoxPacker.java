@@ -17,7 +17,7 @@ public class HorizontalBoxPacker implements BoxPacker{
     }
 
     public HorizontalBoxPacker(StyleInfo info){
-        this(info.RENDER_UTILS.getLineWidth());
+        this(info.getLineWidth());
     }
 
 

@@ -42,16 +42,19 @@ public class UIText extends UIComponent{
     
     public UIText(String t, StyleInfo info, int x, int y, int w, boolean title){
         this(t, title ? info.TITLE_FONT : info.FONT, info.TEXT_COLOR, true, 2,
-                info.TEXT_COLOR.darker().darker(), x, y, w, info.RENDER_UTILS.getLineWidth());
+                info.TEXT_COLOR.darker().darker(), x, y, w, info.getLineWidth());
     }
     
     public UIText(String t, int x, int y, int w){
         this(t, DEFAULT_STYLE_INFO, x, y, w, false);
     }
 
+    public UIText(String t, StyleInfo info, int x, int y){
+        this(t, x, y, stringDimension(t, info.FONT)[0] + 2*info.getLineWidth());
+    }
+
     public UIText(String t, int x, int y){
-        this(t, x, y, stringDimension(t, DEFAULT_STYLE_INFO.FONT)[0]
-                + 2*DEFAULT_STYLE_INFO.RENDER_UTILS.getLineWidth());
+        this(t, DEFAULT_STYLE_INFO, x, y);
     }
     
 

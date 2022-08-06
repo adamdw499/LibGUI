@@ -27,8 +27,8 @@ public class UITextInput extends UIComponent implements ClickOffable{
         this.keys = keys;
         this.info = info;
         this.maxLength = maxLength;
-        typeLine = new TypeIndicator(y+info.RENDER_UTILS.getLineWidth()*2, 2,
-                height-4*info.RENDER_UTILS.getLineWidth(), 60);
+        typeLine = new TypeIndicator(y+info.getLineWidth()*2, 2,
+                height-4*info.getLineWidth(), 60);
     }
 
     public UITextInput(int x, int y, int w, int h, GUIManager gui){
@@ -40,8 +40,8 @@ public class UITextInput extends UIComponent implements ClickOffable{
     public void render(Graphics2D g){
         info.RENDER_UTILS.drawBorder(g, info, x, y, width, height);
         g.setColor(info.BACKGROUND);
-        g.fillRect(x+info.RENDER_UTILS.getLineWidth(), y+info.RENDER_UTILS.getLineWidth(),
-                width-2*info.RENDER_UTILS.getLineWidth(), height-2*info.RENDER_UTILS.getLineWidth());
+        g.fillRect(x+info.getLineWidth(), y+info.getLineWidth(),
+                width-2*info.getLineWidth(), height-2*info.getLineWidth());
         renderText(g);
     }
 
@@ -91,15 +91,15 @@ public class UITextInput extends UIComponent implements ClickOffable{
         FontMetrics f = g.getFontMetrics();
         g.setColor(info.TEXT_COLOR);
         if(isClicked){
-            g.drawString(text.substring(0, typeLine.position), x + 2*info.RENDER_UTILS.getLineWidth(),
-                    y + info.RENDER_UTILS.getLineWidth() + f.getHeight());
+            g.drawString(text.substring(0, typeLine.position), x + 2*info.getLineWidth(),
+                    y + info.getLineWidth() + f.getHeight());
             g.drawString(text.substring(typeLine.position), typeLine.getX() +
-                    typeLine.getWidth() + (int)(info.RENDER_UTILS.getLineWidth()*0.5D),
-                    y + info.RENDER_UTILS.getLineWidth() + f.getHeight());
+                    typeLine.getWidth() + (int)(info.getLineWidth()*0.5D),
+                    y + info.getLineWidth() + f.getHeight());
             typeLine.render(g);
         }else{
-            g.drawString(text, x + 2*info.RENDER_UTILS.getLineWidth(),
-                    y + info.RENDER_UTILS.getLineWidth() + f.getHeight());
+            g.drawString(text, x + 2*info.getLineWidth(),
+                    y + info.getLineWidth() + f.getHeight());
         }
     }
 
@@ -147,7 +147,7 @@ public class UITextInput extends UIComponent implements ClickOffable{
         }
 
         private void recalcX(String before){
-            x = (int)(2.5*info.RENDER_UTILS.getLineWidth()) + stringDimension(before, info.FONT)[0] + UITextInput.this.x;
+            x = (int)(2.5*info.getLineWidth()) + stringDimension(before, info.FONT)[0] + UITextInput.this.x;
         }
 
         @Override

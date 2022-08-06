@@ -70,10 +70,10 @@ public class DraggablePane extends Pane implements Draggable{
         
         @Override
         public boolean withinBounds(int mx, int my){
-            return (x<mx && mx<x+info.RENDER_UTILS.getLineWidth() && y<my && my<y+height) ||
-                    (mx<width+x && x+width-info.RENDER_UTILS.getLineWidth()<mx && y<my && my<y+height) ||
-                    (x<mx && mx<x+width && y<my && my<y+info.RENDER_UTILS.getLineWidth()) ||
-                    (x<mx && mx<x+width && y+height-info.RENDER_UTILS.getLineWidth()<my && my<y+height);
+            return (x<mx && mx<x+info.getLineWidth() && y<my && my<y+height) ||
+                    (mx<width+x && x+width-info.getLineWidth()<mx && y<my && my<y+height) ||
+                    (x<mx && mx<x+width && y<my && my<y+info.getLineWidth()) ||
+                    (x<mx && mx<x+width && y+height-info.getLineWidth()<my && my<y+height);
         }
         
         

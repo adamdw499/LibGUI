@@ -18,7 +18,7 @@ public class CenterAlignedBoxPacker implements BoxPacker{
     }
 
     public CenterAlignedBoxPacker(StyleInfo info){
-        this(info.RENDER_UTILS.getLineWidth());
+        this(info.getLineWidth());
     }
 
 

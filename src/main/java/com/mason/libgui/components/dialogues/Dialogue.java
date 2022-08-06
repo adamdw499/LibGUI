@@ -52,7 +52,7 @@ public class Dialogue extends DraggablePane{
     }
 
     public Dialogue(int x, int y, int w, String title, String text, Button[] buttons){
-        this(x, y, w, DEFAULT_STYLE_INFO, title, text, buttons, DEFAULT_STYLE_INFO.RENDER_UTILS.getLineWidth());
+        this(x, y, w, DEFAULT_STYLE_INFO, title, text, buttons, DEFAULT_STYLE_INFO.getLineWidth());
     }
 
 

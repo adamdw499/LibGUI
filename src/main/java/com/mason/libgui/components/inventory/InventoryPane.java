@@ -38,7 +38,7 @@ public class InventoryPane extends Pane{
     }
 
     public InventoryPane(StyleInfo info, int topSpace, int botSpace, Button[] buttons, int cols){
-        this(info, 2*info.RENDER_UTILS.getLineWidth(), topSpace, botSpace, info.RENDER_UTILS.getLineWidth(), buttons, cols);
+        this(info, 2*info.getLineWidth(), topSpace, botSpace, info.getLineWidth(), buttons, cols);
     }
 
 

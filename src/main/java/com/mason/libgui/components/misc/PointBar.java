@@ -45,8 +45,8 @@ public class PointBar extends UIComponent{
     public void render(Graphics2D g){
         info.RENDER_UTILS.drawButton(g, info, x, y, width, height, false, false);
         g.setColor(color);
-        g.fillRect(x+info.RENDER_UTILS.getLineWidth(), y+info.RENDER_UTILS.getLineWidth(),
-                (int)((width-2*info.RENDER_UTILS.getLineWidth())*(current/max)), height-2*info.RENDER_UTILS.getLineWidth());
+        g.fillRect(x+info.getLineWidth(), y+info.getLineWidth(),
+                (int)((width-2*info.getLineWidth())*(current/max)), height-2*info.getLineWidth());
     }
     
 }

@@ -32,6 +32,11 @@ public class StyleInfo{
         TITLE_FONT = tf;
         RENDER_UTILS = utils;
     }
+
+
+    public int getLineWidth(){
+        return RENDER_UTILS.getLineWidth();
+    }
     
     
     public static Color[] analogousColors(Color col, float delta){

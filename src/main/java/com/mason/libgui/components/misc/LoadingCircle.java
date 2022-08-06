@@ -33,22 +33,29 @@ public class LoadingCircle extends UIComponent{
     
     @Override
     public void render(Graphics2D g){
-        //Paints the rotating loading circle.
         g.setColor(color);
         g.fillOval(x, y, width, height);
         g.setColor(Window.BACKGROUND_COLOR);
-        g.fillOval(x + lineWidth, y + lineWidth, width-2* lineWidth, height-2* lineWidth);
+        g.fillOval(x + lineWidth, y + lineWidth, width-2 * lineWidth, height-2 * lineWidth);
         g.fill(rotation.createTransformedShape(rectangle));
-        //Paints the loading message.
-        /*g.setFont(LOADING_TEXT_FONT);
-        g.setColor(color);
-        FontMetrics f = g.getFontMetrics();
-        g.drawString(message, (WIDTH - f.stringWidth(message))/2, 5*HEIGHT/6 + f.getDescent());*/
     }
     
     @Override
     public void tick(int mx, int my){
-        rotation.rotate(angularVelocity, x + width/2, y + height/2);
+        rotation.rotate(angularVelocity, x + width/2D, y + height/2D);
+    }
+
+
+    @Override
+    public void setX(int _x){
+        rectangle.translate(_x-x, 0);
+        super.setX(_x);
+    }
+
+    @Override
+    public void setY(int _y){
+        rectangle.translate(0, _y-y);
+        super.setY(_y);
     }
     
 }
