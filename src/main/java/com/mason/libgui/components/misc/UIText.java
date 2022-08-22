@@ -45,12 +45,12 @@ public class UIText extends UIComponent{
                 info.TEXT_COLOR.darker().darker(), x, y, w, info.getLineWidth());
     }
     
-    public UIText(String t, int x, int y, int w){
-        this(t, DEFAULT_STYLE_INFO, x, y, w, false);
+    public UIText(String t, StyleInfo info, int x, int y, int w){
+        this(t, info, x, y, w, false);
     }
 
     public UIText(String t, StyleInfo info, int x, int y){
-        this(t, x, y, stringDimension(t, info.FONT)[0] + 2*info.getLineWidth());
+        this(t, info, x, y, stringDimension(t, info.FONT)[0] + 2*info.getLineWidth());
     }
 
     public UIText(String t, int x, int y){

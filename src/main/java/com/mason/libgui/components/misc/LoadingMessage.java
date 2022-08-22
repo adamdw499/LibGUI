@@ -23,6 +23,10 @@ public class LoadingMessage extends LoadingCircle{
         this(col, info, x, y, diam, 0.05, 2*info.getLineWidth(), info.getLineWidth(), info.getLineWidth());
     }
 
+    public LoadingMessage(Color col, int x, int y, int diam){
+        this(col, StyleInfo.LOADING_STYLE_INFO, x, y, diam);
+    }
+
 
     public void setMessage(String message){
         text = new UIText(message, info, -1, y + padding + height);

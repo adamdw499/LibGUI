@@ -7,7 +7,7 @@ import static com.mason.libgui.utils.Utils.R;
  * pseudo-code)
  * @author Adam Whittaker
  */
-public class MidpointDisplacementNoise{
+public class MidpointDisplacementNoise extends Noise{
 
 
     /**

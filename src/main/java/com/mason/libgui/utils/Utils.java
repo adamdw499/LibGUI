@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Random;
 
+import static java.lang.Math.exp;
+
 /**
  *
  * @author Adam Whittaker
@@ -121,6 +123,10 @@ public final class Utils{
      */
     public static double interpolate(double a, double b, double x){
         return (1D - x) * a + x * b;
+    }
+
+    public static double sigmoid(double x){
+        return 1D/(1D+exp(-x));
     }
 
     public static boolean isAlphanumeric(char c){

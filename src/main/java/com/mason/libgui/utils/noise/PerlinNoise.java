@@ -6,7 +6,7 @@ import static com.mason.libgui.utils.Utils.*;
  * Generates wrappable noise using the Perlin noise algorithm.
  * @author Adam Whittaker
  */
-public class PerlinNoise{
+public class PerlinNoise extends Noise{
 
 
     /**
@@ -59,6 +59,7 @@ public class PerlinNoise{
      * Generates noise on the given 2D double array using the Perlin noise
      * algorithm.
      */
+    @Override
     public void apply(double[][] map){
         //The initial grid size is a quarter of the array.
         int xCoarse = map[0].length/4, yCoarse = map.length/4;
@@ -72,19 +73,25 @@ public class PerlinNoise{
             if(xCoarse<1) xCoarse = 1;
             if(yCoarse<1) yCoarse = 1;
         }
-        //Shifts the mean by 125.
-        shiftMean(map, 125);
     }
 
     /**
-     * Shifts the noise by the given mean.
+     * Shifts this noise to the range [0,1].
      * @param map The noise map.
-     * @param mean The mean.
      */
-    private void shiftMean(double[][] map, double mean){
+    public void normalise(double[][] map){
+        double max = Double.MIN_VALUE, min = Double.MAX_VALUE, mean = 0;
+        for(double[] vals : map){
+            for(double val : vals){
+                if(max < val) max = val;
+                if(min > val) min = val;
+                mean += val;
+            }
+        }
+        mean /= (map.length*map[0].length);
         for(int y=0;y<map.length;y++){
             for(int x=0;x<map[0].length;x++){
-                map[y][x] += mean;
+                map[y][x] = (map[y][x]-mean-min)/(max-min);
             }
         }
     }
@@ -98,7 +105,7 @@ public class PerlinNoise{
      */
     private void overlayOctave(double[][] map, double p, int xCoarse, int yCoarse){
         for(int y = 0; y < map.length; y++){
-            for(int x = 0; x < map[0].length; x++){
+            for(int x = 0; x < map[y].length; x++){
                 //Calculates the perlin noise function for one point in the map.
                 map[y][x] += p * getPerlin(x, y, xCoarse, yCoarse);
             }
@@ -143,7 +150,7 @@ public class PerlinNoise{
     }
 
     /**
-     * Computes the dot product for the point and the vector on the top left
+     * Computes the dot product for the point and the vector in the top left
      * corner of its Perlin rectangle.
      * @param x The x coordinate of the point.
      * @param y The y coordinate of the point.
@@ -158,7 +165,7 @@ public class PerlinNoise{
     }
 
     /**
-     * Computes the dot product for the point and the vector on the top right
+     * Computes the dot product for the point and the vector in the top right
      * corner of its Perlin rectangle.
      * @param x The x coordinate of the point.
      * @param y The y coordinate of the point.
@@ -173,7 +180,7 @@ public class PerlinNoise{
     }
 
     /**
-     * Computes the dot product for the point and the vector on the bottom left
+     * Computes the dot product for the point and the vector in the bottom left
      * corner of its Perlin rectangle.
      * @param x The x coordinate of the point.
      * @param y The y coordinate of the point.
@@ -188,7 +195,7 @@ public class PerlinNoise{
     }
 
     /**
-     * Computes the dot product for the point and the vector on the bottom right
+     * Computes the dot product for the point and the vector in the bottom right
      * corner of its Perlin rectangle.
      * @param x The x coordinate of the point.
      * @param y The y coordinate of the point.

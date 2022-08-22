@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 
 import static com.mason.libgui.utils.Utils.R;
+import static com.mason.libgui.utils.Utils.sigmoid;
+import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public final class ImageUtils{
@@ -31,10 +33,21 @@ public final class ImageUtils{
                     pixel[0] += R.nextInt(2*jitter) - jitter;
                 }
                 pixel[0] = min(pixel[0], 255);
-                pixel[0] = Math.max(pixel[0], 0);
+                pixel[0] = max(pixel[0], 0);
                 raster.setPixel(x, y, pixel);
             }
         }
+    }
+
+    public static Color bitmapNoise(int r, int g, int b, int jitter){
+        r += R.nextInt(jitter*2)-jitter;
+        g += R.nextInt(jitter*2)-jitter;
+        b += R.nextInt(jitter*2)-jitter;
+        return new Color(max(min(r, 255), 0), max(min(g, 255), 0), max(min(b, 255), 0));
+    }
+
+    public static Color bitmapNoise(Color col, int jitter){
+        return bitmapNoise(col.getRed(), col.getGreen(), col.getBlue(), jitter);
     }
 
 
@@ -167,6 +180,23 @@ public final class ImageUtils{
         return img;
     }
 
+    public static Color getDichromeColor(int x, int y, Color col1, Color col2, double[][] map){
+        int[] pixel = new int[]{0, 0, 0, 255};
+        getColorAverage(pixel, col1, col2, map[y][x]);
+        return new Color(pixel[0], pixel[1], pixel[2]);
+    }
+
+    public static Color getQuadchromeColor(int x, int y, double[][] landMap, double[][] waterMap, double weight,
+                                           Color landCol1, Color landCol2,
+                                           Color waterCol1, Color waterCol2){
+        int[] pixel1 = new int[]{0, 0, 0, 255}, pixel2 = new int[]{0, 0, 0, 255};
+        getColorAverage(pixel1, landCol1, landCol2, landMap[y][x]);
+        getColorAverage(pixel2, waterCol1, waterCol2, 2D*(sigmoid(waterMap[y][x])-0.5D));
+        return new Color((int)(pixel1[0]*weight + pixel2[0]*(1D-weight)),
+                (int)(pixel1[1]*weight + pixel2[1]*(1D-weight)),
+                (int)(pixel1[2]*weight + pixel2[2]*(1D-weight)));
+    }
+
 
     /**
      * Averages two colors based on a given weight (RGB only).
@@ -182,6 +212,12 @@ public final class ImageUtils{
         pixel[1] = getChannelAverage(c1.getGreen(), c2.getGreen(), weight);
         pixel[2] = getChannelAverage(c1.getBlue(), c2.getBlue(), weight);
         return pixel;
+    }
+
+    public static Color getColorAverage(Color c1, Color c2, double weight){
+        int[] pixel = new int[3];
+        getColorAverage(pixel, c1, c2, weight);
+        return new Color(pixel[0], pixel[1], pixel[2]);
     }
 
     public static void applyFadeFactor(BufferedImage img, double factor){
@@ -218,7 +254,7 @@ public final class ImageUtils{
      * @param weight the weight of color 1 in the average (0 -> 1).
      */
     private static int getChannelAverage(double v1, double v2, double weight){
-        return (int)(v1*(1D-weight)/2D + v2*(weight+1D)/2D);
+        return max(min((int)(v1*(1D-weight)/2D + v2*(weight+1D)/2D),255),0);
     }
 
     /**
