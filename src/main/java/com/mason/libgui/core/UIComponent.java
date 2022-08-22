@@ -1,7 +1,7 @@
 
 package com.mason.libgui.core;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 
 /**

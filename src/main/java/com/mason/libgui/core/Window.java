@@ -3,10 +3,9 @@ package com.mason.libgui.core;
 
 import com.mason.libgui.components.misc.KeyHandler;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
-import javax.swing.JFrame;
 
 /**
  *

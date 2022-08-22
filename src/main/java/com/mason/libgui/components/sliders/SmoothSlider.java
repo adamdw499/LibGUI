@@ -3,10 +3,9 @@ package com.mason.libgui.components.sliders;
 
 import com.mason.libgui.components.draggables.Draggable;
 import com.mason.libgui.core.UIComponent;
-import com.mason.libgui.utils.RenderUtils;
 import com.mason.libgui.utils.StyleInfo;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 

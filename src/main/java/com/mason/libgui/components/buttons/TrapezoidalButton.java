@@ -1,6 +1,5 @@
 package com.mason.libgui.components.buttons;
 
-import com.mason.libgui.utils.RenderUtils;
 import com.mason.libgui.utils.StyleInfo;
 import com.mason.libgui.utils.UIAligner.Direction;
 

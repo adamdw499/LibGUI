@@ -1,7 +1,6 @@
 package com.mason.libgui.components.buttons;
 
 import com.mason.libgui.components.misc.UIText;
-import com.mason.libgui.utils.RenderUtils;
 import com.mason.libgui.utils.StyleInfo;
 
 import java.awt.*;

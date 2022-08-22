@@ -4,11 +4,9 @@ package com.mason.libgui.core;
 import com.mason.libgui.components.draggables.DraggableComponent;
 import com.mason.libgui.components.panes.Pane;
 import com.mason.libgui.components.panes.ScrollablePane;
-import com.mason.libgui.test.testComponents.GridTest;
 import com.mason.libgui.utils.StyleInfo;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
 
 /**
  *

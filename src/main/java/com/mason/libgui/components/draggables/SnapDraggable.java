@@ -1,8 +1,6 @@
 
 package com.mason.libgui.components.draggables;
 
-import com.mason.libgui.components.draggables.DraggableComponent;
-
 import java.awt.event.MouseEvent;
 
 /**

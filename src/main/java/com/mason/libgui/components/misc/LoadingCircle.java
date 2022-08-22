@@ -3,9 +3,8 @@ package com.mason.libgui.components.misc;
 
 import com.mason.libgui.core.UIComponent;
 import com.mason.libgui.core.Window;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 
 /**

@@ -2,7 +2,8 @@
 package com.mason.libgui.components.sliders;
 
 import com.mason.libgui.core.UIComponent;
-import java.awt.Graphics2D;
+
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 

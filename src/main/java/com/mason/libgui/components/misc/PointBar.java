@@ -4,8 +4,7 @@ package com.mason.libgui.components.misc;
 import com.mason.libgui.core.UIComponent;
 import com.mason.libgui.utils.StyleInfo;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
 
 /**
  *

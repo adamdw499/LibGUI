@@ -3,7 +3,8 @@ package com.mason.libgui.components.panes;
 
 import com.mason.libgui.core.UIComponentManager;
 import com.mason.libgui.utils.StyleInfo;
-import java.awt.Graphics2D;
+
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.AffineTransform;

@@ -1,8 +1,7 @@
 
 package com.mason.libgui.utils;
 
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 
 /**
  *

@@ -4,14 +4,12 @@ import com.mason.libgui.components.buttons.Button;
 import com.mason.libgui.components.buttons.ButtonDecorator;
 import com.mason.libgui.components.panes.Pane;
 import com.mason.libgui.core.UIComponent;
-import com.mason.libgui.utils.RenderUtils;
 import com.mason.libgui.utils.StyleInfo;
 import com.mason.libgui.utils.UIAligner.Direction;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-import java.util.Arrays;
 
 public class Inventory extends UIComponent{
 

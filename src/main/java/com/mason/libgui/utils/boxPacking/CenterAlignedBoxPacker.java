@@ -2,9 +2,7 @@ package com.mason.libgui.utils.boxPacking;
 
 import com.mason.libgui.core.UIComponent;
 import com.mason.libgui.utils.StyleInfo;
-import com.mason.libgui.utils.exceptions.OversizedComponentException;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 
 public class CenterAlignedBoxPacker implements BoxPacker{

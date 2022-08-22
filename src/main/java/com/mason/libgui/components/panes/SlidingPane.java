@@ -1,6 +1,5 @@
 package com.mason.libgui.components.panes;
 
-import com.mason.libgui.components.panes.Pane;
 import com.mason.libgui.core.UIComponent;
 import com.mason.libgui.utils.StyleInfo;
 import com.mason.libgui.utils.UIAligner.Direction;

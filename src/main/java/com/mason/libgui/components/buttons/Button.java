@@ -3,8 +3,8 @@ package com.mason.libgui.components.buttons;
 
 import com.mason.libgui.core.UIComponent;
 import com.mason.libgui.utils.StyleInfo;
-import com.mason.libgui.utils.RenderUtils;
-import java.awt.Graphics2D;
+
+import java.awt.*;
 import java.awt.event.MouseEvent;
 
 /**
