@@ -6,25 +6,73 @@ import com.mason.libgui.utils.StyleInfo;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
+/**
+ * A Button with text
+ */
 public abstract class TextButton extends Button{
 
 
-    private UIText text;
+    /**
+     * The text object
+     */
+    private final UIText text;
 
 
+    /**
+     * Wraps the text in a button barely enclosing the text.
+     * @param text
+     * @param info
+     */
     public TextButton(UIText text, StyleInfo info){
         super(info, text.getX(), text.getY(), text.getWidth(), text.getHeight());
         this.text = text;
     }
 
-    public TextButton(String text, StyleInfo info, int x, int y, int w){
-        this(new UIText(text, info, x, y, w, false), info);
+    /**
+     * Creates a button with the UIText in the middle.
+     * @param text
+     * @param info
+     * @param x
+     * @param y
+     * @param w
+     * @param h
+     */
+    public TextButton(UIText text, StyleInfo info, int x, int y, int w, int h){
+        super(info, x, y, w, h);
+        this.text = text;
+        setX(x);
+        setY(y);
     }
 
-    public TextButton(String text, int x, int y, int w){
-        this(text, StyleInfo.DEFAULT_STYLE_INFO, x, y, w);
+    /**
+     * Creates a button with the UIText in the middle.
+     * @param text
+     * @param info
+     * @param x
+     * @param y
+     * @param w
+     * @param h
+     */
+    public TextButton(String text, StyleInfo info, int x, int y, int w, int h){
+        this(new UIText(text, info, -1, -1), info, x, y, w, h);
     }
 
+    /**
+     * Creates a button with the UIText in the middle.
+     * @param text
+     * @param x
+     * @param y
+     * @param w
+     * @param h
+     */
+    public TextButton(String text, int x, int y, int w, int h){
+        this(text, StyleInfo.DEFAULT_STYLE_INFO, x, y, w, h);
+    }
+
+    /**
+     * Wraps the text in a button barely enclosing the text.
+     * @param text
+     */
     public TextButton(String text, int x, int y){
         this(new UIText(text, x, y), StyleInfo.DEFAULT_STYLE_INFO);
     }
@@ -40,13 +88,13 @@ public abstract class TextButton extends Button{
     @Override
     public void setX(int _x){
         super.setX(_x);
-        text.setX(_x);
+        text.setX(_x + width/2 - text.getWidth()/2);
     }
 
     @Override
     public void setY(int _y){
         super.setY(_y);
-        text.setY(_y);
+        text.setY(_y + height/2 - text.getHeight()/2);
     }
 
 
@@ -56,8 +104,8 @@ public abstract class TextButton extends Button{
     }
 
 
-    public static TextButton getBlankButton(String text, int x, int y, int w){
-        return new TextButton(text, x, y, w){
+    public static TextButton getBlankButton(String text, int x, int y, int w, int h){
+        return new TextButton(text, x, y, w, h){
 
             @Override
             public void mouseClicked(MouseEvent e){}

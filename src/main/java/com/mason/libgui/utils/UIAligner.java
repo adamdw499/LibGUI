@@ -10,12 +10,21 @@ import com.mason.libgui.core.UIComponent;
 public class UIAligner{
     
     
-    public static enum Position{
-        START, MIDDLE, END;
+    public enum Position{
+        START, MIDDLE, END
     }
 
-    public static enum Direction{
-        LEFT, UP, DOWN, RIGHT;
+    public enum Direction{
+
+        LEFT(false), UP(true), DOWN(true), RIGHT(false);
+
+
+        public final boolean vertical;
+
+        Direction(boolean vert){
+            vertical = vert;
+        }
+
     }
     
     
@@ -58,27 +67,15 @@ public class UIAligner{
     
     public void align(UIComponent comp, int width, int height, Position hor, Position vert){
         switch(hor){
-            case START -> {
-                comp.setX(leftMargin);
-            }
-            case MIDDLE -> {
-                comp.setX(width/2 - comp.getWidth()/2 + getHorizontalMod());
-            }
-            case END -> {
-                comp.setX(width - rightMargin - comp.getWidth());
-            }
+            case START -> comp.setX(leftMargin);
+            case MIDDLE -> comp.setX(width/2 - comp.getWidth()/2 + getHorizontalMod());
+            case END -> comp.setX(width - rightMargin - comp.getWidth());
         }
         
         switch(vert){
-            case START -> {
-                comp.setY(topMargin);
-            }
-            case MIDDLE -> {
-                comp.setY(height/2 - comp.getHeight()/2 + getVerticalMod());
-            }
-            case END -> {
-                comp.setY(height - bottomMargin - comp.getHeight());
-            }
+            case START -> comp.setY(topMargin);
+            case MIDDLE -> comp.setY(height/2 - comp.getHeight()/2 + getVerticalMod());
+            case END -> comp.setY(height - bottomMargin - comp.getHeight());
         }
     }
     

@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 
 /**
- *
+ * The base object that can be rendered, intersected with, and animated on screen.
  * @author Adam Whittaker
  */
 public abstract class UIComponent extends MouseAdapter{
@@ -43,7 +43,7 @@ public abstract class UIComponent extends MouseAdapter{
      * @return True if it is.
      */
     public boolean withinBounds(int mx, int my){
-        return x<mx && mx<x+width && y<my && my<y+height;
+        return withinBounds(x, y, width, height, mx, my);
     }
     
     
@@ -111,14 +111,28 @@ public abstract class UIComponent extends MouseAdapter{
         height = h;
     }
 
+    /**
+     * Checks if this component intersects with the given one.
+     * @param comp The component
+     * @return true if it does
+     */
     public boolean intersects(UIComponent comp){
         return comp.x + comp.width >= x && comp.x <= x + width &&
                 comp.y + comp.height >= y && comp.y <= y + height;
     }
 
-    
+
+    /**
+     * Checks if this component intersects with the given one.
+     * @param g the graphics object
+     */
     public void render(Graphics2D g){}
-    
+
+    /**
+     * Checks if this component intersects with the given one.
+     * @param mx
+     * @param my
+     */
     public void tick(int mx, int my){}
     
 }

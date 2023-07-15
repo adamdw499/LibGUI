@@ -6,28 +6,34 @@ import com.mason.libgui.utils.UIAligner.Direction;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public abstract class TrapezoidalButton extends Button{
+/**
+ * A button in the shape of a trapezoid
+ */
+public abstract class TrapezoidalButton extends PolygonalButton{
 
 
-    private int tapering;
-    private Polygon trapezium;
-    private Direction direction;
+    /**
+     * Tapering is the pixel difference in length between the main parallel sides.
+     * Direction is the way in which the smaller side of the main parallel side points. I.e: the direction the "arrow"
+     * of the trapezium is pointing.
+     */
+    private final int tapering;
+    private final Direction direction;
 
 
     public TrapezoidalButton(StyleInfo info, int x, int y, int w, int h, int tapering, Direction direction){
-        super(info, x, y, w, h);
+        super(info, createTrapezium(x, y, w, h, tapering, direction));
         this.tapering = tapering;
         this.direction = direction;
-        trapezium = getPolygon();
     }
 
 
-    private Polygon getPolygon(){
+    private static Polygon createTrapezium(int x, int y, int width, int height, int tapering, Direction direction){
         switch(direction){
             case LEFT -> {
                 return new Polygon(
                         new int[]{x+width, x, x, x+width},
-                        new int[]{y, y+tapering, y+tapering+height, y+height}, 4);
+                        new int[]{y, y+tapering, y-tapering+height, y+height}, 4);
             }
             case UP -> {
                 return new Polygon(
@@ -42,7 +48,7 @@ public abstract class TrapezoidalButton extends Button{
             case RIGHT -> {
                 return new Polygon(
                         new int[]{x, x+width, x+width, x},
-                        new int[]{y, y+tapering, y+tapering+height, y+height}, 4);
+                        new int[]{y, y+tapering, y-tapering+height, y+height}, 4);
             }
             default -> throw new IllegalStateException("Unexpected value: " + direction);
         }
@@ -50,41 +56,15 @@ public abstract class TrapezoidalButton extends Button{
 
 
     @Override
-    public void render(Graphics2D g){
-        if(isHovering()) g.setColor(info.FORE_HIGHLIGHT);
-        else g.setColor(info.FOREGROUND);
-        g.fillPolygon(trapezium);
-        info.RENDER_UTILS.drawBorder(g, info, trapezium);
-    }
-
-
-    @Override
-    public boolean withinBounds(int mx, int my){
-        return trapezium.contains(mx, my);
-    }
-
-    @Override
-    public void setX(int _x){
-        trapezium.translate(_x - x, 0);
-        super.setX(_x);
-    }
-
-    @Override
-    public void setY(int _y){
-        trapezium.translate(0, _y - y);
-        super.setY(_y);
-    }
-
-    @Override
     public void setWidth(int w){
         super.setWidth(w);
-        trapezium = getPolygon();
+        setPolygon(createTrapezium(x, y, width, height, tapering, direction));
     }
 
     @Override
     public void setHeight(int h){
         super.setHeight(h);
-        trapezium = getPolygon();
+        setPolygon(createTrapezium(x, y, width, height, tapering, direction));
     }
 
 

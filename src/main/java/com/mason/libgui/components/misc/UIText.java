@@ -3,6 +3,7 @@ package com.mason.libgui.components.misc;
 
 import com.mason.libgui.core.UIComponent;
 import com.mason.libgui.utils.StyleInfo;
+import com.mason.libgui.utils.UIAligner.Position;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -17,11 +18,11 @@ import static com.mason.libgui.utils.Utils.stringDimension;
 public class UIText extends UIComponent{
     
     
-    private String[] text;
-    private Font font;
+    private final String[] text;
+    private final Font font;
     private Color color;
     private boolean dropShadow;
-    private int dropShadowOffset;
+    private final int dropShadowOffset;
     private Color shadowColor;
     private int padding;
     
@@ -62,17 +63,17 @@ public class UIText extends UIComponent{
 
         LinkedList<String> lines = new LinkedList<>();
         int x;
-        String currentLine = words[0];
+        StringBuilder currentLine = new StringBuilder(words[0]);
         for(int n=1; n < words.length; n++){
             if(stringDimension(currentLine + " " + words[n], font)[0] > width - 2*padding){
-                lines.add(currentLine);
-                currentLine = words[n];
+                lines.add(currentLine.toString());
+                currentLine = new StringBuilder(words[n]);
             }else{
-                currentLine += " " + words[n];
+                currentLine.append(" ").append(words[n]);
             }
         }
-        lines.add(currentLine);
-        return lines.toArray(new String[lines.size()]);
+        lines.add(currentLine.toString());
+        return lines.toArray(new String[0]);
     }
 
 
@@ -82,9 +83,9 @@ public class UIText extends UIComponent{
     }
 
     public String getText(){
-        String ret = "";
+        StringBuilder ret = new StringBuilder();
         for(String line : text){
-            ret += line + " ";
+            ret.append(line).append(" ");
         }
         return ret.substring(0, ret.length()-1);
     }
@@ -105,6 +106,22 @@ public class UIText extends UIComponent{
             h += stringDimension(line, font)[1];
         }
     }
-    
-    
+
+
+    public void setDropShadow(boolean dropShadow) {
+        this.dropShadow = dropShadow;
+    }
+
+    public void setPadding(int padding) {
+        this.padding = padding;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public void setShadowColor(Color shadowColor) {
+        this.shadowColor = shadowColor;
+    }
+
 }

@@ -1,7 +1,7 @@
 package com.mason.libgui.components.inventory;
 
 import com.mason.libgui.components.buttons.Button;
-import com.mason.libgui.components.buttons.ButtonDecorator;
+import com.mason.libgui.components.buttons.ButtonImpersonator;
 import com.mason.libgui.components.panes.Pane;
 import com.mason.libgui.core.UIComponent;
 import com.mason.libgui.utils.StyleInfo;
@@ -10,6 +10,10 @@ import com.mason.libgui.utils.UIAligner.Direction;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+
+import static com.mason.libgui.components.buttons.TrapezoidalButton.getBlankButton;
+import static com.mason.libgui.utils.UIAligner.Direction.*;
+import static java.lang.Math.min;
 
 public class Inventory extends UIComponent{
 
@@ -20,20 +24,23 @@ public class Inventory extends UIComponent{
     private Direction direction;
 
 
-    public Inventory(StyleInfo info, Pane[] panes, Button[] buttons, Direction direction){
+    public Inventory(StyleInfo info, Pane[] panes, Button[] selectorButtons, Direction direction){
         super(panes[0].getX(), panes[0].getY(), panes[0].getWidth(), panes[0].getHeight());
         this.panes = panes;
-        switch(direction) {
-            case DOWN, UP -> selector = new PaneSelector(info, 0, 0, width, buttons[0].getHeight(), buttons, direction);
-            case LEFT, RIGHT -> selector = new PaneSelector(info, 0, 0, buttons[0].getWidth(), height, buttons, direction);
+        if(direction.vertical){
+            selector = new PaneSelector(info, 0, 0, width, selectorButtons[0].getHeight(), selectorButtons, direction);
+            setHeight(panes[0].getHeight() + selector.getHeight());
+        }else{
+            selector = new PaneSelector(info, 0, 0, selectorButtons[0].getWidth(), height, selectorButtons, direction);
+            setWidth(panes[0].getWidth() + selector.getWidth());
         }
         this.direction = direction;
         setX(x);
         setY(y);
-        switch(direction){
-            case UP, DOWN -> setHeight(panes[0].getHeight() + selector.getHeight());
-            case LEFT, RIGHT -> setWidth(panes[0].getWidth() + selector.getWidth());
-        }
+    }
+
+    public Inventory(StyleInfo info, Pane[] panes, Direction direction){
+        this(info, panes, defaultSelectorButtons(info, panes[0], panes.length, direction), direction);
     }
 
 
@@ -61,21 +68,33 @@ public class Inventory extends UIComponent{
 
     public void setX(int _x){
         super.setX(_x);
-        for(Pane pane : panes) pane.setX(_x);
-        switch(direction){
-            case DOWN, UP -> selector.setX(_x);
-            case LEFT -> selector.setX(_x-selector.getWidth());
-            case RIGHT -> selector.setX(_x+panes[currentPane].getWidth());
+
+        if(direction.equals(LEFT)){
+            for(Pane pane : panes) pane.setX(_x + selector.getWidth());
+        }else{
+            for(Pane pane : panes) pane.setX(_x);
+        }
+
+        if(direction.equals(RIGHT)){
+            selector.setX(_x + panes[currentPane].getWidth());
+        }else{
+            selector.setX(_x);
         }
     }
 
     public void setY(int _y){
         super.setY(_y);
-        for(Pane pane : panes) pane.setY(_y);
-        switch(direction){
-            case LEFT, RIGHT -> selector.setY(_y);
-            case DOWN -> selector.setY(_y+panes[currentPane].getHeight());
-            case UP -> selector.setY(_y-selector.getHeight());
+
+        if(direction.equals(UP)){
+            for(Pane pane : panes) pane.setY(_y + selector.getHeight());
+        }else{
+            for(Pane pane : panes) pane.setY(_y);
+        }
+
+        if(direction.equals(DOWN)){
+            selector.setY(_y + panes[currentPane].getHeight());
+        }else{
+            selector.setY(_y);
         }
     }
 
@@ -153,10 +172,10 @@ public class Inventory extends UIComponent{
     }
 
 
-    private class PaneSelectorButton extends ButtonDecorator{
+    private class PaneSelectorButton extends ButtonImpersonator {
 
 
-        private int paneNum;
+        private final int paneNum;
 
 
         public PaneSelectorButton(Button b, int paneNum){
@@ -170,6 +189,31 @@ public class Inventory extends UIComponent{
             Inventory.this.setPane(paneNum);
         }
 
+    }
+
+
+    private static Button[] defaultSelectorButtons(StyleInfo info, Pane pane, int numPanes, Direction direction){
+        Button[] selectors = new Button[numPanes];
+
+        int x = pane.getX(), y = pane.getY(), w, h, tapering = min(24, 24*3/numPanes);
+        if(direction.vertical){
+            h = 24;
+            w = pane.getWidth()/numPanes;
+        }else{
+            w = 24;
+            h = pane.getHeight()/numPanes;
+        }
+
+        for(int n=0; n<numPanes; n++){
+            selectors[n] = getBlankButton(info, x, y, w, h, tapering, direction);
+            if(direction.vertical){
+                x += w;
+            }else{
+                y += h;
+            }
+        }
+
+        return selectors;
     }
 
 }

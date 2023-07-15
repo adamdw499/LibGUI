@@ -4,13 +4,19 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
-public abstract class ButtonDecorator extends Button{
+/**
+ * Copies a Button, overriding its mouse click function. Intended for use with blank Buttons.
+ */
+public abstract class ButtonImpersonator extends Button{
 
 
-    private Button button;
+    /**
+     * The button that is being impersonated.
+     */
+    private final Button button;
 
 
-    public ButtonDecorator(Button b){
+    public ButtonImpersonator(Button b){
         super(b.info, b.getX(), b.getY(), b.getWidth(), b.getHeight());
         button = b;
     }

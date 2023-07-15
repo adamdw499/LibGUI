@@ -8,12 +8,15 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 /**
- *
+ * A clickable UIComponent.
  * @author Adam Whittaker
  */
 public abstract class Button extends UIComponent{
-    
-    
+
+
+    /**
+     * hovering: Whether the mouse is currently over the button.
+     */
     private boolean hovering = false;
     public StyleInfo info;
     
@@ -32,7 +35,12 @@ public abstract class Button extends UIComponent{
     public void render(Graphics2D g){
         info.RENDER_UTILS.drawButton(g, info, x, y, width, height, hovering, false);
     }
-    
+
+    /**
+     * Sets hovering to false if the mouse is off the button.
+     * @param mx
+     * @param my
+     */
     @Override
     public void tick(int mx, int my){
         if(hovering && !withinBounds(mx, my)) hovering = false; 
@@ -41,8 +49,12 @@ public abstract class Button extends UIComponent{
     protected boolean isHovering(){
         return hovering;
     }
-    
-    
+
+
+    /**
+     * Sets hovering to true if the mouse is over the button.
+     * @param e the event to be processed
+     */
     @Override
     public void mouseMoved(MouseEvent e){
         if(!hovering) hovering = true;
@@ -53,6 +65,15 @@ public abstract class Button extends UIComponent{
     public abstract void mouseClicked(MouseEvent e);
 
 
+    /**
+     * Creates a do-nothing button, for testing purposes.
+     * @param info
+     * @param x
+     * @param y
+     * @param w
+     * @param h
+     * @return
+     */
     public static Button getBlankButton(StyleInfo info, int x, int y, int w, int h){
         return new Button(info, x, y, w, h){
 
@@ -67,6 +88,28 @@ public abstract class Button extends UIComponent{
 
             @Override
             public void mouseClicked(MouseEvent e){}
+
+        };
+    }
+
+    /**
+     * @return A button that does not exist.
+     */
+    public static Button getNullButton(){
+        return new Button(-1, -1, -1, -1){
+            @Override
+            public void mouseClicked(MouseEvent e){}
+
+            @Override
+            public void tick(int mx, int my){}
+
+            @Override
+            public void render(Graphics2D g){}
+
+            @Override
+            public boolean withinBounds(int mx, int my){
+                return false;
+            }
 
         };
     }
