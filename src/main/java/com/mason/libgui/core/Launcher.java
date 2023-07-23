@@ -9,6 +9,7 @@ import com.mason.libgui.components.inventory.Inventory;
 import com.mason.libgui.components.inventory.InventoryPane;
 import com.mason.libgui.components.misc.Tooltip;
 import com.mason.libgui.components.misc.UIText;
+import com.mason.libgui.components.misc.UITextInput;
 import com.mason.libgui.utils.UIAligner;
 
 
@@ -66,16 +67,7 @@ public class Launcher{
 
         gui.addComponent(scroll);*/
 
-        UIComponent comp = new Dialogue(200, 200, 400, "Title", "This is a test question", new Button[]{
-                TooltipButton.getBlankButton(-1, -1, 100, 32, "Uwu"),
-                TooltipButton.getBlankButton(-1, -1, 100, 32, "Long tooltip text"),
-                TooltipButton.getBlankButton( -1, -1, 100, 32, "supercalifragilistic expialidocious"),
-                TextButton.getBlankButton("Example text", -1, -1)
-        });
-        Tooltip tooltip = new Tooltip("Example", 0, 0);
-        tooltip.setY(300);
-        tooltip.setX(300);
-        gui.addComponent(tooltip);
+        UIComponent comp = new UITextInput(200, 200, 400, 50, gui, 50);
 
         gui.addComponent(comp);
 

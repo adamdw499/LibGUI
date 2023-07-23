@@ -13,7 +13,9 @@ public class KeyBuffer implements KeyListener{
     /**
      * Stores the latest key events.
      */
-    private LinkedList<KeyEvent> typedKeys, pressedKeys, releasedKeys;
+    private LinkedList<KeyEvent> typedKeys = new LinkedList<>(),
+            pressedKeys = new LinkedList<>(),
+            releasedKeys = new LinkedList<>();
 
 
     /**

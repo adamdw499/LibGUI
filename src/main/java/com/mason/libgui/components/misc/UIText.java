@@ -8,6 +8,7 @@ import java.awt.*;
 import java.util.LinkedList;
 
 import static com.mason.libgui.utils.StyleInfo.DEFAULT_STYLE_INFO;
+import static com.mason.libgui.utils.Utils.calcFontHeight;
 import static com.mason.libgui.utils.Utils.stringDimension;
 import static java.lang.Math.max;
 
@@ -25,6 +26,7 @@ public class UIText extends UIComponent{
     private final int dropShadowOffset;
     private Color shadowColor;
     private int padding;
+    private final int fontHeight;
 
 
     /**
@@ -45,6 +47,7 @@ public class UIText extends UIComponent{
         super(x, y, w, -1);
         padding = pad;
         font = f;
+        fontHeight = calcFontHeight(font);
         recalcLinesAndHeight(t);
         color = c;
         dropShadow = dropS;
@@ -179,7 +182,7 @@ public class UIText extends UIComponent{
      */
     private void recalcLinesAndHeight(String t){
         text = splitLines(t);
-        setHeight(text.length*(stringDimension("QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm", font)[1] + padding) + padding);
+        setHeight(text.length*(fontHeight + padding) + padding);
     }
 
 

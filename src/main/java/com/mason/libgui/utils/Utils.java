@@ -143,6 +143,15 @@ public final class Utils{
         };
     }
 
+    public static int calcFontHeight(Font font){
+        return stringDimension("QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm .-", font)[1];
+    }
+
+    public static int calcAverageCharWidth(Font font){
+        String str = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm .-";
+        return stringDimension(str, font)[0]/str.length();
+    }
+
     
     public static void main(String[] args){
         MidpointDisplacementNoise mdp = new MidpointDisplacementNoise(1, 0.75D, false);
