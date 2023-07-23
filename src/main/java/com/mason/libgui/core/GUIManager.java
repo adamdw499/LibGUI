@@ -1,7 +1,7 @@
 
 package com.mason.libgui.core;
 
-import com.mason.libgui.components.misc.KeyHandler;
+import com.mason.libgui.components.keyInput.KeyBuffer;
 import com.mason.libgui.utils.ExceptionHandler;
 import com.mason.libgui.utils.StyleInfo;
 import com.mason.libgui.utils.UIAligner.Position;
@@ -18,7 +18,7 @@ public class GUIManager{
     private final UIComponentManager compManager;
     private final Pacemaker pacemaker;
     private ExceptionHandler exceptionHandler;
-    private final KeyHandler keyHandler;
+    private final KeyBuffer keyBuffer;
     
     
     public GUIManager(int width, int height, String title){
@@ -27,8 +27,8 @@ public class GUIManager{
 
     public GUIManager(int width, int height, String title, ExceptionHandler ex){
         compManager = new UIComponentManager(StyleInfo.DEFAULT_STYLE_INFO, width, height);
-        keyHandler = new KeyHandler();
-        window = new Window(width, height, title, compManager, keyHandler);
+        keyBuffer = new KeyBuffer();
+        window = new Window(width, height, title, compManager, keyBuffer);
         pacemaker = new Pacemaker(this);
         setExceptionHandler(ex);
     }
@@ -64,8 +64,12 @@ public class GUIManager{
         return pacemaker;
     }
 
-    public KeyHandler getKeyHandler(){
-        return keyHandler;
+    public KeyBuffer getKeyBuffer(){
+        return keyBuffer;
+    }
+
+    public UIComponentManager getCompManager(){
+        return compManager;
     }
 
     public final void setExceptionHandler(ExceptionHandler ex){

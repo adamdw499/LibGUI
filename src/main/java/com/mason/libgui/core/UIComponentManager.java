@@ -4,6 +4,7 @@ package com.mason.libgui.core;
 import com.mason.libgui.components.draggables.Draggable;
 import com.mason.libgui.components.misc.ClickBlocker;
 import com.mason.libgui.components.misc.ClickOffable;
+import com.mason.libgui.components.misc.Fosterable;
 import com.mason.libgui.components.panes.Pane;
 import com.mason.libgui.utils.StyleInfo;
 import com.mason.libgui.utils.UIAligner;
@@ -80,6 +81,7 @@ public class UIComponentManager extends UIComponent{
     }
 
     public void addComponent(UIComponent comp){
+        if(comp instanceof Fosterable f) f.setParent(this);
         spawning.add(comp);
     }
 

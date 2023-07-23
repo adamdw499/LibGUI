@@ -3,8 +3,11 @@ package com.mason.libgui.core;
 
 import com.mason.libgui.components.buttons.Button;
 import com.mason.libgui.components.buttons.TextButton;
+import com.mason.libgui.components.buttons.TooltipButton;
+import com.mason.libgui.components.dialogues.Dialogue;
 import com.mason.libgui.components.inventory.Inventory;
 import com.mason.libgui.components.inventory.InventoryPane;
+import com.mason.libgui.components.misc.Tooltip;
 import com.mason.libgui.components.misc.UIText;
 import com.mason.libgui.utils.UIAligner;
 
@@ -63,14 +66,18 @@ public class Launcher{
 
         gui.addComponent(scroll);*/
 
-        TextButton button = new TextButton("text", DEFAULT_STYLE_INFO, 100, 100, 100, 100) {
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        UIComponent comp = new Dialogue(200, 200, 400, "Title", "This is a test question", new Button[]{
+                TooltipButton.getBlankButton(-1, -1, 100, 32, "Uwu"),
+                TooltipButton.getBlankButton(-1, -1, 100, 32, "Long tooltip text"),
+                TooltipButton.getBlankButton( -1, -1, 100, 32, "supercalifragilistic expialidocious"),
+                TextButton.getBlankButton("Example text", -1, -1)
+        });
+        Tooltip tooltip = new Tooltip("Example", 0, 0);
+        tooltip.setY(300);
+        tooltip.setX(300);
+        gui.addComponent(tooltip);
 
-            }
-        };
-
-        gui.addComponent(button);
+        gui.addComponent(comp);
 
         //gui.addComponent(new Dialogue(50, 50, 270, "Title", "The quick brown fox jumped over the lazy dog.", buttons));
         //gui.addComponent(new DraggablePane(ALTERNATE_STYLE_INFO_1, 250, 200, 200, 200));

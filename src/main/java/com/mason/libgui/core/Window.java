@@ -1,7 +1,7 @@
 
 package com.mason.libgui.core;
 
-import com.mason.libgui.components.misc.KeyHandler;
+import com.mason.libgui.components.keyInput.KeyBuffer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,14 +18,14 @@ public class Window extends JFrame{
     public static final Color BACKGROUND_COLOR = new Color(20,20,20);
 
 
-    public Window(int width, int height, String title, UIComponentManager cm, KeyHandler keys, Image toolbarImg, Cursor cursor){
+    public Window(int width, int height, String title, UIComponentManager cm, KeyBuffer keys, Image toolbarImg, Cursor cursor){
         this(width, height, title, cm, keys);
 
         setIconImage(toolbarImg);
         setCursor(cursor);
     }
     
-    public Window(int width, int height, String title, UIComponentManager cm, KeyHandler keys){
+    public Window(int width, int height, String title, UIComponentManager cm, KeyBuffer keys){
         super(title);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

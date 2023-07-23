@@ -7,7 +7,7 @@ import com.mason.libgui.utils.StyleInfo;
 import java.awt.*;
 
 /**
- *
+ * A progress bar
  * @author Adam Whittaker
  */
 public class PointBar extends UIComponent{
@@ -16,8 +16,19 @@ public class PointBar extends UIComponent{
     private Color color;
     private StyleInfo info;
     private double current, max;
-    
-    
+
+
+    /**
+     * Creates an instance.
+     * @param info
+     * @param col The color of the "progress"
+     * @param cur the current value
+     * @param _max the maximum value
+     * @param x
+     * @param y
+     * @param w
+     * @param h
+     */
     public PointBar(StyleInfo info, Color col, int cur, int _max, int x, int y, int w, int h){
         super(x, y, w, h);
         color = col;

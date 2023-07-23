@@ -8,10 +8,10 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 
 /**
- *
+ * A simple rotating circle animation.
  * @author Adam Whittaker
  */
-public class LoadingCircle extends UIComponent{
+public class LoadingCircleAnimation extends UIComponent{
     
     
     private final Color color;    
@@ -19,9 +19,19 @@ public class LoadingCircle extends UIComponent{
     private final AffineTransform rotation = new AffineTransform();
     private final Rectangle rectangle;
     private final int lineWidth;
-    
-    
-    public LoadingCircle(Color col, int x, int y, int diam, double angularVel, int gapHeight, int lineWidth){
+
+
+    /**
+     * Creates an instance.
+     * @param col The color of the circle
+     * @param x The top left x
+     * @param y top left y
+     * @param diam diameter of the circle
+     * @param angularVel angular velocity of the animation
+     * @param gapHeight the size of the gap in the circle that does the rotating
+     * @param lineWidth the width of the loading circle annulus
+     */
+    public LoadingCircleAnimation(Color col, int x, int y, int diam, double angularVel, int gapHeight, int lineWidth){
         super(x, y, diam, diam);
         color = col;
         angularVelocity = angularVel;
@@ -35,10 +45,15 @@ public class LoadingCircle extends UIComponent{
         g.setColor(color);
         g.fillOval(x, y, width, height);
         g.setColor(Window.BACKGROUND_COLOR);
-        g.fillOval(x + lineWidth, y + lineWidth, width-2 * lineWidth, height-2 * lineWidth);
+        g.fillOval(x + lineWidth, y + lineWidth, width - 2*lineWidth, height - 2*lineWidth);
         g.fill(rotation.createTransformedShape(rectangle));
     }
-    
+
+    /**
+     * Rotates the gap in the annulus a little.
+     * @param mx
+     * @param my
+     */
     @Override
     public void tick(int mx, int my){
         rotation.rotate(angularVelocity, x + width/2D, y + height/2D);

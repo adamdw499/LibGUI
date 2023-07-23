@@ -1,5 +1,7 @@
 package com.mason.libgui.components.misc;
 
+import com.mason.libgui.components.keyInput.KeyBuffer;
+import com.mason.libgui.components.keyInput.KeyedComponent;
 import com.mason.libgui.core.GUIManager;
 import com.mason.libgui.core.UIComponent;
 import com.mason.libgui.utils.StyleInfo;
@@ -7,22 +9,22 @@ import com.mason.libgui.utils.Utils;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 import static com.mason.libgui.utils.Utils.stringDimension;
 
-public class UITextInput extends UIComponent implements ClickOffable{
+/**
+ *
+ */
+public class UITextInput extends KeyedComponent{
 
 
     private String text = "";
-    private boolean isClicked = false;
-    private final KeyHandler keys;
     private final TypeIndicator typeLine;
     private final StyleInfo info;
     private final int maxLength;
 
 
-    public UITextInput(StyleInfo info, int x, int y, int w, int h, KeyHandler keys, int maxLength){
+    public UITextInput(StyleInfo info, int x, int y, int w, int h, KeyBuffer keys, int maxLength){
         super(x, y, w, h);
         this.keys = keys;
         this.info = info;
@@ -32,7 +34,7 @@ public class UITextInput extends UIComponent implements ClickOffable{
     }
 
     public UITextInput(int x, int y, int w, int h, GUIManager gui){
-        this(StyleInfo.TEXT_INPUT_INFO, x, y, w, h, gui.getKeyHandler(), 12);
+        this(StyleInfo.TEXT_INPUT_INFO, x, y, w, h, gui.getKeyBuffer(), 12);
     }
 
 
@@ -46,25 +48,15 @@ public class UITextInput extends UIComponent implements ClickOffable{
     }
 
     @Override
-    public void tick(int mx, int my){
-        typeLine.tick(mx, my);
-        if(isClicked){
-            if(keys.hasNewKeyTyped()){
-                processKeyTyped(keys.pollCurrentKeyTyped());
-            }else if(keys.hasNewKeyPressed()){
-                processKeyPressed(keys.pollCurrentKeyPressed());
-            }
-        }
-    }
-
-    private void processKeyTyped(KeyEvent e){
+    protected void processKeyTyped(KeyEvent e){
         if(text.length() < maxLength && Utils.isAlphanumeric(e.getKeyChar())){
             text = text.substring(0, typeLine.position) + e.getKeyChar() + text.substring(typeLine.position);
             typeLine.setPosition(typeLine.position + 1, text);
         }
     }
 
-    private void processKeyPressed(KeyEvent e){
+    @Override
+    protected void processKeyPressed(KeyEvent e){
         switch(e.getKeyCode()){
             case KeyEvent.VK_LEFT -> {
                 if(typeLine.position > 0) typeLine.setPosition(typeLine.position-1, text);
@@ -86,6 +78,15 @@ public class UITextInput extends UIComponent implements ClickOffable{
         }
     }
 
+    @Override
+    protected void processKeyReleased(KeyEvent e){}
+
+    @Override
+    public void tick(int mx, int my){
+        typeLine.tick(mx, my);
+        super.tick(mx, my);
+    }
+
     public void renderText(Graphics2D g){
         g.setFont(info.FONT);
         FontMetrics f = g.getFontMetrics();
@@ -103,11 +104,6 @@ public class UITextInput extends UIComponent implements ClickOffable{
         }
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e){
-        isClicked = true;
-    }
-
 
     public String getText(){
         return text;
@@ -116,11 +112,6 @@ public class UITextInput extends UIComponent implements ClickOffable{
     @Override
     public String toString(){
         return "[UITextInput] " + getText();
-    }
-
-    @Override
-    public void clickOff(){
-        isClicked = false;
     }
 
 

@@ -7,13 +7,13 @@ import java.awt.event.MouseEvent;
  *
  * @author Adam Whittaker
  */
-public abstract class SnapDraggable extends DraggableComponent {
+public abstract class SnapDraggableComponent extends DraggableComponent{
     
     
     private int[][] snapGrid;
     
     
-    public SnapDraggable(int[][] grid, int x, int y, int width, int height){
+    public SnapDraggableComponent(int[][] grid, int x, int y, int width, int height){
         super(x, y, width, height);
         snapGrid = grid;
         snap();

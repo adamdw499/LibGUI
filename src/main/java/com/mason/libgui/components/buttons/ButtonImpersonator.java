@@ -41,18 +41,31 @@ public abstract class ButtonImpersonator extends Button{
         button.tick(mx, my);
     }
 
+    @Override
     public void setX(int x){
         super.setX(x);
         button.setX(x);
     }
 
+    @Override
     public void setY(int y){
         super.setY(y);
         button.setY(y);
     }
 
+    @Override
     protected boolean isHovering(){
         return button.isHovering();
+    }
+
+    @Override
+    protected void startHovering(){
+        button.startHovering();
+    }
+
+    @Override
+    protected void stopHovering(){
+        button.stopHovering();
     }
 
     @Override
@@ -60,26 +73,32 @@ public abstract class ButtonImpersonator extends Button{
         button.mouseMoved(e);
     }
 
+    @Override
     public void mousePressed(MouseEvent e) {
         button.mousePressed(e);
     }
 
+    @Override
     public void mouseReleased(MouseEvent e) {
         button.mouseReleased(e);
     }
 
+    @Override
     public void mouseEntered(MouseEvent e) {
         button.mouseEntered(e);
     }
 
+    @Override
     public void mouseExited(MouseEvent e) {
         button.mouseExited(e);
     }
 
+    @Override
     public void mouseWheelMoved(MouseWheelEvent e){
         button.mouseWheelMoved(e);
     }
 
+    @Override
     public void mouseDragged(MouseEvent e){
         button.mouseDragged(e);
     }

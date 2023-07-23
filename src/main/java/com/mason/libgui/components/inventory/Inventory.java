@@ -15,6 +15,9 @@ import static com.mason.libgui.components.buttons.TrapezoidalButton.getBlankButt
 import static com.mason.libgui.utils.UIAligner.Direction.*;
 import static java.lang.Math.min;
 
+/**
+ * A set of panes that can be selected.
+ */
 public class Inventory extends UIComponent{
 
 
@@ -24,6 +27,13 @@ public class Inventory extends UIComponent{
     private Direction direction;
 
 
+    /**
+     * Creates an instance.
+     * @param info The style info
+     * @param panes The panes array
+     * @param selectorButtons The buttons to select the panes
+     * @param direction The direction the selector buttons relative to the pane
+     */
     public Inventory(StyleInfo info, Pane[] panes, Button[] selectorButtons, Direction direction){
         super(panes[0].getX(), panes[0].getY(), panes[0].getWidth(), panes[0].getHeight());
         this.panes = panes;
@@ -39,6 +49,12 @@ public class Inventory extends UIComponent{
         setY(y);
     }
 
+    /**
+     * Creates an instance with default selector buttons.
+     * @param info The style info
+     * @param panes The panes array
+     * @param direction The direction the selector buttons relative to the pane
+     */
     public Inventory(StyleInfo info, Pane[] panes, Direction direction){
         this(info, panes, defaultSelectorButtons(info, panes[0], panes.length, direction), direction);
     }
@@ -136,6 +152,9 @@ public class Inventory extends UIComponent{
     }
 
 
+    /**
+     * The set of pane selector buttons
+     */
     private class PaneSelector extends Pane{
 
 
@@ -172,7 +191,10 @@ public class Inventory extends UIComponent{
     }
 
 
-    private class PaneSelectorButton extends ButtonImpersonator {
+    /**
+     * Links a selector button to its pane.
+     */
+    private class PaneSelectorButton extends ButtonImpersonator{
 
 
         private final int paneNum;
@@ -192,6 +214,14 @@ public class Inventory extends UIComponent{
     }
 
 
+    /**
+     * Creates default selector buttons.
+     * @param info
+     * @param pane An example pane to get the dimensions from.
+     * @param numPanes
+     * @param direction
+     * @return
+     */
     private static Button[] defaultSelectorButtons(StyleInfo info, Pane pane, int numPanes, Direction direction){
         Button[] selectors = new Button[numPanes];
 

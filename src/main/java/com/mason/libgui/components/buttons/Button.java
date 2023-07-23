@@ -43,11 +43,7 @@ public abstract class Button extends UIComponent{
      */
     @Override
     public void tick(int mx, int my){
-        if(hovering && !withinBounds(mx, my)) hovering = false; 
-    }
-
-    protected boolean isHovering(){
-        return hovering;
+        if(hovering && !withinBounds(mx, my)) stopHovering();
     }
 
 
@@ -57,7 +53,25 @@ public abstract class Button extends UIComponent{
      */
     @Override
     public void mouseMoved(MouseEvent e){
-        if(!hovering) hovering = true;
+        if(!hovering) startHovering();
+    }
+
+    /**
+     * Sets hovering parameter to true.
+     */
+    protected void startHovering(){
+        hovering = true;
+    }
+
+    /**
+     * Sets hovering parameter to false.
+     */
+    protected void stopHovering(){
+        hovering = false;
+    }
+
+    protected boolean isHovering(){
+        return hovering;
     }
 
 
