@@ -31,4 +31,7 @@ public class GridTest extends UIComponent{
         g.drawImage(img, null, x, y);
     }
 
+    @Override
+    public void tick(int mx, int my){}
+
 }

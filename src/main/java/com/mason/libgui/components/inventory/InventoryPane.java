@@ -12,7 +12,18 @@ import java.awt.*;
 public class InventoryPane extends Pane{
 
 
-    private int rows, columns, padding, rightSpace, leftSpace, topSpace, bottomSpace, buttonWidth, buttonHeight;
+    /**
+     * See constructor javadoc
+     */
+    private final int rows;
+    private final int columns;
+    private final int padding;
+    private final int rightSpace;
+    private final int leftSpace;
+    private final int topSpace;
+    private final int bottomSpace;
+    private final int buttonWidth;
+    private final int buttonHeight;
 
 
     /**

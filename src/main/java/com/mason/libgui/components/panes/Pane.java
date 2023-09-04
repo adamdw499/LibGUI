@@ -1,6 +1,7 @@
 
 package com.mason.libgui.components.panes;
 
+import com.mason.libgui.components.dragging.DragManager;
 import com.mason.libgui.core.UIComponentManager;
 import com.mason.libgui.utils.StyleInfo;
 
@@ -10,23 +11,42 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.geom.AffineTransform;
 
 /**
- *
+ * A window pane onto which new components can be nested. Mainly code for translating between absolute and relative
+ * mouse coordinates.
  * @author Adam Whittaker
  */
 public class Pane extends UIComponentManager{
-    
-    
+
+
+    /**
+     * Forwarded constructor
+     */
     public Pane(StyleInfo info, int x, int y, int w, int h){
         super(info, x, y, w, h);
     }
-    
-    
+
+    /**
+     * Forwarded constructor
+     */
+    protected Pane(DragManager m, StyleInfo info, int x, int y, int w, int h){
+        super(m, info, x, y, w, h);
+    }
+
+
+    /**
+     * Translates the components, and renders a border around the pane.
+     * @param g the graphics object
+     */
     @Override
     public void render(Graphics2D g){
         renderComponents(g);
         renderBorder(g);
     }
 
+    /**
+     * Applies a translation to the components before drawing them, to translate from absolute to relative
+     * coordinates.
+     */
     protected void renderComponents(Graphics2D g){
         AffineTransform saved = g.getTransform();
         g.transform(AffineTransform.getTranslateInstance(x, y));
@@ -34,15 +54,24 @@ public class Pane extends UIComponentManager{
         g.setTransform(saved);
     }
 
+    /**
+     * Draws a border around the pane.
+     */
     protected void renderBorder(Graphics2D g){
         info.RENDER_UTILS.drawBorder(g, info, x, y, width, height);
     }
-    
+
+    /**
+     * Translates the mouse event to relative coordinates.
+     */
     protected MouseEvent relativeMouseCoords(MouseEvent e){
-        return new MouseEvent(e.getComponent(), e.getID(), e.getWhen(), e.getModifiersEx(), e.getX() - x, e.getY() - y, 
-                e.getClickCount(), e.isPopupTrigger());
+        return new MouseEvent(e.getComponent(), e.getID(), e.getWhen(), e.getModifiersEx(),
+                e.getX() - x, e.getY() - y, e.getClickCount(), e.isPopupTrigger());
     }
-    
+
+    /**
+     * Translates the mouse wheel event to relative coordinates.
+     */
     protected MouseWheelEvent relativeMouseCoords(MouseWheelEvent e){
         return new MouseWheelEvent(e.getComponent(), e.getID(), e.getWhen(), e.getModifiersEx(), e.getX() - x, 
                 e.getY() - y, e.getClickCount(), e.isPopupTrigger(), e.getScrollType(), e.getScrollAmount(), 

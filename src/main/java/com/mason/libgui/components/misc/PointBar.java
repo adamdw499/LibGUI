@@ -58,5 +58,8 @@ public class PointBar extends UIComponent{
         g.fillRect(x+info.getLineWidth(), y+info.getLineWidth(),
                 (int)((width-2*info.getLineWidth())*(current/max)), height-2*info.getLineWidth());
     }
-    
+
+    @Override
+    public void tick(int mx, int my){}
+
 }

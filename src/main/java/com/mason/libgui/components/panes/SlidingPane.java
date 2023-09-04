@@ -4,6 +4,7 @@ import com.mason.libgui.core.UIComponent;
 import com.mason.libgui.utils.StyleInfo;
 import com.mason.libgui.utils.UIAligner.Direction;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class SlidingPane extends Pane{
@@ -172,6 +173,12 @@ public class SlidingPane extends Pane{
                     (x<mx && mx<x+width && y<my && my<y+info.getLineWidth()) ||
                     (x<mx && mx<x+width && y+height-info.getLineWidth()<my && my<y+height);
         }
+
+        @Override
+        public void render(Graphics2D g){}
+
+        @Override
+        public void tick(int mx, int my){}
 
         @Override
         public void mouseClicked(MouseEvent e){

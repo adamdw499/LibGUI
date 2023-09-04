@@ -1,25 +1,12 @@
 
 package com.mason.libgui.core;
 
-import com.mason.libgui.components.buttons.Button;
-import com.mason.libgui.components.buttons.TextButton;
-import com.mason.libgui.components.buttons.TooltipButton;
-import com.mason.libgui.components.dialogues.Dialogue;
-import com.mason.libgui.components.inventory.Inventory;
-import com.mason.libgui.components.inventory.InventoryPane;
-import com.mason.libgui.components.misc.Tooltip;
-import com.mason.libgui.components.misc.UIText;
-import com.mason.libgui.components.misc.UITextInput;
-import com.mason.libgui.utils.UIAligner;
+import com.mason.libgui.components.panes.PannablePane;
 
-
-import java.awt.event.MouseEvent;
 
 import static com.mason.libgui.components.buttons.Button.getBlankButton;
 import static com.mason.libgui.components.buttons.TrapezoidalButton.getBlankButton;
 import static com.mason.libgui.utils.StyleInfo.*;
-import static com.mason.libgui.utils.UIAligner.Position.MIDDLE;
-import static com.mason.libgui.utils.UIAligner.Position.START;
 
 /**
  *
@@ -67,9 +54,14 @@ public class Launcher{
 
         gui.addComponent(scroll);*/
 
-        UIComponent comp = new UITextInput(200, 200, 400, 50, gui, 50);
+        UIComponent comp = //PanLockedDraggableComponent.getTestInstance(100, 100, 100, 100);
+                    UIComponent.getTestInstance(250, 250, 100, 100);
 
-        gui.addComponent(comp);
+        PannablePane pane = new PannablePane(DEFAULT_STYLE_INFO, 100, 100, 600, 600, 300, 300, true);
+
+        pane.addComponent(comp);
+
+        gui.addComponent(pane);
 
         //gui.addComponent(new Dialogue(50, 50, 270, "Title", "The quick brown fox jumped over the lazy dog.", buttons));
         //gui.addComponent(new DraggablePane(ALTERNATE_STYLE_INFO_1, 250, 200, 200, 200));

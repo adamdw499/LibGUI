@@ -1,106 +1,47 @@
 
 package com.mason.libgui.components.panes;
 
-import com.mason.libgui.components.draggables.Draggable;
-import com.mason.libgui.core.UIComponent;
+import com.mason.libgui.components.dragging.Draggable;
 import com.mason.libgui.utils.StyleInfo;
 
-import java.awt.event.MouseEvent;
-
 /**
- *
+ * A Pane object that can be dragged around.
  * @author Adam Whittaker
  */
 public class DraggablePane extends Pane implements Draggable{
-    
-    
-    private final DragRegion dragRegion;
-    private int diffX, diffY;
-    
-    
+
+
+    /**
+     * Forwarded constructor.
+     */
     public DraggablePane(StyleInfo info, int x, int y, int w, int h){
         super(info, x, y, w, h);
-        dragRegion = new DragRegion(w, h);
-        addComponent(dragRegion);
-    }
-    
-    
-    @Override
-    public void mousePressed(MouseEvent e){
-        if(dragRegion.withinBounds(e.getX()-x, e.getY()-y)) dragRegion.mousePressed(e);
-        else super.mousePressed(e);
-    }
-    
-    @Override
-    public void mouseDragged(MouseEvent e){
-        if(dragRegion.isDragging()) dragRegion.mouseDragged(e);
-        else super.mouseDragged(e);
-    }
-    
-    @Override
-    public void mouseReleased(MouseEvent e){
-        if(dragRegion.isDragging()) dragRegion.stopDragging();
-        else super.mouseReleased(e);
     }
 
 
+    /**
+     * Checks if the mouse is on the border.
+     * @param mx relative mouse x
+     * @param my relative mouse y
+     */
     @Override
-    public void setWidth(int w){
-        super.setWidth(w);
-        dragRegion.setWidth(w);
+    public boolean withinDragRegion(int mx, int my){
+        return mx<x+info.getLineWidth() || x+width-info.getLineWidth()<mx ||
+                (my<y+info.getLineWidth()) || y+height-info.getLineWidth()<my;
     }
 
     @Override
-    public void setHeight(int h){
-        super.setHeight(h);
-        dragRegion.setHeight(h);
+    public boolean validDragLocation(int x, int y){
+        return true;
     }
 
-    
-    protected class DragRegion extends UIComponent{
-        
-        
-        private boolean dragging = false;
-        
-        
-        DragRegion(int w, int h){
-            super(0, 0, w, h);
-        }
-        
-        
-        @Override
-        public boolean withinBounds(int mx, int my){
-            return (x<mx && mx<x+info.getLineWidth() && y<my && my<y+height) ||
-                    (mx<width+x && x+width-info.getLineWidth()<mx && y<my && my<y+height) ||
-                    (x<mx && mx<x+width && y<my && my<y+info.getLineWidth()) ||
-                    (x<mx && mx<x+width && y+height-info.getLineWidth()<my && my<y+height);
-        }
-        
-        
-        @Override
-        public void mousePressed(MouseEvent e){
-            dragging = true;
-            diffX = e.getX() - DraggablePane.this.x;
-            diffY = e.getY() - DraggablePane.this.y;
-        }
+    @Override
+    public void processInvalidDrag(int mx, int my){}
 
-        @Override
-        public void mouseDragged(MouseEvent e){
-            if(dragging){
-                DraggablePane.this.x = e.getX() - diffX;
-                DraggablePane.this.y = e.getY() - diffY;
-            }
-        }
-        
-        
-        boolean isDragging(){
-            return dragging;
-        }
-        
-        void stopDragging(){
-            dragging = false;
-        }
-        
-    }
-    
+    @Override
+    public void startDrag(){}
+
+    @Override
+    public void releaseDrag(){}
+
 }

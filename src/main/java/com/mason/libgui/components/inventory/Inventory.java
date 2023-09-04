@@ -21,10 +21,16 @@ import static java.lang.Math.min;
 public class Inventory extends UIComponent{
 
 
-    private Pane[] panes;
-    private PaneSelector selector;
+    /**
+     * panes: the panes.
+     * selector: the set of buttons selecting the current pane.
+     * currentPane: the current pane index.
+     * direction: the location of the pane selector relative to the panes.
+     */
+    private final Pane[] panes;
+    private final PaneSelector selector;
     private int currentPane = 0;
-    private Direction direction;
+    private final Direction direction;
 
 
     /**
@@ -60,28 +66,51 @@ public class Inventory extends UIComponent{
     }
 
 
+    /**
+     * Renders the pane selector and current pane separately
+     * @param g the graphics object
+     */
     @Override
     public void render(Graphics2D g){
         panes[currentPane].render(g);
         selector.render(g);
     }
 
+    /**
+     * Sets the pane
+     * @param paneNum the index
+     */
     protected void setPane(int paneNum){
         currentPane = paneNum;
     }
 
+    /**
+     * Adds the pane selector to the bounds of this object.
+     * @param mx The x coordinate.
+     * @param my The y coordinate.
+     */
     @Override
     public boolean withinBounds(int mx, int my){
         return panes[currentPane].withinBounds(mx, my) || selector.withinBounds(mx, my);
     }
 
+    /**
+     * Ticks the selector and the current pane
+     * @param mx mouse x
+     * @param my mouse y
+     */
     @Override
     public void tick(int mx, int my){
-        for(Pane pane : panes) pane.tick(mx, my);
+        panes[currentPane].tick(mx, my);
         selector.tick(mx, my);
     }
 
 
+    /**
+     * Moves the selector also
+     * @param _x The x
+     */
+    @Override
     public void setX(int _x){
         super.setX(_x);
 
@@ -98,6 +127,11 @@ public class Inventory extends UIComponent{
         }
     }
 
+    /**
+     * Moves the selector also
+     * @param _y The y
+     */
+    @Override
     public void setY(int _y){
         super.setY(_y);
 
@@ -167,6 +201,15 @@ public class Inventory extends UIComponent{
         }
 
 
+        /**
+         * Moves the button to the correct place in the selector.
+         * @param w width of the selector
+         * @param h height of the selector
+         * @param button the button
+         * @param direction the direction of the selector relative to the pane
+         * @param n the index of the button
+         * @param numButtons the total number of buttons in the selector
+         */
         private static void setButtonCoords(int w, int h, Button button, Direction direction, int n, int numButtons){
             switch(direction){
                 case DOWN, UP -> {
@@ -183,6 +226,10 @@ public class Inventory extends UIComponent{
         }
 
 
+        /**
+         * Skips rendering of the pane border
+         * @param g the graphics object
+         */
         @Override
         public void render(Graphics2D g){
             renderComponents(g);
@@ -216,11 +263,7 @@ public class Inventory extends UIComponent{
 
     /**
      * Creates default selector buttons.
-     * @param info
      * @param pane An example pane to get the dimensions from.
-     * @param numPanes
-     * @param direction
-     * @return
      */
     private static Button[] defaultSelectorButtons(StyleInfo info, Pane pane, int numPanes, Direction direction){
         Button[] selectors = new Button[numPanes];

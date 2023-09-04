@@ -3,6 +3,7 @@ package com.mason.libgui.core;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * The base object that can be rendered, intersected with, and animated on screen.
@@ -49,7 +50,6 @@ public abstract class UIComponent extends MouseAdapter{
     
     /**
      * Retrieves the box's x value.
-     * @return
      */
     public int getX(){
         return x;
@@ -57,7 +57,6 @@ public abstract class UIComponent extends MouseAdapter{
     
     /**
      * Retrieves the box's y value.
-     * @return
      */
     public int getY(){
         return y;
@@ -65,7 +64,6 @@ public abstract class UIComponent extends MouseAdapter{
     
     /**
      * Retrieves the box's width.
-     * @return
      */
     public int getWidth(){
         return width;
@@ -73,7 +71,6 @@ public abstract class UIComponent extends MouseAdapter{
     
     /**
      * Retrieves the box's height.
-     * @return
      */
     public int getHeight(){
         return height;
@@ -123,16 +120,43 @@ public abstract class UIComponent extends MouseAdapter{
 
 
     /**
-     * Checks if this component intersects with the given one.
+     * Renders the component
      * @param g the graphics object
      */
-    public void render(Graphics2D g){}
+    public abstract void render(Graphics2D g);
 
     /**
-     * Checks if this component intersects with the given one.
-     * @param mx
-     * @param my
+     * Ticks this component.
+     * @param mx mouse x
+     * @param my mouse y
      */
-    public void tick(int mx, int my){}
+    public abstract void tick(int mx, int my);
+
+
+    /**
+     * Grants this object its parent component manager, upon being added to it.
+     */
+    public void setParent(UIComponentManager parent){}
+
+
+    public static UIComponent getTestInstance(int x, int y, int w, int h){
+        return new UIComponent(x, y, w, h){
+
+            @Override
+            public void render(Graphics2D g){
+                g.setColor(Color.PINK);
+                g.fillRect(x, y, width, height);
+            }
+
+            @Override
+            public void tick(int mx, int my){}
+
+            @Override
+            public void mousePressed(MouseEvent e){
+                System.out.println("Test component pressed");
+            }
+
+        };
+    }
     
 }

@@ -1,17 +1,15 @@
 package com.mason.libgui.components.buttons;
 
-import com.mason.libgui.components.misc.Fosterable;
 import com.mason.libgui.components.misc.Tooltip;
 import com.mason.libgui.core.UIComponentManager;
 import com.mason.libgui.utils.StyleInfo;
 
-import java.awt.*;
 import java.awt.event.MouseEvent;
 
 /**
  * A button with a tooltip that appears when you hover over it.
  */
-public abstract class TooltipButton extends Button implements Fosterable{
+public abstract class TooltipButton extends Button{
 
 
     private Tooltip tooltip;

@@ -216,6 +216,9 @@ public class UIText extends UIComponent{
         }
     }
 
+    @Override
+    public void tick(int mx, int my){}
+
 
     public void setDropShadow(boolean dropShadow) {
         this.dropShadow = dropShadow;
