@@ -11,6 +11,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.AffineTransform;
 
+import static com.mason.libgui.utils.Utils.withinRectBounds;
+
 /**
  * A pane that can be panned and zoomed.
  */
@@ -66,7 +68,7 @@ public class PannablePane extends Pane{
      */
     @Override
     public boolean withinBounds(int mx, int my){
-        return withinBounds(x, y, camera.getWidth(), camera.getHeight(), mx, my);
+        return withinRectBounds(x, y, camera.getWidth(), camera.getHeight(), mx, my);
     }
 
     /**

@@ -14,6 +14,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Random;
 
 import static java.lang.Math.exp;
@@ -129,6 +131,20 @@ public final class Utils{
         return 1D/(1D+exp(-x));
     }
 
+    /**
+     * Checks whether the given coordinate is inside the given rectangle.
+     * @param x The x coordinate of the top-left of the rectangle.
+     * @param y The y coordinate of the top-left of the rectangle.
+     * @param width The width.
+     * @param height The height.
+     * @param mx The x coordinate.
+     * @param my The y coordinate.
+     * @return True if it is.
+     */
+    public static boolean withinRectBounds(int x, int y, int width, int height, int mx, int my){
+        return x<mx && mx<x+width && y<my && my<y+height;
+    }
+
     public static boolean isAlphanumeric(char c){
         return Character.isAlphabetic(c) || Character.isDigit(c) || c == ' ' || c == '.' || c == '-';
     }
@@ -152,24 +168,22 @@ public final class Utils{
         return stringDimension(str, font)[0]/str.length();
     }
 
+    public static boolean isInstanceOfType(Object obj, Type type){
+        Class<?> objClass = obj.getClass();
+
+        if (type instanceof Class<?> clazz){
+
+            return clazz.isInstance(obj);
+
+        } else if (type instanceof ParameterizedType parameterizedType) {
+            return ((Class<?>) parameterizedType.getRawType()).isAssignableFrom(objClass);
+        }
+
+        return false;
+    }
+
     
     public static void main(String[] args){
-        MidpointDisplacementNoise mdp = new MidpointDisplacementNoise(1, 0.75D, false);
-        double[][] map = new double[128][128];
-        mdp.apply(map);
-        BufferedImage img = ImageUtils.getDichromeTexture(128, 128, 0, 0,
-                new Color(120, 30, 50),
-                new Color(30, 100, 90), map);
-        Graphics2D g = img.createGraphics();
-        g.drawImage(readImage("testImages/filter3.png", new FailExceptionHandler()), null,0, 0);
-        writeImage("png", "testImages/mdn.png", img, new FailExceptionHandler());
-        /*BufferedImage img = loadImage("testImages/filter3.png", new FailExceptionHandler());
-        ImageUtils.applyFadeFactor(img, 0.5);
-        writeImage("png", "testImages/filter4.png", img, new FailExceptionHandler());
-        ImageUtils.applyFadeFactor(img, 0.5);
-        writeImage("png", "testImages/filter5.png", img, new FailExceptionHandler());
-        ImageUtils.applyFadeFactor(img, 0.5);
-        writeImage("png", "testImages/filter6.png", img, new FailExceptionHandler());*/
     }
     
 }

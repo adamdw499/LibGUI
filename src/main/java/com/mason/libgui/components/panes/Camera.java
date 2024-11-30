@@ -6,6 +6,7 @@ import com.mason.libgui.core.UIComponentManager;
 import java.awt.*;
 import java.awt.event.MouseWheelEvent;
 
+import static com.mason.libgui.utils.Utils.withinRectBounds;
 import static java.lang.Math.min;
 import static java.lang.StrictMath.pow;
 
@@ -48,7 +49,7 @@ public class Camera extends DraggableComponent{
      */
     @Override
     public boolean withinBounds(int mx, int my){
-        return withinBounds((int)apparentX(), (int)apparentY(), (int)(width/zoom), (int)(height/zoom), mx, my);
+        return withinRectBounds((int)apparentX(), (int)apparentY(), (int)(width/zoom), (int)(height/zoom), mx, my);
     }
 
     /**
@@ -91,9 +92,10 @@ public class Camera extends DraggableComponent{
      */
     @Override
     public boolean validDragLocation(int x, int y){
-        double ax = apparentX(x);
+        /*double ax = apparentX(x);
         double ay = apparentY(y);
-        return ax>=0 && ay>=0 && ax+width/zoom<=parentWidth && ay+height/zoom<=parentHeight;
+        return ax>=0 && ay>=0 && ax+width/zoom<=parentWidth && ay+height/zoom<=parentHeight;*/
+        return true;
     }
 
     /**
@@ -234,8 +236,8 @@ public class Camera extends DraggableComponent{
             zoomFactor = pow(maxZoom, 0.25);
             minZoom = maxZoom/pow(zoomFactor, 8);
         }else{
-            maxZoom = 1;
             zoomFactor = 1.2;
+            maxZoom = pow(zoomFactor,8);/* 1 */
             minZoom = 1/pow(zoomFactor,8);
         }
     }

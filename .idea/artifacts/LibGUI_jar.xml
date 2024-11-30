@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="LibGUI:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/LibGUI_jar</output-path>
+    <root id="archive" name="LibGUI.jar">
+      <element id="module-output" name="LibGUI" />
+    </root>
+  </artifact>
+</component>

@@ -1,6 +1,8 @@
 
 package com.mason.libgui.core;
 
+import com.mason.libgui.utils.Utils;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -21,21 +23,7 @@ public abstract class UIComponent extends MouseAdapter{
         width = w;
         height = h;
     }
-    
-    
-    /**
-     * Checks whether the given coordinate is inside the given rectangle.
-     * @param x The x coordinate of the top-left of the rectangle.
-     * @param y The y coordinate of the top-left of the rectangle.
-     * @param width The width.
-     * @param height The height.
-     * @param mx The x coordinate.
-     * @param my The y coordinate.
-     * @return True if it is.
-     */
-    public static boolean withinBounds(int x, int y, int width, int height, int mx, int my){
-        return x<mx && mx<x+width && y<my && my<y+height;
-    }
+
     
     /**
      * Checks whether the given coordinate is inside this component.
@@ -44,7 +32,7 @@ public abstract class UIComponent extends MouseAdapter{
      * @return True if it is.
      */
     public boolean withinBounds(int mx, int my){
-        return withinBounds(x, y, width, height, mx, my);
+        return Utils.withinRectBounds(x, y, width, height, mx, my);
     }
     
     
@@ -141,6 +129,11 @@ public abstract class UIComponent extends MouseAdapter{
 
     public static UIComponent getTestInstance(int x, int y, int w, int h){
         return new UIComponent(x, y, w, h){
+
+            @Override
+            public boolean withinBounds(int mx, int my){
+                return Utils.withinRectBounds(x, y, width, height, mx, my);
+            }
 
             @Override
             public void render(Graphics2D g){

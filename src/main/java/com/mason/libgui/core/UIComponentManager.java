@@ -16,6 +16,8 @@ import java.awt.event.MouseWheelEvent;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.mason.libgui.utils.Utils.withinRectBounds;
+
 
 /**
  *
@@ -25,7 +27,7 @@ public class UIComponentManager extends UIComponent{
     
     
     private final List<UIComponent> components = new LinkedList<>();
-    private final List<UIComponent> spawning = new LinkedList<>(), despawning = new LinkedList<>();
+    private final SpawningManager spawner = new SpawningManager(components);
     protected int mouseX, mouseY;
     protected StyleInfo info;
     protected final DragManager dragManager;
@@ -78,7 +80,7 @@ public class UIComponentManager extends UIComponent{
 
     public void addComponent(UIComponent comp){
         comp.setParent(this);
-        spawning.add(comp);
+        spawner.addComponent(comp);
     }
 
     protected void moveComponentToFront(UIComponent comp){
@@ -92,16 +94,17 @@ public class UIComponentManager extends UIComponent{
     }
     
     public void removeComponent(UIComponent comp){
-        despawning.add(comp);
+        spawner.removeComponent(comp);
+    }
+
+    public void addToBackground(UIComponent comp){
+        spawner.addToBackground(comp);
     }
     
     @Override
     public void tick(int mx, int my){
         components.forEach(c -> c.tick(mouseX, mouseY));
-        spawning.forEach(comp -> components.add(0, comp));
-        if(!despawning.isEmpty()) components.removeAll(despawning);
-        spawning.clear();
-        despawning.clear();
+        spawner.tick();
     }
     
     @Override
@@ -109,6 +112,11 @@ public class UIComponentManager extends UIComponent{
         for(int n = components.size()-1; n>=0; n--){
             components.get(n).render(g);
         }
+    }
+
+    @Override
+    public boolean withinBounds(int mx, int my){
+        return withinRectBounds(x, y, width, height, mx, my);
     }
 
     

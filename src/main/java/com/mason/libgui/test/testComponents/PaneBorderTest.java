@@ -5,7 +5,6 @@ import com.mason.libgui.utils.DefaultRenderUtils;
 import com.mason.libgui.utils.StyleInfo;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
 
 /**
  * A component that functions like a thick green border.
