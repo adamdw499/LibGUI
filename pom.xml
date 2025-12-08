@@ -4,6 +4,14 @@
     <groupId>com.mason</groupId>
     <artifactId>LibGUI</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
     <packaging>jar</packaging>
     <build>
         <plugins>
@@ -25,5 +33,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
+
+        <!-- JUnit 5 version -->
+        <junit.jupiter.version>5.11.0</junit.jupiter.version>
     </properties>
 </project>

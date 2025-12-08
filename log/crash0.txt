@@ -1,5 +1,5 @@
 07-21 18:18:24:168: $ java.lang.Exception: UwU
 java.lang.Exception: UwU
-	at com.mason.libgui.core.Launcher.main(Launcher.java:73)
+	at com.mason.libgui.core.launch.DebugLauncher.main(Launcher.java:73)
 07-21 18:18:24:168:      ---- CRASH DATA ----
 07-21 18:18:24:168: $    ---- END OF CRASH DATA ----

@@ -1,118 +1,110 @@
 
 package com.mason.libgui.components.panes;
 
-import com.mason.libgui.components.dragging.DragManager;
-import com.mason.libgui.core.UIComponentManager;
-import com.mason.libgui.utils.StyleInfo;
+import com.mason.libgui.components.behaviour.GraphicsTransformBehaviour;
+import com.mason.libgui.core.component.HitboxRect;
+import com.mason.libgui.core.component.UIComponent;
+import com.mason.libgui.core.componentManagement.UIComponentContainer;
+import com.mason.libgui.core.componentManagement.UIComponentManager;
+import com.mason.libgui.core.input.componentLayer.GUIInputRegister;
+import com.mason.libgui.core.input.mouse.BoundedMouseInputListener;
+import com.mason.libgui.core.input.mouse.InputDelegator;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
-import java.awt.geom.AffineTransform;
+import java.awt.event.KeyListener;
 
-/**
- * A window pane onto which new components can be nested. Mainly code for translating between absolute and relative
- * mouse coordinates.
- * @author Adam Whittaker
- */
-public class Pane extends UIComponentManager{
+public class Pane extends UIComponent implements UIComponentContainer, GUIInputRegister<BoundedMouseInputListener>, InputDelegator{
 
 
-    /**
-     * Forwarded constructor
-     */
-    public Pane(StyleInfo info, int x, int y, int w, int h){
-        super(info, x, y, w, h);
+    private final UIComponentManager componentManager;
+    private final PaneGUIInputTranslator inputTranslator;
+    private final GraphicsTransformBehaviour graphicsTransform;
+
+
+    protected Pane(HitboxRect boundary){
+        this(boundary, UIComponentManager.buildSimpleUIComponentManager());
     }
 
-    /**
-     * Forwarded constructor
-     */
-    protected Pane(DragManager m, StyleInfo info, int x, int y, int w, int h){
-        super(m, info, x, y, w, h);
+    protected Pane(HitboxRect boundary, UIComponentManager componentManager){
+        super(boundary);
+        this.componentManager = componentManager;
+        inputTranslator = new PaneGUIInputTranslator(boundary);
+        inputTranslator.setDelegateSocket(componentManager.getInputDistributor());
+
+        PaneGraphicsTransformBuilder transformBuilder =
+                new PaneGraphicsTransformBuilder(this::renderAfterTranslation, boundary);
+        graphicsTransform = transformBuilder.build();
+    }
+
+    public static Pane buildDefault(HitboxRect boundary){
+        return new Pane(boundary);
+    }
+
+    public static Pane build(HitboxRect boundary, UIComponentManager componentManager){
+        return new Pane(boundary, componentManager);
     }
 
 
-    /**
-     * Translates the components, and renders a border around the pane.
-     * @param g the graphics object
-     */
+    //Rendering relativisation
     @Override
     public void render(Graphics2D g){
-        renderComponents(g);
-        renderBorder(g);
+        graphicsTransform.transformAndRender(g);
     }
 
-    /**
-     * Applies a translation to the components before drawing them, to translate from absolute to relative
-     * coordinates.
-     */
-    protected void renderComponents(Graphics2D g){
-        AffineTransform saved = g.getTransform();
-        g.transform(AffineTransform.getTranslateInstance(x, y));
-        super.render(g);
-        g.setTransform(saved);
+    protected void renderAfterTranslation(Graphics2D g){
+        componentManager.renderComponents(g);
     }
 
-    /**
-     * Draws a border around the pane.
-     */
-    protected void renderBorder(Graphics2D g){
-        info.RENDER_UTILS.drawBorder(g, info, x, y, width, height);
-    }
 
-    /**
-     * Translates the mouse event to relative coordinates.
-     */
-    protected MouseEvent relativeMouseCoords(MouseEvent e){
-        return new MouseEvent(e.getComponent(), e.getID(), e.getWhen(), e.getModifiersEx(),
-                e.getX() - x, e.getY() - y, e.getClickCount(), e.isPopupTrigger());
-    }
-
-    /**
-     * Translates the mouse wheel event to relative coordinates.
-     */
-    protected MouseWheelEvent relativeMouseCoords(MouseWheelEvent e){
-        return new MouseWheelEvent(e.getComponent(), e.getID(), e.getWhen(), e.getModifiersEx(), e.getX() - x, 
-                e.getY() - y, e.getClickCount(), e.isPopupTrigger(), e.getScrollType(), e.getScrollAmount(), 
-                e.getWheelRotation());
-    }
-
-    
+    //Ticking
     @Override
-    public void mouseClicked(MouseEvent e){
-        e = relativeMouseCoords(e);
-        super.mouseClicked(e);
+    public void tick(){
+        componentManager.tickComponents();
+    }
+
+
+    @Override
+    public void addComponent(UIComponent comp){
+        componentManager.addComponent(comp);
     }
 
     @Override
-    public void mousePressed(MouseEvent e){
-        e = relativeMouseCoords(e);
-        super.mousePressed(e);
+    public void removeComponent(UIComponent comp){
+        componentManager.removeComponent(comp);
+    }
+
+
+    //Input Register
+    @Override
+    public void addKeyListener(KeyListener listener){
+        componentManager.addKeyListener(listener);
     }
 
     @Override
-    public void mouseReleased(MouseEvent e){
-        e = relativeMouseCoords(e);
-        super.mouseReleased(e);
+    public void removeKeyListener(KeyListener listener){
+        componentManager.removeKeyListener(listener);
     }
 
     @Override
-    public void mouseWheelMoved(MouseWheelEvent e){
-        e = relativeMouseCoords(e);
-        super.mouseWheelMoved(e);
-    }
-    
-    @Override
-    public void mouseDragged(MouseEvent e){
-        e = relativeMouseCoords(e);
-        super.mouseDragged(e);
+    public void addMouseInputListener(BoundedMouseInputListener listener){
+        componentManager.addMouseInputListener(listener);
     }
 
     @Override
-    public void mouseMoved(MouseEvent e){
-        e = relativeMouseCoords(e);
-        super.mouseMoved(e);
+    public void removeMouseInputListener(BoundedMouseInputListener listener){
+        componentManager.removeMouseInputListener(listener);
     }
-    
+
+    @Override
+    public void setInputSource(GUIInputRegister<BoundedMouseInputListener> inputRegister){
+        inputRegister.addKeyListener(inputTranslator);
+        inputRegister.addMouseInputListener(inputTranslator);
+    }
+
+    @Override
+    public void unsetInputSource(GUIInputRegister<BoundedMouseInputListener> inputRegister){
+        inputRegister.removeKeyListener(inputTranslator);
+        inputRegister.removeMouseInputListener(inputTranslator);
+    }
+
 }
